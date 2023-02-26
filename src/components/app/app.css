@@ -38,8 +38,8 @@
 }
 
 .content {
-  column-gap: 40px;
   display: flex;
+  justify-content: space-between;
   margin: 40px auto 0;
   width: 100%;
   max-width: 1250px;

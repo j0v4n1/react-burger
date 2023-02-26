@@ -1,5 +1,7 @@
 .constructor {
   margin-top: 100px;
+  width: 100%;
+  max-width: 600px;
 }
 
 .list {
@@ -27,4 +29,10 @@
 
 .list::-webkit-scrollbar-thumb {
   background: #8585AD;
+}
+
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end
 }

@@ -19,6 +19,7 @@
 }
 
 .item {
+  position: relative;
   padding: 24px 0 40px;
   display: flex;
   flex-direction: column;

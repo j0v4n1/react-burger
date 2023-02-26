@@ -1,11 +1,13 @@
 import {
   ConstructorElement,
   DragIcon,
+  Button,
+  CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import data from "../../utils/data";
 import styles from "./burger-constructor.module.css";
 
-const [{image}] = data;
+const [{ image }] = data;
 
 const BurgerConstructor = () => {
   const ingredients = data.map((el) => {
@@ -46,9 +48,7 @@ const BurgerConstructor = () => {
           />
         </li>
         <li>
-          <ul className={styles.list}>
-            {ingredients}
-          </ul>
+          <ul className={styles.list}>{ingredients}</ul>
         </li>
         <li className="ml-8">
           <ConstructorElement
@@ -60,6 +60,15 @@ const BurgerConstructor = () => {
           />
         </li>
       </ul>
+      <div className={styles.bottom}>
+        <div className="mr-10" style={{display: 'flex', alignItems: 'center'}}>
+          <div className="mr-2 text text_type_digits-medium">610</div>
+          <div><CurrencyIcon type="primary" /></div>
+        </div>
+        <Button htmlType="button" type="primary" size="large">
+          Оформить заказ
+        </Button>
+      </div>
     </div>
   );
 };

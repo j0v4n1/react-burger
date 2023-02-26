@@ -1,6 +1,11 @@
 import { useState } from "react";
 
-import { Tab, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Tab,
+  CurrencyIcon,
+  Counter,
+  Button
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import data from "../../utils/data";
 
 import styles from "./burger-ingredients.module.css";
@@ -11,6 +16,7 @@ const BurgerIngredients = () => {
     if (bun.type === "bun") {
       return (
         <li key={bun._id} className={styles.item}>
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={bun.image} alt={bun.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -32,6 +38,7 @@ const BurgerIngredients = () => {
     if (sauce.type === "sauce") {
       return (
         <li key={sauce._id} className={styles.item}>
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={sauce.image} alt={sauce.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -53,6 +60,7 @@ const BurgerIngredients = () => {
     if (cutlet.type === "main") {
       return (
         <li key={cutlet._id} className={styles.item}>
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -75,13 +83,13 @@ const BurgerIngredients = () => {
       <h1 className={styles.title}>Соберите бургер</h1>
       <div className={"mt-5"} style={{ display: "flex" }}>
         <Tab value="one" active={current === "one"} onClick={setCurrent}>
-          One
+          Булки
         </Tab>
         <Tab value="two" active={current === "two"} onClick={setCurrent}>
-          Two
+          Соусы
         </Tab>
         <Tab value="three" active={current === "three"} onClick={setCurrent}>
-          Three
+          Начинки
         </Tab>
       </div>
       <div className={styles.wrapper}>
@@ -89,7 +97,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>{buns}</ul>
         <h2 className={"text text_type_main-medium"}>Соусы</h2>
         <ul className={styles.list}>{sauces}</ul>
-        <h2 className={"text text_type_main-medium"}>Котлеты</h2>
+        <h2 className={"text text_type_main-medium"}>Начинки</h2>
         <ul className={styles.list}>{cutlets}</ul>
       </div>
     </div>
