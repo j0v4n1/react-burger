@@ -4,29 +4,32 @@ import {
   Button,
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import data from "../../utils/data";
 import styles from "./burger-constructor.module.css";
+import PropTypes from "prop-types";
+import { useState, useEffect } from "react";
 
-const [{ image }] = data;
+const BurgerConstructor = ({ data }) => {
+  const [totalPrice, setTotalPrice] = useState(0);
 
-const BurgerConstructor = () => {
-  const ingredients = data.map((el) => {
-    if (el.type !== "bun") {
+  useEffect(() => {
+    setTotalPrice(total);
+  }, []);
+
+  let total = 0;
+
+  const ingredients = data.map(({ id, name, price, image, type }) => {
+    total += price;
+    if (type !== "bun") {
       return (
-        <li key={el._id} className={styles.item}>
+        <li key={id} className={styles.item}>
           <div className="mr-2">
             <DragIcon type="primary" />
           </div>
-          <ConstructorElement
-            text={el.name}
-            price={el.price}
-            thumbnail={el.image}
-          />
+          <ConstructorElement text={name} price={price} thumbnail={image} />
         </li>
       );
     }
   });
-
   return (
     <div className={styles.constructor}>
       <ul
@@ -41,10 +44,10 @@ const BurgerConstructor = () => {
         <li className="ml-8">
           <ConstructorElement
             type="top"
-            isLocked={image}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={image}
+            isLocked={true}
+            text={`${data[0].name}(верх)`}
+            price={data[0].price}
+            thumbnail={data[0].image}
           />
         </li>
         <li>
@@ -54,16 +57,21 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (низ)"
+            text={`${data[0].name}(низ)`}
             price={200}
-            thumbnail={image}
+            thumbnail={data[0].image}
           />
         </li>
       </ul>
       <div className={styles.bottom}>
-        <div className="mr-10" style={{display: 'flex', alignItems: 'center'}}>
-          <div className="mr-2 text text_type_digits-medium">610</div>
-          <div><CurrencyIcon type="primary" /></div>
+        <div
+          className="mr-10"
+          style={{ display: "flex", alignItems: "center" }}
+        >
+          <div className="mr-2 text text_type_digits-medium">{totalPrice}</div>
+          <div className={styles.svgWrapper}>
+            <CurrencyIcon type="primary" />
+          </div>
         </div>
         <Button htmlType="button" type="primary" size="large">
           Оформить заказ
@@ -71,6 +79,10 @@ const BurgerConstructor = () => {
       </div>
     </div>
   );
+};
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default BurgerConstructor;

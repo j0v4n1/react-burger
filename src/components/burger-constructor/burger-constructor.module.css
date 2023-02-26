@@ -36,3 +36,13 @@
   align-items: center;
   justify-content: flex-end
 }
+
+.svgWrapper {
+  width: 36px;
+  height: 36px; 
+}
+
+.svgWrapper svg {
+  width: 100%;
+  height: 100%;
+}

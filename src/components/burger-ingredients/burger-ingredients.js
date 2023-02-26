@@ -1,21 +1,22 @@
 import { useState } from "react";
-
+import PropTypes from 'prop-types';
 import {
   Tab,
   CurrencyIcon,
-  Counter,
-  Button
+  Counter
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import data from "../../utils/data";
+
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({data}) => {
+
   const [current, setCurrent] = useState("one");
   const buns = data.map((bun) => {
+
     if (bun.type === "bun") {
       return (
-        <li key={bun._id} className={styles.item}>
+        <li key={bun.id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={bun.image} alt={bun.name} />
           <div style={{ display: "flex" }}>
@@ -37,7 +38,7 @@ const BurgerIngredients = () => {
   const sauces = data.map((sauce) => {
     if (sauce.type === "sauce") {
       return (
-        <li key={sauce._id} className={styles.item}>
+        <li key={sauce.id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={sauce.image} alt={sauce.name} />
           <div style={{ display: "flex" }}>
@@ -59,7 +60,7 @@ const BurgerIngredients = () => {
   const cutlets = data.map((cutlet) => {
     if (cutlet.type === "main") {
       return (
-        <li key={cutlet._id} className={styles.item}>
+        <li key={cutlet.id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
           <div style={{ display: "flex" }}>
@@ -103,5 +104,9 @@ const BurgerIngredients = () => {
     </div>
   );
 };
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object)
+}
 
 export default BurgerIngredients;
