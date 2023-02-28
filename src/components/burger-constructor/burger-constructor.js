@@ -9,16 +9,18 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
 const BurgerConstructor = ({ data }) => {
-  const [totalPrice, setTotalPrice] = useState(0);
+  
+  const [totalPrice, setTotalPrice] = useState();
 
   useEffect(() => {
+    let total = 0;
+    data.forEach(({ price }) => {
+      total += price;
+    });
     setTotalPrice(total);
   }, []);
 
-  let total = 0;
-
   const ingredients = data.map(({ id, name, price, image, type }) => {
-    total += price;
     if (type !== "bun") {
       return (
         <li key={id} className={styles.item}>
@@ -30,6 +32,7 @@ const BurgerConstructor = ({ data }) => {
       );
     }
   });
+
   return (
     <div className={styles.constructor}>
       <ul
