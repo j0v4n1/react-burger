@@ -1,24 +1,23 @@
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   Tab,
   CurrencyIcon,
-  Counter
+  Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({data}) => {
-
+const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("bun");
 
-  const buns = data.map((bun) => {
-
+  const buns = data.map((bun, index) => {
     if (bun.type === "bun") {
       return (
         <li key={bun._id} className={styles.item}>
-          <Counter count={1} size="default" extraClass="m-1" />
+          {index % 3 === 0 ? (
+            <Counter count={1} size="default" extraClass="m-1" />
+          ) : null}
           <img className={styles.image} src={bun.image} alt={bun.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -36,11 +35,13 @@ const BurgerIngredients = ({data}) => {
       );
     }
   });
-  const sauces = data.map((sauce) => {
+  const sauces = data.map((sauce, index) => {
     if (sauce.type === "sauce") {
       return (
         <li key={sauce._id} className={styles.item}>
-          <Counter count={1} size="default" extraClass="m-1" />
+          {index % 3 === 0 ? (
+            <Counter count={1} size="default" extraClass="m-1" />
+          ) : null}
           <img className={styles.image} src={sauce.image} alt={sauce.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -58,11 +59,13 @@ const BurgerIngredients = ({data}) => {
       );
     }
   });
-  const cutlets = data.map((cutlet) => {
+  const cutlets = data.map((cutlet, index) => {
     if (cutlet.type === "main") {
       return (
         <li key={cutlet._id} className={styles.item}>
-          <Counter count={1} size="default" extraClass="m-1" />
+          {index % 3 === 0 ? (
+            <Counter count={1} size="default" extraClass="m-1" />
+          ) : null}
           <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -81,7 +84,7 @@ const BurgerIngredients = ({data}) => {
     }
   });
   return (
-    <div className={styles.ingredients}>
+    <div className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
       <div className={"mt-5"} style={{ display: "flex" }}>
         <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
@@ -107,7 +110,7 @@ const BurgerIngredients = ({data}) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
-}
+  data: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default BurgerIngredients;

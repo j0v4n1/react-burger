@@ -6,11 +6,11 @@
 
 .title {
   margin: 0;
-  padding-left: 40px;
+  font-size: 36px;
 }
 
 .list {
-  padding: 0 0 0 16px;
+  padding: 0 16px 0;
   margin: 0;
   list-style: none;
   display: grid;
