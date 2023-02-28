@@ -11,12 +11,13 @@ import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients = ({data}) => {
 
-  const [current, setCurrent] = useState("one");
+  const [current, setCurrent] = useState("bun");
+
   const buns = data.map((bun) => {
 
     if (bun.type === "bun") {
       return (
-        <li key={bun.id} className={styles.item}>
+        <li key={bun._id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={bun.image} alt={bun.name} />
           <div style={{ display: "flex" }}>
@@ -38,7 +39,7 @@ const BurgerIngredients = ({data}) => {
   const sauces = data.map((sauce) => {
     if (sauce.type === "sauce") {
       return (
-        <li key={sauce.id} className={styles.item}>
+        <li key={sauce._id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={sauce.image} alt={sauce.name} />
           <div style={{ display: "flex" }}>
@@ -60,7 +61,7 @@ const BurgerIngredients = ({data}) => {
   const cutlets = data.map((cutlet) => {
     if (cutlet.type === "main") {
       return (
-        <li key={cutlet.id} className={styles.item}>
+        <li key={cutlet._id} className={styles.item}>
           <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
           <div style={{ display: "flex" }}>
@@ -83,13 +84,13 @@ const BurgerIngredients = ({data}) => {
     <div className={styles.ingredients}>
       <h1 className={styles.title}>Соберите бургер</h1>
       <div className={"mt-5"} style={{ display: "flex" }}>
-        <Tab value="one" active={current === "one"} onClick={setCurrent}>
+        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value="two" active={current === "two"} onClick={setCurrent}>
+        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab value="three" active={current === "three"} onClick={setCurrent}>
+        <Tab value="main" active={current === "main"} onClick={setCurrent}>
           Начинки
         </Tab>
       </div>

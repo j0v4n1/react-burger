@@ -18,54 +18,67 @@ const BurgerConstructor = ({ data }) => {
       total += price;
     });
     setTotalPrice(total);
-  }, []);
+  }, [data]);
 
-  const ingredients = data.map(({ id, name, price, image, type }) => {
-    if (type !== "bun") {
+  const ingredients = data.map(({ _id, name, price, image }, index) => {
+    if (index === 0) {
       return (
-        <li key={id} className={styles.item}>
-          <div className="mr-2">
-            <DragIcon type="primary" />
-          </div>
-          <ConstructorElement text={name} price={price} thumbnail={image} />
-        </li>
+        <ul
+          key={_id}
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            listStyle: "none",
+            padding: 0,
+          }}
+        >
+          <li className="ml-8">
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={name}
+              price={price}
+              thumbnail={image}
+            />
+          </li>
+          <li>
+            <ul className={styles.list}>
+              {data.map(({ _id, name, price, image, type }) => {
+                if (type !== "bun") {
+                  return (
+                    <li key={_id} className={styles.item}>
+                      <div className="mr-2">
+                        <DragIcon type="primary" />
+                      </div>
+                      <ConstructorElement
+                        text={name}
+                        price={price}
+                        thumbnail={image}
+                      />
+                    </li>
+                  );
+                }
+              })}
+            </ul>
+          </li>
+          <li className="ml-8">
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={name}
+              price={price}
+              thumbnail={image}
+            />
+          </li>
+        </ul>
       );
     }
   });
 
   return (
     <div className={styles.constructor}>
-      <ul
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "16px",
-          listStyle: "none",
-          padding: 0,
-        }}
-      >
-        <li className="ml-8">
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${data[0].name}(верх)`}
-            price={data[0].price}
-            thumbnail={data[0].image}
-          />
-        </li>
-        <li>
-          <ul className={styles.list}>{ingredients}</ul>
-        </li>
-        <li className="ml-8">
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${data[0].name}(низ)`}
-            price={200}
-            thumbnail={data[0].image}
-          />
-        </li>
-      </ul>
+      {ingredients}
       <div className={styles.bottom}>
         <div
           className="mr-10"
