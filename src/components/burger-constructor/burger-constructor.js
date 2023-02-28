@@ -9,7 +9,6 @@ import PropTypes from "prop-types";
 import { useState, useEffect } from "react";
 
 const BurgerConstructor = ({ data }) => {
-  
   const [totalPrice, setTotalPrice] = useState();
 
   useEffect(() => {
@@ -42,6 +41,7 @@ const BurgerConstructor = ({ data }) => {
           gap: "16px",
           listStyle: "none",
           padding: 0,
+          margin: '16px 0 40px'
         }}
       >
         <li className="ml-8">

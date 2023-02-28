@@ -1,19 +1,16 @@
 import { useState } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
   Tab,
   CurrencyIcon,
-  Counter
+  Counter,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({data}) => {
-
+const BurgerIngredients = ({ data }) => {
   const [current, setCurrent] = useState("one");
   const buns = data.map((bun) => {
-
     if (bun.type === "bun") {
       return (
         <li key={bun.id} className={styles.item}>
@@ -106,7 +103,7 @@ const BurgerIngredients = ({data}) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
-}
+  data: PropTypes.arrayOf(PropTypes.object),
+};
 
 export default BurgerIngredients;
