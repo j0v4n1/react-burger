@@ -1,0 +1,31 @@
+.title {
+  margin: 0;
+}
+
+.titleWrapper {
+  padding: 40px 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.image {
+  box-sizing: border-box;
+  padding: 0 100px;
+  width: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+.name {
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.pfcWrapper {
+  padding: 32px 0 60px;
+  margin: 0 auto;
+  max-width: 516px;
+  justify-content: space-between;
+  display: flex;
+}

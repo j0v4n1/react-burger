@@ -18,7 +18,13 @@
   column-gap: 24px;
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .item {
+  cursor: pointer;
   position: relative;
   padding: 24px 0 40px;
   display: flex;
@@ -33,9 +39,9 @@
 
 .wrapper {
   margin-top: 40px;
-  max-height: 690px;
   overflow: hidden;
   overflow-y: scroll;
+  max-height: calc(100vh - 318px);
 }
 
 .wrapper::-webkit-scrollbar {

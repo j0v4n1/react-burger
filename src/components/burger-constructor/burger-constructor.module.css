@@ -1,13 +1,14 @@
 .constructor {
-  margin-top: 100px;
+  margin-top: 44px;
   width: 100%;
   max-width: 600px;
+  max-height: calc(100vh - 88px);
 }
 
 .list {
   overflow: hidden;
   overflow-y: scroll;
-  max-height: 464px;
+  max-height: calc(100vh - 504px);
   padding: 0 8px 0 0;
 }
 

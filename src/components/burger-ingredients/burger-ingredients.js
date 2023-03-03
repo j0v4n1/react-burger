@@ -8,16 +8,27 @@ import {
 
 import styles from "./burger-ingredients.module.css";
 
-const BurgerIngredients = ({ data }) => {
+const BurgerIngredients = ({
+  data,
+  onHandleOpenModal,
+  onSelectedIngredientId,
+  changeModalContent
+}) => {
   const [current, setCurrent] = useState("bun");
 
-  const buns = data.map((bun, index) => {
+  const buns = data.map((bun) => {
     if (bun.type === "bun") {
       return (
-        <li key={bun._id} className={styles.item}>
-          {index % 3 === 0 ? (
-            <Counter count={1} size="default" extraClass="m-1" />
-          ) : null}
+        <li
+          key={bun._id}
+          className={styles.item}
+          onClick={() => {
+            onHandleOpenModal();
+            onSelectedIngredientId(bun._id);
+            changeModalContent('ingredient-details')
+          }}
+        >
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={bun.image} alt={bun.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -35,13 +46,19 @@ const BurgerIngredients = ({ data }) => {
       );
     }
   });
-  const sauces = data.map((sauce, index) => {
+  const sauces = data.map((sauce) => {
     if (sauce.type === "sauce") {
       return (
-        <li key={sauce._id} className={styles.item}>
-          {index % 3 === 0 ? (
-            <Counter count={1} size="default" extraClass="m-1" />
-          ) : null}
+        <li
+          key={sauce._id}
+          className={styles.item}
+          onClick={() => {
+            onHandleOpenModal();
+            onSelectedIngredientId(sauce._id);
+            changeModalContent('ingredient-details')
+          }}
+        >
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={sauce.image} alt={sauce.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -59,13 +76,19 @@ const BurgerIngredients = ({ data }) => {
       );
     }
   });
-  const cutlets = data.map((cutlet, index) => {
+  const cutlets = data.map((cutlet) => {
     if (cutlet.type === "main") {
       return (
-        <li key={cutlet._id} className={styles.item}>
-          {index % 3 === 0 ? (
-            <Counter count={1} size="default" extraClass="m-1" />
-          ) : null}
+        <li
+          key={cutlet._id}
+          className={styles.item}
+          onClick={() => {
+            onHandleOpenModal();
+            onSelectedIngredientId(cutlet._id);
+            changeModalContent('ingredient-details')
+          }}
+        >
+          <Counter count={1} size="default" extraClass="m-1" />
           <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
           <div style={{ display: "flex" }}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
@@ -84,28 +107,53 @@ const BurgerIngredients = ({ data }) => {
     }
   });
   return (
-    <div className={`${styles.ingredients} text text_type_main-default`}>
+    <section className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
-      <div className={"mt-5"} style={{ display: "flex" }}>
-        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+      <ul
+        className={"mt-5"}
+        style={{ display: "flex", padding: 0, listStyle: "none" }}
+      >
+        <li>
+          <a href="#buns" className={styles.link}>
+            <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+              Булки
+            </Tab>
+          </a>
+        </li>
+        <li>
+          <a href="#sauce" className={styles.link}>
+            <Tab
+              value="sauce"
+              active={current === "sauce"}
+              onClick={setCurrent}
+            >
+              Соусы
+            </Tab>
+          </a>
+        </li>
+        <li>
+          <a href="#main" className={styles.link}>
+            <Tab value="main" active={current === "main"} onClick={setCurrent}>
+              Начинки
+            </Tab>
+          </a>
+        </li>
+      </ul>
+      <div style={{ scrollBehavior: "smooth" }} className={styles.wrapper}>
+        <h2 id="buns" className={"text text_type_main-medium"}>
           Булки
-        </Tab>
-        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
-          Соусы
-        </Tab>
-        <Tab value="main" active={current === "main"} onClick={setCurrent}>
-          Начинки
-        </Tab>
-      </div>
-      <div className={styles.wrapper}>
-        <h2 className={"text text_type_main-medium"}>Булки</h2>
+        </h2>
         <ul className={styles.list}>{buns}</ul>
-        <h2 className={"text text_type_main-medium"}>Соусы</h2>
+        <h2 id="sauce" className={"text text_type_main-medium"}>
+          Соусы
+        </h2>
         <ul className={styles.list}>{sauces}</ul>
-        <h2 className={"text text_type_main-medium"}>Начинки</h2>
+        <h2 id="main" className={"text text_type_main-medium"}>
+          Начинки
+        </h2>
         <ul className={styles.list}>{cutlets}</ul>
       </div>
-    </div>
+    </section>
   );
 };
 
