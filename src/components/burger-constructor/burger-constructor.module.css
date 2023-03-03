@@ -5,14 +5,33 @@
   max-height: calc(100vh - 88px);
 }
 
+.mainList {
+  min-height: calc(100vh - (543px - 160px - 32px));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 40px;
+}
+
+@media (min-height: 1770px) {
+  .mainList {
+    min-height: calc(100vh - (596px - 160px - 32px));
+
+  }
+}
+
 .list {
   overflow: hidden;
   overflow-y: scroll;
-  max-height: calc(100vh - 504px);
+  max-height: calc(100vh - 543px);
   padding: 0 8px 0 0;
 }
 
 .item {
+  cursor: pointer;
   margin-bottom: 16px;
   display: flex;
   align-items: center;
@@ -40,7 +59,7 @@
 
 .svgWrapper {
   width: 36px;
-  height: 36px; 
+  height: 36px;
 }
 
 .svgWrapper svg {

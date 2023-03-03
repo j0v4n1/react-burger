@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState} from "react";
 import PropTypes from "prop-types";
 import {
   Tab,
@@ -7,14 +7,20 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./burger-ingredients.module.css";
+import ModalOverlay from "../modal-overlay/modal-overlay";
+import Modal from "../modal/modal";
 
-const BurgerIngredients = ({
-  data,
-  onHandleOpenModal,
-  onSelectedIngredientId,
-  changeModalContent
-}) => {
+const BurgerIngredients = ({data}) => {
+
+  const [selectedIngredientId, setSelectedIngredientId] = useState(null);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
   const [current, setCurrent] = useState("bun");
+  const [showAnimation, setShowAnimation] = useState(false)
+
+  function changeModalContent(modalElement) {
+    setModalContent(modalElement)
+  }
 
   const buns = data.map((bun) => {
     if (bun.type === "bun") {
@@ -23,21 +29,22 @@ const BurgerIngredients = ({
           key={bun._id}
           className={styles.item}
           onClick={() => {
-            onHandleOpenModal();
-            onSelectedIngredientId(bun._id);
+            setShowAnimation(false);
+            setIsVisibleModal(true);
+            setSelectedIngredientId(bun._id);
             changeModalContent('ingredient-details')
           }}
         >
-          <Counter count={1} size="default" extraClass="m-1" />
-          <img className={styles.image} src={bun.image} alt={bun.name} />
-          <div style={{ display: "flex" }}>
+          <Counter count={1} size="default" extraClass="m-1"/>
+          <img className={styles.image} src={bun.image} alt={bun.name}/>
+          <div style={{display: "flex"}}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
               {bun.price}
             </p>
-            <CurrencyIcon type="primary" />
+            <CurrencyIcon type="primary"/>
           </div>
           <p
-            style={{ textAlign: "center" }}
+            style={{textAlign: "center", paddingBottom: 24}}
             className={"text text_type_main-default"}
           >
             {bun.name}
@@ -45,6 +52,7 @@ const BurgerIngredients = ({
         </li>
       );
     }
+    return null
   });
   const sauces = data.map((sauce) => {
     if (sauce.type === "sauce") {
@@ -53,21 +61,22 @@ const BurgerIngredients = ({
           key={sauce._id}
           className={styles.item}
           onClick={() => {
-            onHandleOpenModal();
-            onSelectedIngredientId(sauce._id);
+            setShowAnimation(false);
+            setIsVisibleModal(true);
+            setSelectedIngredientId(sauce._id);
             changeModalContent('ingredient-details')
           }}
         >
-          <Counter count={1} size="default" extraClass="m-1" />
-          <img className={styles.image} src={sauce.image} alt={sauce.name} />
-          <div style={{ display: "flex" }}>
+          <Counter count={1} size="default" extraClass="m-1"/>
+          <img className={styles.image} src={sauce.image} alt={sauce.name}/>
+          <div style={{display: "flex"}}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
               {sauce.price}
             </p>
-            <CurrencyIcon type="primary" />
+            <CurrencyIcon type="primary"/>
           </div>
           <p
-            style={{ textAlign: "center" }}
+            style={{textAlign: "center", paddingBottom: 24}}
             className={"text text_type_main-default"}
           >
             {sauce.name}
@@ -75,6 +84,7 @@ const BurgerIngredients = ({
         </li>
       );
     }
+    return null
   });
   const cutlets = data.map((cutlet) => {
     if (cutlet.type === "main") {
@@ -83,21 +93,22 @@ const BurgerIngredients = ({
           key={cutlet._id}
           className={styles.item}
           onClick={() => {
-            onHandleOpenModal();
-            onSelectedIngredientId(cutlet._id);
+            setShowAnimation(false);
+            setIsVisibleModal(true);
+            setSelectedIngredientId(cutlet._id);
             changeModalContent('ingredient-details')
           }}
         >
-          <Counter count={1} size="default" extraClass="m-1" />
-          <img className={styles.image} src={cutlet.image} alt={cutlet.name} />
-          <div style={{ display: "flex" }}>
+          <Counter count={1} size="default" extraClass="m-1"/>
+          <img className={styles.image} src={cutlet.image} alt={cutlet.name}/>
+          <div style={{display: "flex"}}>
             <p className={"text text_type_digits-default pb-1 pr-2"}>
               {cutlet.price}
             </p>
-            <CurrencyIcon type="primary" />
+            <CurrencyIcon type="primary"/>
           </div>
           <p
-            style={{ textAlign: "center" }}
+            style={{textAlign: "center", paddingBottom: 24}}
             className={"text text_type_main-default"}
           >
             {cutlet.name}
@@ -105,23 +116,25 @@ const BurgerIngredients = ({
         </li>
       );
     }
+    return null
   });
+
   return (
     <section className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
       <ul
         className={"mt-5"}
-        style={{ display: "flex", padding: 0, listStyle: "none" }}
+        style={{display: "flex", padding: 0, listStyle: "none"}}
       >
         <li>
-          <a href="#buns" className={styles.link}>
+          <a href={"#buns"} className={styles.link}>
             <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
-          <a href="#sauce" className={styles.link}>
+          <a href={"#sauce"} className={styles.link}>
             <Tab
               value="sauce"
               active={current === "sauce"}
@@ -132,14 +145,14 @@ const BurgerIngredients = ({
           </a>
         </li>
         <li>
-          <a href="#main" className={styles.link}>
+          <a href={"#main"} className={styles.link}>
             <Tab value="main" active={current === "main"} onClick={setCurrent}>
               Начинки
             </Tab>
           </a>
         </li>
       </ul>
-      <div style={{ scrollBehavior: "smooth" }} className={styles.wrapper}>
+      <div style={{scrollBehavior: "smooth"}} className={styles.wrapper}>
         <h2 id="buns" className={"text text_type_main-medium"}>
           Булки
         </h2>
@@ -152,6 +165,19 @@ const BurgerIngredients = ({
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
+        {!isVisibleModal ? null :
+          <ModalOverlay isVisibleModal={isVisibleModal}
+                        showAnimation={showAnimation}>
+            <Modal data={data}
+                   selectedIngredientId={selectedIngredientId}
+                   modalContent={modalContent}
+                   onClose={() => {
+                     setTimeout(() => {
+                       setIsVisibleModal(false)
+                     }, 300);
+                     setShowAnimation(true)
+                   }}/>
+          </ModalOverlay>}
       </div>
     </section>
   );
