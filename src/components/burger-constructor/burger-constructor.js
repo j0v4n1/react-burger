@@ -15,7 +15,6 @@ const BurgerConstructor = ({data}) => {
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
-  const [showAnimation, setShowAnimation] = useState(false)
 
   function changeModalContent(modalElement) {
     setModalContent(modalElement)
@@ -29,7 +28,6 @@ const BurgerConstructor = ({data}) => {
         {!bun ? null :
           <li className="ml-8"
               onClick={() => {
-                setShowAnimation(false)
                 setIsVisibleModal(true);
                 setSelectedIngredientId(bun._id);
                 changeModalContent('ingredient-details')
@@ -49,7 +47,6 @@ const BurgerConstructor = ({data}) => {
                 return (
                   <li key={_id} className={styles.item}
                       onClick={() => {
-                        setShowAnimation(false)
                         setIsVisibleModal(true);
                         setSelectedIngredientId(_id);
                         changeModalContent('ingredient-details')
@@ -67,25 +64,19 @@ const BurgerConstructor = ({data}) => {
               }
               return null
             })}
-            {!isVisibleModal ? null :
-              <ModalOverlay isVisibleModal={isVisibleModal}
-                            showAnimation={showAnimation}>
+              <ModalOverlay onClose={() => {setIsVisibleModal(false)}} isVisibleModal={isVisibleModal}>
                 <Modal data={data}
                        selectedIngredientId={selectedIngredientId}
                        modalContent={modalContent}
                        onClose={() => {
-                         setTimeout(() => {
-                           setIsVisibleModal(false)
-                         }, 300);
-                         setShowAnimation(true)
+                         setIsVisibleModal(false)
                        }}/>
-              </ModalOverlay>}
+              </ModalOverlay>
           </ul>
         </li>
         {bun ? (
           <li className="ml-8"
               onClick={() => {
-                setShowAnimation(false)
                 setIsVisibleModal(true);
                 setSelectedIngredientId(bun._id);
                 changeModalContent('ingredient-details')
@@ -112,7 +103,6 @@ const BurgerConstructor = ({data}) => {
         </div>
         <Button
           onClick={() => {
-            setShowAnimation(false);
             setIsVisibleModal(true);
             changeModalContent('order-details');
           }}

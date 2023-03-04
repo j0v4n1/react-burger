@@ -16,7 +16,6 @@ const BurgerIngredients = ({data}) => {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState(null);
   const [current, setCurrent] = useState("bun");
-  const [showAnimation, setShowAnimation] = useState(false)
 
   function changeModalContent(modalElement) {
     setModalContent(modalElement)
@@ -29,7 +28,6 @@ const BurgerIngredients = ({data}) => {
           key={bun._id}
           className={styles.item}
           onClick={() => {
-            setShowAnimation(false);
             setIsVisibleModal(true);
             setSelectedIngredientId(bun._id);
             changeModalContent('ingredient-details')
@@ -61,7 +59,6 @@ const BurgerIngredients = ({data}) => {
           key={sauce._id}
           className={styles.item}
           onClick={() => {
-            setShowAnimation(false);
             setIsVisibleModal(true);
             setSelectedIngredientId(sauce._id);
             changeModalContent('ingredient-details')
@@ -93,7 +90,6 @@ const BurgerIngredients = ({data}) => {
           key={cutlet._id}
           className={styles.item}
           onClick={() => {
-            setShowAnimation(false);
             setIsVisibleModal(true);
             setSelectedIngredientId(cutlet._id);
             changeModalContent('ingredient-details')
@@ -165,19 +161,14 @@ const BurgerIngredients = ({data}) => {
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
-        {!isVisibleModal ? null :
-          <ModalOverlay isVisibleModal={isVisibleModal}
-                        showAnimation={showAnimation}>
-            <Modal data={data}
-                   selectedIngredientId={selectedIngredientId}
-                   modalContent={modalContent}
-                   onClose={() => {
-                     setTimeout(() => {
-                       setIsVisibleModal(false)
-                     }, 300);
-                     setShowAnimation(true)
-                   }}/>
-          </ModalOverlay>}
+        <ModalOverlay onClose={() => {setIsVisibleModal(false)}} isVisibleModal={isVisibleModal}>
+          <Modal data={data}
+                 selectedIngredientId={selectedIngredientId}
+                 modalContent={modalContent}
+                 onClose={() => {
+                   setIsVisibleModal(false)
+                 }}/>
+        </ModalOverlay>
       </div>
     </section>
   );
