@@ -64,14 +64,16 @@ const BurgerConstructor = ({data}) => {
               }
               return null
             })}
-              <ModalOverlay onClose={() => {setIsVisibleModal(false)}} isVisibleModal={isVisibleModal}>
-                <Modal data={data}
-                       selectedIngredientId={selectedIngredientId}
-                       modalContent={modalContent}
-                       onClose={() => {
-                         setIsVisibleModal(false)
-                       }}/>
-              </ModalOverlay>
+            <ModalOverlay onClose={() => {
+              setIsVisibleModal(false)
+            }} isVisibleModal={isVisibleModal}>
+              <Modal data={data}
+                     selectedIngredientId={selectedIngredientId}
+                     modalContent={modalContent}
+                     onClose={() => {
+                       setIsVisibleModal(false)
+                     }}/>
+            </ModalOverlay>
           </ul>
         </li>
         {bun ? (
