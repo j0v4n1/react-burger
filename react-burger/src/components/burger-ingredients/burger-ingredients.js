@@ -7,7 +7,6 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from "./burger-ingredients.module.css";
-import ModalOverlay from "../modal-overlay/modal-overlay";
 import Modal from "../modal/modal";
 
 const BurgerIngredients = ({data}) => {
@@ -161,14 +160,14 @@ const BurgerIngredients = ({data}) => {
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
-        <ModalOverlay onClose={() => {setIsVisibleModal(false)}} isVisibleModal={isVisibleModal}>
-          <Modal data={data}
-                 selectedIngredientId={selectedIngredientId}
-                 modalContent={modalContent}
-                 onClose={() => {
-                   setIsVisibleModal(false)
-                 }}/>
-        </ModalOverlay>
+        <Modal data={data}
+               setIsVisibleModal={setIsVisibleModal}
+               isVisibleModal={isVisibleModal}
+               selectedIngredientId={selectedIngredientId}
+               modalContent={modalContent}
+               onClose={() => {
+                 setIsVisibleModal(false)
+               }}/>
       </div>
     </section>
   );
