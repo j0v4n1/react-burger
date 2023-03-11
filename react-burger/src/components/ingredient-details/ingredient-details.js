@@ -1,5 +1,6 @@
 import styles from "./ingredient-details.module.css";
-
+import ingredientsPropTypes from "../../utils/utils";
+import PropTypes from "prop-types";
 const IngredientDetails = ({data, selectedIngredientId}) => {
 
   const selectedIngredient = data.find(el => {
@@ -52,6 +53,11 @@ const IngredientDetails = ({data, selectedIngredientId}) => {
         </>
       }
     </>);
+};
+
+IngredientDetails.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
+  selectedIngredientId: PropTypes.string.isRequired
 };
 
 export default IngredientDetails;

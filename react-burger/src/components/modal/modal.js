@@ -6,6 +6,7 @@ import {useEffect, useRef} from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import {Transition} from "react-transition-group";
 import PropTypes from "prop-types";
+import ingredientsPropTypes from "../../utils/utils";
 
 const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModal, setIsVisibleModal}) => {
 
@@ -70,7 +71,12 @@ const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModa
 };
 
 Modal.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
+  selectedIngredientId: PropTypes.string,
+  modalContent: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
+  isVisibleModal: PropTypes.bool.isRequired,
+  setIsVisibleModal: PropTypes.func.isRequired
 }
 
 export default Modal;

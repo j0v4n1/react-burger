@@ -1,14 +1,9 @@
 import {useState} from "react";
 import PropTypes from "prop-types";
-import {
-  Tab,
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
-
+import {Tab, CurrencyIcon, Counter,} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
-
+import ingredientsPropTypes from "../../utils/utils";
 const BurgerIngredients = ({data}) => {
 
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
@@ -174,7 +169,7 @@ const BurgerIngredients = ({data}) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
 };
 
 export default BurgerIngredients;
