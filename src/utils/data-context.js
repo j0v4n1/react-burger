@@ -1,5 +1,5 @@
 import {createContext} from "react";
 
-const dataContext = createContext(null);
+const dataContext = createContext([]);
 
 export default dataContext;

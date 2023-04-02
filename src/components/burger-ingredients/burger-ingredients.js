@@ -1,10 +1,11 @@
-import {useState} from "react";
-import PropTypes from "prop-types";
+import {useState, useContext} from "react";
 import {Tab, CurrencyIcon, Counter,} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
-import ingredientsPropTypes from "../../utils/utils";
-const BurgerIngredients = ({data}) => {
+import dataContext from "../../utils/data-context";
+
+const BurgerIngredients = () => {
+  const data = useContext(dataContext);
 
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -166,10 +167,6 @@ const BurgerIngredients = ({data}) => {
       </div>
     </section>
   );
-};
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
 };
 
 export default BurgerIngredients;

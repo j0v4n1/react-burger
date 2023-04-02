@@ -3,15 +3,14 @@ import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
 import "./app.css";
-import getIngredients from '../../utils/burger-api'
+import getIngredients from '../../utils/burger-api';
+import dataContext from "../../utils/data-context";
 
 const App = () => {
   const [data, setData] = useState([]);
 
-  const dataUrl = "https://norma.nomoreparties.space/api";
-
   useEffect(() => {
-    getIngredients(dataUrl).then((res) => {
+    getIngredients().then((res) => {
       setData(res.data);
     });
   }, []);
@@ -20,8 +19,10 @@ const App = () => {
     <>
       <AppHeader/>
       <main className={"content"}>
-        <BurgerIngredients data={data}/>
-        <BurgerConstructor data={data}/>
+        <dataContext.Provider value={data}>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
+        </dataContext.Provider>
       </main>
     </>
   );
