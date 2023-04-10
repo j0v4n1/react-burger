@@ -1,11 +1,20 @@
-import {useState, useContext} from "react";
-import {Tab, CurrencyIcon, Counter,} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, useEffect } from "react";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
-import dataContext from "../../utils/data-context";
+import { useDispatch, useSelector } from "react-redux"
+import { fetchIngredients } from "../../services/actions/fetch-ingredients";
+import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 const BurgerIngredients = () => {
-  const data = useContext(dataContext);
+
+  const ingredients = useSelector(state => state.burgerIngredients.ingredients)
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchIngredients())
+  }, [])
 
   const [selectedIngredientId, setSelectedIngredientId] = useState(null);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -16,98 +25,59 @@ const BurgerIngredients = () => {
     setModalContent(modalElement)
   }
 
-  const buns = data.map((bun) => {
-    if (bun.type === "bun") {
+  const buns = ingredients.map(ingredient => {
+    if (ingredient.type === "bun") {
       return (
-        <li
-          key={bun._id}
+        <BurgerIngredient
+          setIsVisibleModal={setIsVisibleModal}
+          setSelectedIngredientId={setSelectedIngredientId}
+          changeModalContent={changeModalContent}
+          id = {ingredient._id}
+          type={ingredient.type}
+          image={ingredient.image}
+          price={ingredient.price}
+          name={ingredient.name}
+          key={ingredient._id}
           className={styles.item}
-          onClick={() => {
-            setIsVisibleModal(true);
-            setSelectedIngredientId(bun._id);
-            changeModalContent('ingredient-details')
-          }}
-        >
-          <Counter count={1} size="default" extraClass="m-1"/>
-          <img className={styles.image} src={bun.image} alt={bun.name}/>
-          <div style={{display: "flex"}}>
-            <p className={"text text_type_digits-default pb-1 pr-2"}>
-              {bun.price}
-            </p>
-            <CurrencyIcon type="primary"/>
-          </div>
-          <p
-            style={{textAlign: "center", paddingBottom: 24}}
-            className={"text text_type_main-default"}
-          >
-            {bun.name}
-          </p>
-        </li>
+        />
       );
     }
-    return null
   });
-  const sauces = data.map((sauce) => {
-    if (sauce.type === "sauce") {
+  const sauces = ingredients.map(ingredient => {
+    if (ingredient.type === "sauce") {
       return (
-        <li
-          key={sauce._id}
+        <BurgerIngredient
+          setIsVisibleModal={setIsVisibleModal}
+          setSelectedIngredientId={setSelectedIngredientId}
+          changeModalContent={changeModalContent}
+          id = {ingredient._id}
+          type={ingredient.type}
+          image={ingredient.image}
+          price={ingredient.price}
+          name={ingredient.name}
+          key={ingredient._id}
           className={styles.item}
-          onClick={() => {
-            setIsVisibleModal(true);
-            setSelectedIngredientId(sauce._id);
-            changeModalContent('ingredient-details')
-          }}
-        >
-          <Counter count={1} size="default" extraClass="m-1"/>
-          <img className={styles.image} src={sauce.image} alt={sauce.name}/>
-          <div style={{display: "flex"}}>
-            <p className={"text text_type_digits-default pb-1 pr-2"}>
-              {sauce.price}
-            </p>
-            <CurrencyIcon type="primary"/>
-          </div>
-          <p
-            style={{textAlign: "center", paddingBottom: 24}}
-            className={"text text_type_main-default"}
-          >
-            {sauce.name}
-          </p>
-        </li>
+        />
       );
     }
-    return null
   });
-  const cutlets = data.map((cutlet) => {
-    if (cutlet.type === "main") {
+  const cutlets = ingredients.map(ingredient => {
+    if (ingredient.type === "main") {
       return (
-        <li
-          key={cutlet._id}
+        <BurgerIngredient
+          setIsVisibleModal={setIsVisibleModal}
+          setSelectedIngredientId={setSelectedIngredientId}
+          changeModalContent={changeModalContent}
+          id = {ingredient._id}
+          type={ingredient.type}
+          image={ingredient.image}
+          price={ingredient.price}
+          name={ingredient.name}
+          key={ingredient._id}
           className={styles.item}
-          onClick={() => {
-            setIsVisibleModal(true);
-            setSelectedIngredientId(cutlet._id);
-            changeModalContent('ingredient-details')
-          }}
-        >
-          <Counter count={1} size="default" extraClass="m-1"/>
-          <img className={styles.image} src={cutlet.image} alt={cutlet.name}/>
-          <div style={{display: "flex"}}>
-            <p className={"text text_type_digits-default pb-1 pr-2"}>
-              {cutlet.price}
-            </p>
-            <CurrencyIcon type="primary"/>
-          </div>
-          <p
-            style={{textAlign: "center", paddingBottom: 24}}
-            className={"text text_type_main-default"}
-          >
-            {cutlet.name}
-          </p>
-        </li>
+        />
       );
     }
-    return null
   });
 
   return (
@@ -156,7 +126,7 @@ const BurgerIngredients = () => {
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
-        <Modal data={data}
+        <Modal data={ingredients}
                setIsVisibleModal={setIsVisibleModal}
                isVisibleModal={isVisibleModal}
                selectedIngredientId={selectedIngredientId}

@@ -1,28 +1,23 @@
-import {useEffect, useState} from "react";
+// стили
+import "./app.css";
+// компоненты
 import AppHeader from "../app-header/app-header";
 import BurgerConstructor from "../burger-constructor/burger-constructor";
 import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import "./app.css";
-import getIngredients from '../../utils/burger-api';
-import dataContext from "../../utils/data-context";
+// библиотеки
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 const App = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    getIngredients().then((res) => {
-      setData(res.data);
-    });
-  }, []);
 
   return (
     <>
       <AppHeader/>
       <main className={"content"}>
-        <dataContext.Provider value={data}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients/>
           <BurgerConstructor/>
-        </dataContext.Provider>
+        </DndProvider>
       </main>
     </>
   );

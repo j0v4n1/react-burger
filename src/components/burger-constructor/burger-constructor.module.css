@@ -6,6 +6,7 @@
 }
 
 .mainList {
+  outline: 1px dashed var(--colors-interface-accent);
   min-height: calc(100vh - (543px - 160px - 32px));
   display: flex;
   flex-direction: column;

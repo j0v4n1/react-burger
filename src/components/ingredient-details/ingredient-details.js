@@ -1,11 +1,24 @@
 import styles from "./ingredient-details.module.css";
 import ingredientsPropTypes from "../../utils/utils";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { SET_INGREDIENT_DETAILS } from "../../services/constants/constants";
+
 const IngredientDetails = ({data, selectedIngredientId}) => {
 
   const selectedIngredient = data.find(el => {
     return el._id === selectedIngredientId
   })
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({
+      type: SET_INGREDIENT_DETAILS,
+      ingredient: selectedIngredient
+    })
+  }, [])
 
   return (
     <>

@@ -1,24 +1,43 @@
-import {ConstructorElement, DragIcon, Button, CurrencyIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
+// стили
 import styles from "./burger-constructor.module.css";
-import Modal from "../modal/modal";
-import {useState, useContext, useReducer, useEffect} from "react";
-import dataContext from "../../utils/data-context";
+// доп функции
 import orderNumberContext from "../../utils/order-number-context";
 import getOrderNumber from "../../utils/order-api";
+// компоненты
+import Modal from "../modal/modal";
+// библиотеки
+import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDrop } from "react-dnd";
+import { setIngredient } from "../../services/actions/set-ingredient";
 
 const BurgerConstructor = () => {
 
-  const data = useContext(dataContext);
-  const initialState = {totalIngredientsPrice: 0}
+  const dispatch = useDispatch();
+
+  const dropHandler = (type, id) => {
+    dispatch(setIngredient(type, id))
+  }
+
+  const [dropTarget] = useDrop({
+    accept: "bun",
+    drop(ingredientId) {
+      dropHandler("bun", ingredientId)
+    }
+  })
+
+  const ingredients = useSelector(state => state.burgerIngredients.ingredients)
+  const burger = useSelector(state => state.burgerConstructor.burgerObject)
+
   const [selectedIngredientId, setSelectedIngredientId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
   const [orderNumber, setOrderNumber] = useState(0);
 
   const burgerObject = {
-    bun: data.find(({type}) => type === "bun"),
-    ingredients:
-      data.filter(({type, price}) => {
+    bun: ingredients.find(({type}) => type === "bun"),
+    ingredients: ingredients.filter(({type, price}) => {
         return type !== 'bun' && price < 1000
       })
   }
@@ -27,59 +46,39 @@ const BurgerConstructor = () => {
     const ingredientsAndBunsIdsList = [
       burgerObject.bun._id, ...burgerObject.ingredients.flatMap(({_id}) => _id), burgerObject.bun._id
     ];
-    getOrderNumber(ingredientsAndBunsIdsList).
-    then(orderData => {
-      setOrderNumber(orderData.order.number)
-    })
+    getOrderNumber(ingredientsAndBunsIdsList)
+      .then(orderData => {
+        setOrderNumber(orderData.order.number)
+      })
       .then(() => {
         setIsVisibleModal(true);
       })
   }
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case 'total':
-        return {
-          totalIngredientsPrice: !(burgerObject.bun && burgerObject.ingredients) ? null :
-            burgerObject.ingredients.reduce((prevVal, val) => {
-              return prevVal + val.price
-            }, (burgerObject.bun.price * 2))
-        }
-      default:
-        throw new Error(`Wrong type of action: ${action.type}`)
-    }
-  }
-
-  const [state, dispatch] = useReducer(reducer, initialState)
-
   function changeModalContent(modalElement) {
     setModalContent(modalElement)
   }
 
-  useEffect(() => {
-    dispatch({type: 'total'})
-  }, [burgerObject.bun])
-
   return <div className={styles.constructor}>
     <ul className={styles.mainList}>
-      {!burgerObject.bun ? null :
+      {Object.entries(burger.bun).length === 0 ? null :
         <li className="ml-8"
             onClick={() => {
               setIsVisibleModal(true);
-              setSelectedIngredientId(burgerObject.bun._id);
+              setSelectedIngredientId(burger.bun._id);
               changeModalContent('ingredient-details')
             }}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${burgerObject.bun.name} (верх)`}
-            price={burgerObject.bun.price}
-            thumbnail={burgerObject.bun.image}
+            text={`${burger.bun.name} (верх)`}
+            price={burger.bun.price}
+            thumbnail={burger.bun.image}
           />
         </li>}
       <li>
         <ul className={styles.list}>
-          {burgerObject.ingredients.map(({_id, name, price, image}) => {
+          {burger.ingredients.map(({_id, name, price, image}) => {
             return <li key={_id} className={styles.item}
                        onClick={() => {
                          setIsVisibleModal(true);
@@ -98,7 +97,7 @@ const BurgerConstructor = () => {
           })}
           <orderNumberContext.Provider value={orderNumber}>
             <div>
-              <Modal data={data}
+              <Modal data={ingredients}
                      setIsVisibleModal={setIsVisibleModal}
                      isVisibleModal={isVisibleModal}
                      selectedIngredientId={selectedIngredientId}
@@ -110,19 +109,19 @@ const BurgerConstructor = () => {
           </orderNumberContext.Provider>
         </ul>
       </li>
-      {!burgerObject.bun ? null :
+      {Object.entries(burger.bun).length === 0 ? null :
         <li className="ml-8"
             onClick={() => {
               setIsVisibleModal(true);
-              setSelectedIngredientId(burgerObject.bun._id);
+              setSelectedIngredientId(burger.bun._id);
               changeModalContent('ingredient-details')
             }}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${burgerObject.bun.name} (верх)`}
-            price={burgerObject.bun.price}
-            thumbnail={burgerObject.bun.image}
+            text={`${burger.bun.name} (верх)`}
+            price={burger.bun.price}
+            thumbnail={burger.bun.image}
           />
         </li>}
     </ul>
@@ -131,7 +130,7 @@ const BurgerConstructor = () => {
         className="mr-10"
         style={{display: "flex", alignItems: "center"}}
       >
-        <div className="mr-2 text text_type_digits-medium">{state.totalIngredientsPrice}</div>
+        <div className="mr-2 text text_type_digits-medium">610</div>
         <div className={styles.svgWrapper}>
           <CurrencyIcon type="primary"/>
         </div>
