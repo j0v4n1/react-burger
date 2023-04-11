@@ -1,5 +1,3 @@
-import { SET_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENT_BUN } from "../constants/constants";
-
 const initialState = {
   burgerObject: {
     bun: {},
@@ -9,7 +7,7 @@ const initialState = {
 
 const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_INGREDIENT_BUN:
+    case "SET_INGREDIENT_BUN":
       return {
         ...state,
         burgerObject: {
@@ -18,7 +16,7 @@ const burgerConstructorReducer = (state = initialState, action) => {
 
         }
       }
-    case REMOVE_INGREDIENT:
+    case "REMOVE_INGREDIENT":
       return {
         ...state,
         ingredients: action.ingredients

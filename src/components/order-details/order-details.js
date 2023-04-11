@@ -1,11 +1,10 @@
 import styles from './order-details.module.css';
 import done from '../../images/done.png'
-import {useContext} from "react";
-import orderNumberContext from "../../utils/order-number-context";
+import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
 
-  const orderNumber = useContext(orderNumberContext)
+  const orderNumber = useSelector(store => store.orderDetails.order.number)
 
   return (
     <div className={styles.wrapper}>

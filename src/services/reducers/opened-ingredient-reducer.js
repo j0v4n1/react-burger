@@ -1,12 +1,10 @@
-import { SET_INGREDIENT_DETAILS } from "../constants/constants";
-
 const initialState = {
   currentIngredient: {}
 }
 
 const openedIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_INGREDIENT_DETAILS:
+    case "SET_INGREDIENT_DETAILS":
       return {
         ...state,
         currentIngredient: action.ingredient

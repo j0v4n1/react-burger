@@ -33,7 +33,6 @@ const BurgerConstructor = () => {
   const [selectedIngredientId, setSelectedIngredientId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
-  const [orderNumber, setOrderNumber] = useState(0);
 
   const burgerObject = {
     bun: ingredients.find(({type}) => type === "bun"),
@@ -48,7 +47,11 @@ const BurgerConstructor = () => {
     ];
     getOrderNumber(ingredientsAndBunsIdsList)
       .then(orderData => {
-        setOrderNumber(orderData.order.number)
+        dispatch({
+          type: "SET_ORDER_DETAILS",
+          number: orderData.order.number,
+          name: orderData.name
+        })
       })
       .then(() => {
         setIsVisibleModal(true);
@@ -95,18 +98,16 @@ const BurgerConstructor = () => {
               />
             </li>
           })}
-          <orderNumberContext.Provider value={orderNumber}>
-            <div>
-              <Modal data={ingredients}
-                     setIsVisibleModal={setIsVisibleModal}
-                     isVisibleModal={isVisibleModal}
-                     selectedIngredientId={selectedIngredientId}
-                     modalContent={modalContent}
-                     onClose={() => {
-                       setIsVisibleModal(false)
-                     }}/>
-            </div>
-          </orderNumberContext.Provider>
+          <div>
+            <Modal data={ingredients}
+                    setIsVisibleModal={setIsVisibleModal}
+                    isVisibleModal={isVisibleModal}
+                    selectedIngredientId={selectedIngredientId}
+                    modalContent={modalContent}
+                    onClose={() => {
+                      setIsVisibleModal(false)
+                    }}/>
+          </div>
         </ul>
       </li>
       {Object.entries(burger.bun).length === 0 ? null :

@@ -1,22 +1,21 @@
-import {GET_INGREDIENTS, GET_INGREDIENTS_FAILED, GET_INGREDIENTS_SUCCESS} from "../constants/constants";
 import getIngredients from "../../utils/burger-api";
 
 export const fetchIngredients = () => {
   return function (dispatch) {
     dispatch({
-      type: GET_INGREDIENTS
+      type: "GET_INGREDIENTS"
     })
 
   getIngredients()
     .then(result => {
       dispatch({
-        type: GET_INGREDIENTS_SUCCESS,
+        type: "GET_INGREDIENTS_SUCCESS",
         ingredients: result.data
       })
     })
     .catch(() => {
       dispatch({
-        type: GET_INGREDIENTS_FAILED
+        type: "GET_INGREDIENTS_FAILED"
       })
     })
   }

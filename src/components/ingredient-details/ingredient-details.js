@@ -3,8 +3,6 @@ import ingredientsPropTypes from "../../utils/utils";
 import PropTypes from "prop-types";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { SET_INGREDIENT_DETAILS } from "../../services/constants/constants";
-
 const IngredientDetails = ({data, selectedIngredientId}) => {
 
   const selectedIngredient = data.find(el => {
@@ -15,7 +13,7 @@ const IngredientDetails = ({data, selectedIngredientId}) => {
 
   useEffect(() => {
     dispatch({
-      type: SET_INGREDIENT_DETAILS,
+      type: "SET_INGREDIENT_DETAILS",
       ingredient: selectedIngredient
     })
   }, [])
