@@ -26,9 +26,7 @@ const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModa
   const nodeRef = useRef(null);
 
   const defaultStyle = {
-    transition: `all ${duration}ms ease-in-out`,
-    visibility: 'hidden',
-    opacity: 0,
+    transition: `all ${duration}ms ease-in-out`, visibility: 'hidden', opacity: 0,
   }
 
   const transitionStyles = {
@@ -43,32 +41,26 @@ const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModa
   const ingredientDetailsState = modalContent === "ingredient-details" ?
     <IngredientDetails selectedIngredientId={selectedIngredientId} data={data}/> : null;
 
-  return ReactDOM.createPortal(
-    <Transition nodeRef={nodeRef} in={isVisibleModal} timeout={duration} unmountOnExit mountOnEnter>
-      {state => (
-        <div ref={nodeRef} className={styles.modals} style={{
-          ...defaultStyle,
-          ...transitionStyles[state]
-        }}>
-          <ModalOverlay onClose={() => {
-            setIsVisibleModal(false)
-          }
-          }/>
-          <div className={styles.modal}>
-            <button
-              onClick={onClose}
-              aria-label="Закрыть"
-              type="button"
-              className={styles.closeButton}>
-            </button>
-            {orderDetailsState}
-            {ingredientDetailsState}
-          </div>
-        </div>
-      )}
-    </Transition>,
-    document.getElementById('react-modals')
-  );
+  return ReactDOM.createPortal(<Transition nodeRef={nodeRef} in={isVisibleModal} timeout={duration} unmountOnExit
+                                           mountOnEnter>
+    {state => (<div ref={nodeRef} className={styles.modals} style={{
+      ...defaultStyle, ...transitionStyles[state]
+    }}>
+      <ModalOverlay onClose={() => {
+        setIsVisibleModal(false)
+      }}/>
+      <div className={styles.modal}>
+        <button
+          onClick={onClose}
+          aria-label="Закрыть"
+          type="button"
+          className={styles.closeButton}>
+        </button>
+        {orderDetailsState}
+        {ingredientDetailsState}
+      </div>
+    </div>)}
+  </Transition>, document.getElementById('react-modals'));
 };
 
 Modal.propTypes = {

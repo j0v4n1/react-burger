@@ -1,60 +1,54 @@
 // стили
 import styles from "./burger-constructor.module.css";
 // доп функции
-import orderNumberContext from "../../utils/order-number-context";
 import getOrderNumber from "../../utils/order-api";
 // компоненты
 import Modal from "../modal/modal";
 // библиотеки
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { useDrop } from "react-dnd";
-import { setIngredient } from "../../services/actions/set-ingredient";
+import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDispatch, useSelector} from "react-redux";
+import {useState} from "react";
+import {useDrop} from "react-dnd";
+import {setIngredient} from "../../services/actions/set-ingredient";
 
 const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
 
-  const dropHandler = (type, id) => {
-    dispatch(setIngredient(type, id))
+  const dropHandler = (ingredientType, _id, name, image, price, fat, proteins, carbohydrates, calories) => {
+    dispatch(setIngredient(ingredientType, _id, name, image, price, fat, proteins, carbohydrates, calories))
   }
 
-  const [dropTarget] = useDrop({
-    accept: "bun",
-    drop(ingredientId) {
-      dropHandler("bun", ingredientId)
+  const [{isOver}, dropTarget] = useDrop({
+    accept: "ingredient", collect: monitor => ({
+      isOver: monitor.isOver()
+    }), drop: ({type, _id, name, image, price, fat, proteins, carbohydrates, calories}) => {
+      dropHandler(type, _id, name, image, price, fat, proteins, carbohydrates, calories)
     }
   })
+  const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
+  const data = useSelector(store => store.burgerIngredients.ingredients);
+  const totalCost = useSelector(store => store.burgerConstructor.burgerObject.totalCost)
 
-  const ingredients = useSelector(state => state.burgerIngredients.ingredients)
-  const burger = useSelector(state => state.burgerConstructor.burgerObject)
-
-  const [selectedIngredientId, setSelectedIngredientId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
 
-  const burgerObject = {
-    bun: ingredients.find(({type}) => type === "bun"),
-    ingredients: ingredients.filter(({type, price}) => {
-        return type !== 'bun' && price < 1000
-      })
-  }
-
   const fetchOrderNumber = () => {
-    const ingredientsAndBunsIdsList = [
-      burgerObject.bun._id, ...burgerObject.ingredients.flatMap(({_id}) => _id), burgerObject.bun._id
-    ];
+    const ingredientsAndBunsIdsList = [burgerObject.bun._id, ...burgerObject.ingredients.flatMap(({_id}) => _id), burgerObject.bun._id];
     getOrderNumber(ingredientsAndBunsIdsList)
       .then(orderData => {
         dispatch({
-          type: "SET_ORDER_DETAILS",
-          number: orderData.order.number,
-          name: orderData.name
+          type: "SET_ORDER_DETAILS", number: orderData.order.number, name: orderData.name
         })
       })
-      .then(() => {
+      .catch((error) => {
+        console.error(error)
+      })
+      .finally(() => {
         setIsVisibleModal(true);
+        dispatch({
+          type: "REMOVE_ALL_INGREDIENTS"
+        })
       })
   }
 
@@ -62,32 +56,28 @@ const BurgerConstructor = () => {
     setModalContent(modalElement)
   }
 
+  const isBurgerObjectEmpty = () => {
+    return Object.keys(burgerObject.bun).length === 0 && Object.keys(burgerObject.ingredients).length === 0;
+  }
+  const disableButton = isBurgerObjectEmpty();
+
   return <div className={styles.constructor}>
-    <ul className={styles.mainList}>
-      {Object.entries(burger.bun).length === 0 ? null :
-        <li className="ml-8"
-            onClick={() => {
-              setIsVisibleModal(true);
-              setSelectedIngredientId(burger.bun._id);
-              changeModalContent('ingredient-details')
-            }}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${burger.bun.name} (верх)`}
-            price={burger.bun.price}
-            thumbnail={burger.bun.image}
-          />
-        </li>}
+    <ul className={styles.mainList}
+        ref={dropTarget}
+        style={isOver ? {outlineStyle: "solid"} : null}>
+      {Object.entries(burgerObject.bun).length === 0 ? null : <li className="ml-8" style={{cursor: "pointer"}}>
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text={`${burgerObject.bun.name} (верх)`}
+          price={burgerObject.bun.price}
+          thumbnail={burgerObject.bun.image}
+        />
+      </li>}
       <li>
         <ul className={styles.list}>
-          {burger.ingredients.map(({_id, name, price, image}) => {
-            return <li key={_id} className={styles.item}
-                       onClick={() => {
-                         setIsVisibleModal(true);
-                         setSelectedIngredientId(_id);
-                         changeModalContent('ingredient-details')
-                       }}>
+          {burgerObject.ingredients.map(({newId, name, price, image}) => {
+            return <li key={newId} className={styles.item}>
               <div className="mr-2">
                 <DragIcon type="primary"/>
               </div>
@@ -95,43 +85,42 @@ const BurgerConstructor = () => {
                 text={name}
                 price={price}
                 thumbnail={image}
+                handleClose={() => {
+                  dispatch({
+                    type: "REMOVE_INGREDIENT", newId, price
+                  })
+                }}
               />
             </li>
           })}
           <div>
-            <Modal data={ingredients}
-                    setIsVisibleModal={setIsVisibleModal}
-                    isVisibleModal={isVisibleModal}
-                    selectedIngredientId={selectedIngredientId}
-                    modalContent={modalContent}
-                    onClose={() => {
-                      setIsVisibleModal(false)
-                    }}/>
+            <Modal
+              data={data}
+              setIsVisibleModal={setIsVisibleModal}
+              isVisibleModal={isVisibleModal}
+              modalContent={modalContent}
+              onClose={() => {
+                setIsVisibleModal(false)
+              }}/>
           </div>
         </ul>
       </li>
-      {Object.entries(burger.bun).length === 0 ? null :
-        <li className="ml-8"
-            onClick={() => {
-              setIsVisibleModal(true);
-              setSelectedIngredientId(burger.bun._id);
-              changeModalContent('ingredient-details')
-            }}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${burger.bun.name} (верх)`}
-            price={burger.bun.price}
-            thumbnail={burger.bun.image}
-          />
-        </li>}
+      {Object.entries(burgerObject.bun).length === 0 ? null : <li className="ml-8" style={{cursor: "pointer"}}>
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text={`${burgerObject.bun.name} (верх)`}
+          price={burgerObject.bun.price}
+          thumbnail={burgerObject.bun.image}
+        />
+      </li>}
     </ul>
     <div className={styles.bottom}>
       <div
         className="mr-10"
         style={{display: "flex", alignItems: "center"}}
       >
-        <div className="mr-2 text text_type_digits-medium">610</div>
+        <div className="mr-2 text text_type_digits-medium">{totalCost}</div>
         <div className={styles.svgWrapper}>
           <CurrencyIcon type="primary"/>
         </div>
@@ -144,6 +133,7 @@ const BurgerConstructor = () => {
         htmlType="button"
         type="primary"
         size="large"
+        disabled={disableButton}
       >
         Оформить заказ
       </Button>

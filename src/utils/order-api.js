@@ -2,11 +2,9 @@ import checkResponse from "./check-response";
 
 function getOrderNumber(ingredientsList) {
   return fetch(`https://norma.nomoreparties.space/api/orders`, {
-    method: 'POST',
-    headers: {
+    method: 'POST', headers: {
       'Content-type': 'application/json'
-    },
-    body: JSON.stringify({
+    }, body: JSON.stringify({
       ingredients: ingredientsList
     })
   })
