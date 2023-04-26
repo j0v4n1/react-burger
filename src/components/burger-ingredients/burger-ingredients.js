@@ -48,6 +48,7 @@ const BurgerIngredients = () => {
         setIsVisibleModal={setIsVisibleModal}
         setSelectedIngredientId={setSelectedIngredientId}
         changeModalContent={changeModalContent}
+        product={ingredient}
         _id={ingredient._id}
         newId={ingredient.newId}
         proteins={ingredient.proteins}
@@ -69,6 +70,7 @@ const BurgerIngredients = () => {
         setIsVisibleModal={setIsVisibleModal}
         setSelectedIngredientId={setSelectedIngredientId}
         changeModalContent={changeModalContent}
+        product={ingredient}
         _id={ingredient._id}
         newId={ingredient.newId}
         proteins={ingredient.proteins}
@@ -91,6 +93,7 @@ const BurgerIngredients = () => {
         setSelectedIngredientId={setSelectedIngredientId}
         changeModalContent={changeModalContent}
         newId={ingredient.newId}
+        product={ingredient}
         _id={ingredient._id}
         proteins={ingredient.proteins}
         fat={ingredient.fat}

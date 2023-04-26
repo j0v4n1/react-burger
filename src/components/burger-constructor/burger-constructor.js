@@ -7,7 +7,7 @@ import Modal from "../modal/modal";
 // библиотеки
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
+import {useState, useMemo} from "react";
 import {useDrop} from "react-dnd";
 import {setIngredient} from "../../services/actions/set-ingredient";
 
@@ -28,7 +28,6 @@ const BurgerConstructor = () => {
   })
   const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
   const data = useSelector(store => store.burgerIngredients.ingredients);
-  const totalCost = useSelector(store => store.burgerConstructor.burgerObject.totalCost)
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
@@ -60,6 +59,18 @@ const BurgerConstructor = () => {
     return Object.keys(burgerObject.bun).length === 0 && Object.keys(burgerObject.ingredients).length === 0;
   }
   const disableButton = isBurgerObjectEmpty();
+
+  const burgerConstructorIngredients = [burgerObject.bun, ...burgerObject.ingredients.flatMap(ingredient => ingredient), burgerObject.bun];
+
+  const totalPrice = useMemo(() => {
+    return burgerConstructorIngredients.reduce((sum, item) => {
+      if (item.type === 'bun') {
+        return sum + item.price * 2;
+      }
+
+      return sum + item.price;
+    }, 0);
+  }, [burgerConstructorIngredients]);
 
   return <div className={styles.constructor}>
     <ul className={styles.mainList}
@@ -120,7 +131,7 @@ const BurgerConstructor = () => {
         className="mr-10"
         style={{display: "flex", alignItems: "center"}}
       >
-        <div className="mr-2 text text_type_digits-medium">{totalCost}</div>
+        <div className="mr-2 text text_type_digits-medium">{totalPrice ? totalPrice : 0}</div>
         <div className={styles.svgWrapper}>
           <CurrencyIcon type="primary"/>
         </div>
