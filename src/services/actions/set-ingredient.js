@@ -5,8 +5,6 @@ export const setIngredient = (ingredientType, _id, name, image, price, fat, prot
 
     const newId = uuidv4();
 
-    let counterIngredient = 0;
-
     if (ingredientType === "bun") {
       dispatch({
         type: "SET_INGREDIENT_BUN",
@@ -20,7 +18,6 @@ export const setIngredient = (ingredientType, _id, name, image, price, fat, prot
         carbohydrates,
         calories,
         ingredientType,
-        counter: 2
       })
     } else {
       dispatch({
@@ -35,7 +32,6 @@ export const setIngredient = (ingredientType, _id, name, image, price, fat, prot
         carbohydrates,
         calories,
         ingredientType,
-        counterIngredient: counterIngredient + 1
       })
     }
   }

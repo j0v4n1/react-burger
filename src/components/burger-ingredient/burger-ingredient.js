@@ -1,6 +1,7 @@
 import styles from "./burger-ingredient.module.css";
 import {useDrag} from "react-dnd";
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useMemo} from "react";
 
 const BurgerIngredient = ({
                             _id,
@@ -26,8 +27,6 @@ const BurgerIngredient = ({
     })
   })
 
-  let counter = 0;
-
   return <li
     onClick={() => {
       setIsVisibleModal(true);
@@ -37,7 +36,7 @@ const BurgerIngredient = ({
     style={isDragging ? {backgroundColor: "var(--colors-interface-accent)"} : null}
     ref={dragRef}
     className={styles.item}>
-    {counter > 0 ? <Counter count={counter} size="default" extraClass="m-1"/> : null}
+    <Counter count={0} size="default" extraClass="m-1"/>
     <img className={styles.image} src={image} alt={name}/>
     <div style={{display: "flex"}}>
       <p className={"text text_type_digits-default pb-1 pr-2"}>

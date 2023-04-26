@@ -9,7 +9,6 @@ import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 const BurgerIngredients = () => {
 
   const ingredients = useSelector(store => store.burgerIngredients.ingredients)
-
   const dispatch = useDispatch();
 
   const scrollRef = useRef();
