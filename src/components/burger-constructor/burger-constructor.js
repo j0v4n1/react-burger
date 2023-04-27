@@ -28,24 +28,24 @@ const BurgerConstructor = () => {
   })
   const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
   const data = useSelector(store => store.burgerIngredients.ingredients);
-  const orderNumber = useSelector(store => store.orderDetails.order.number);
+  const orderNumber = useSelector(store => store.orderDetails.orderNumber);
 
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');
 
   const fetchOrderNumber = () => {
-    const ingredientsAndBunsIdsList = [burgerObject.bun._id, ...burgerObject.ingredients.flatMap(({_id}) => _id), burgerObject.bun._id];
+    const ingredientsAndBunsIdsList = [
+      burgerObject.bun._id, ...burgerObject.ingredients.flatMap(({_id}) => _id), burgerObject.bun._id
+    ];
     getOrderNumber(ingredientsAndBunsIdsList)
       .then(orderData => {
         dispatch({
-          type: "SET_ORDER_DETAILS", number: orderData.order.number, name: orderData.name
+          type: "SET_ORDER_DETAILS", payload: orderData.order.number
         })
       })
       .catch((error) => {
         console.error(error)
       })
       .finally(() => {
-        setIsVisibleModal(true);
         dispatch({
           type: "REMOVE_ALL_INGREDIENTS"
         })
@@ -61,7 +61,9 @@ const BurgerConstructor = () => {
   }
   const disableButton = isBurgerObjectEmpty();
 
-  const burgerConstructorIngredients = [burgerObject.bun, ...burgerObject.ingredients.flatMap(ingredient => ingredient), burgerObject.bun];
+  const burgerConstructorIngredients = [
+    burgerObject.bun, ...burgerObject.ingredients.flatMap(ingredient => ingredient), burgerObject.bun
+  ];
 
   const totalPrice = useMemo(() => {
     return burgerConstructorIngredients.reduce((sum, item) => {
@@ -106,14 +108,17 @@ const BurgerConstructor = () => {
             </li>
           })}
           <div>
-            <Modal
+            {
+              orderNumber &&
+              <Modal
               data={data}
-              setIsVisibleModal={setIsVisibleModal}
-              isVisibleModal={isVisibleModal}
               modalContent={modalContent}
               onClose={() => {
-                setIsVisibleModal(false)
+                dispatch({
+                  type: "REMOVE_ORDER_DETAILS"
+                })
               }}/>
+            }
           </div>
         </ul>
       </li>

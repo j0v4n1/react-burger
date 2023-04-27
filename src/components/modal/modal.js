@@ -2,13 +2,18 @@ import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import OrderDetails from "../order-details/order-details";
-import {useEffect, useRef} from "react";
+import { useEffect, useRef } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import {Transition} from "react-transition-group";
+import { Transition } from "react-transition-group";
 import PropTypes from "prop-types";
 import ingredientsPropTypes from "../../utils/utils";
+import { useDispatch, useSelector } from "react-redux";
 
-const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModal, setIsVisibleModal}) => {
+const Modal = ({data, selectedIngredientId, modalContent, onClose}) => {
+
+  const orderNumber = useSelector(store => store.orderDetails.orderNumber);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     document.addEventListener('keydown', keydownHandler);
@@ -36,18 +41,20 @@ const Modal = ({data, selectedIngredientId, modalContent, onClose, isVisibleModa
     exited: {opacity: 0, visibility: 'hidden'},
   };
 
-
   const orderDetailsState = modalContent === "order-details" ? <OrderDetails/> : null;
   const ingredientDetailsState = modalContent === "ingredient-details" ?
     <IngredientDetails selectedIngredientId={selectedIngredientId} data={data}/> : null;
 
-  return ReactDOM.createPortal(<Transition nodeRef={nodeRef} in={isVisibleModal} timeout={duration} unmountOnExit
+  return ReactDOM.createPortal(<Transition nodeRef={nodeRef} in={Boolean(orderNumber)} timeout={duration} unmountOnExit
                                            mountOnEnter>
     {state => (<div ref={nodeRef} className={styles.modals} style={{
-      ...defaultStyle, ...transitionStyles[state]
+      ...defaultStyle,
+      ...transitionStyles[state]
     }}>
       <ModalOverlay onClose={() => {
-        setIsVisibleModal(false)
+        dispatch({
+          type: "REMOVE_ORDER_DETAILS"
+        })
       }}/>
       <div className={styles.modal}>
         <button
@@ -68,8 +75,6 @@ Modal.propTypes = {
   selectedIngredientId: PropTypes.string,
   modalContent: PropTypes.string,
   onClose: PropTypes.func.isRequired,
-  isVisibleModal: PropTypes.bool.isRequired,
-  setIsVisibleModal: PropTypes.func.isRequired
 }
 
 export default Modal;

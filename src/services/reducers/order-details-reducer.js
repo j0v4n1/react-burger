@@ -1,8 +1,5 @@
 const initialState = {
-  order: {
-    name: "",
-    number: null
-  }
+  orderNumber: null
 }
 
 export const orderDetailsReducer = (state = initialState, action) => {
@@ -10,11 +7,11 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case "SET_ORDER_DETAILS":
       return {
         ...state,
-        order: {
-          ...state.order,
-          number: action.number,
-          name: action.name
-        }
+        orderNumber: action.payload
+      }
+    case "REMOVE_ORDER_DETAILS":
+      return {
+        orderNumber: null
       }
       default:
         return state
