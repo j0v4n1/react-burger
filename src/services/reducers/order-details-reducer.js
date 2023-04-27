@@ -1,15 +1,17 @@
+import {SET_ORDER_DETAILS, REMOVE_ORDER_DETAILS} from "../actions/order-details";
+
 const initialState = {
   orderNumber: null
 }
 
 export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_ORDER_DETAILS":
+    case SET_ORDER_DETAILS:
       return {
         ...state,
         orderNumber: action.payload
       }
-    case "REMOVE_ORDER_DETAILS":
+    case REMOVE_ORDER_DETAILS:
       return {
         orderNumber: null
       }

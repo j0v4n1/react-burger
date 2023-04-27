@@ -31,17 +31,6 @@
   padding: 0 8px 0 0;
 }
 
-.item {
-  cursor: pointer;
-  margin-bottom: 16px;
-  display: flex;
-  align-items: center;
-}
-
-.item:last-of-type {
-  margin-bottom: 0;
-}
-
 .list::-webkit-scrollbar {
   background: #2F2F37;
   width: 8px;

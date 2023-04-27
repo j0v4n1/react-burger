@@ -1,13 +1,14 @@
 import styles from "./burger-constructor.module.css";
 import getOrderNumber from "../../utils/order-api";
 import Modal from "../modal/modal";
-import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch, useSelector } from "react-redux";
-import { useMemo } from "react";
-import { useDrop } from "react-dnd";
-import { setIngredient } from "../../services/actions/set-ingredient";
+import {ConstructorElement, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import {useDispatch, useSelector} from "react-redux";
+import {useMemo} from "react";
+import {useDrop} from "react-dnd";
+import {setIngredient} from "../../services/actions/set-ingredient";
 import OrderDetails from "../order-details/order-details";
-import { bun } from "../../constants/constants";
+import {bun} from "../../constants/constants";
+import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
 
 const BurgerConstructor = () => {
 
@@ -61,7 +62,6 @@ const BurgerConstructor = () => {
       if (item.type === bun) {
         return sum + item.price * 2;
       }
-
       return sum + item.price;
     }, 0);
   }, [burgerConstructorIngredients]);
@@ -82,21 +82,7 @@ const BurgerConstructor = () => {
       <li>
         <ul className={styles.list}>
           {burgerObject.ingredients.map(({newId, name, price, image}) => {
-            return <li key={newId} className={styles.item}>
-              <div className="mr-2">
-                <DragIcon type="primary"/>
-              </div>
-              <ConstructorElement
-                text={name}
-                price={price}
-                thumbnail={image}
-                handleClose={() => {
-                  dispatch({
-                    type: "REMOVE_INGREDIENT", newId, price
-                  })
-                }}
-              />
-            </li>
+            return <BurgerConstructorIngredient key={newId} name={name} image={image} newId={newId}/>
           })}
           <div>
             {orderNumber &&
