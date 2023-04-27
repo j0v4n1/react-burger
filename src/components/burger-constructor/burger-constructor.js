@@ -28,6 +28,7 @@ const BurgerConstructor = () => {
   })
   const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
   const data = useSelector(store => store.burgerIngredients.ingredients);
+  const orderNumber = useSelector(store => store.orderDetails.order.number);
 
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const [modalContent, setModalContent] = useState('');

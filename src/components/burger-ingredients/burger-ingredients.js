@@ -11,10 +11,9 @@ const BurgerIngredients = () => {
   const ingredients = useSelector(store => store.burgerIngredients.ingredients)
   const dispatch = useDispatch();
 
-  const scrollRef = useRef();
+  const scrollRef = useRef(null);
 
   const scrollHandler = () => {
-
     if (scrollRef.current.scrollTop < 294) {
       setCurrent("bun");
     } else if (scrollRef.current.scrollTop < 876) {
