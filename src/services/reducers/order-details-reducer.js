@@ -9,7 +9,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
     case SET_ORDER_DETAILS:
       return {
         ...state,
-        orderNumber: action.payload
+        orderNumber: action.number
       }
     case REMOVE_ORDER_DETAILS:
       return {

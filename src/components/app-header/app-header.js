@@ -1,4 +1,9 @@
-import {Logo, BurgerIcon, ListIcon, ProfileIcon,} from "@ya.praktikum/react-developer-burger-ui-components";
+import {
+  Logo,
+  BurgerIcon,
+  ListIcon,
+  ProfileIcon,
+} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 
 const AppHeader = () => {
@@ -8,33 +13,33 @@ const AppHeader = () => {
         <nav className={styles.menu}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <BurgerIcon type="primary"/>
+              <BurgerIcon type="primary" />
               <a
-                style={{color: "var(--text-primary-color)"}}
+                style={{ color: "var(--text-primary-color)" }}
                 className={styles.link}
-                href={'#'}
+                href={"#"}
               >
                 Конструктор
               </a>
             </li>
             <li className={styles.item}>
-              <ListIcon type="secondary"/>
-              <a className={styles.link} href={'#'}>
+              <ListIcon type="secondary" />
+              <a className={styles.link} href={"#"}>
                 Лента заказов
               </a>
             </li>
           </ul>
-          <Logo/>
+          <Logo />
         </nav>
         <div className={styles.account}>
-          <ProfileIcon type="secondary"/>
-          <a className={styles.link} href={'#'}>
+          <ProfileIcon type="secondary" />
+          <a className={styles.link} href={"#"}>
             Личный кабинет
           </a>
         </div>
       </div>
     </header>
   );
-}
+};
 
 export default AppHeader;

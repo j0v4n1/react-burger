@@ -5,36 +5,37 @@ export const SET_INGREDIENT = "SET_INGREDIENT";
 export const REMOVE_INGREDIENT = "REMOVE_INGREDIENT";
 export const REMOVE_ALL_INGREDIENTS = "REMOVE_ALL_INGREDIENTS";
 
-export const setIngredient = (ingredientType, _id, name, image, price, fat, proteins, carbohydrates, calories) => {
+export const setIngredient = (ingredient) => {
+
   return function (dispatch) {
+
     const newId = uuidv4();
-    if (ingredientType === "bun") {
+    
+    if (ingredient.type === "bun") {
       dispatch({
         type: SET_INGREDIENT_BUN,
-        _id,
-        name,
-        newId,
-        image,
-        price,
-        fat,
-        proteins,
-        carbohydrates,
-        calories,
-        ingredientType,
+        _id: ingredient._id,
+        name: ingredient.name,
+        newId: newId,
+        image: ingredient.image,
+        price: ingredient.price,
+        fat: ingredient.fat,
+        proteins: ingredient.proteins,
+        carbohydrates: ingredient.carbohydrates,
+        calories: ingredient.calories,
       })
     } else {
       dispatch({
         type: SET_INGREDIENT,
-        _id,
-        name,
-        newId,
-        image,
-        price,
-        fat,
-        proteins,
-        carbohydrates,
-        calories,
-        ingredientType,
+        _id: ingredient._id,
+        name: ingredient.name,
+        newId: newId,
+        image: ingredient.image,
+        price: ingredient.price,
+        fat: ingredient.fat,
+        proteins: ingredient.proteins,
+        carbohydrates: ingredient.carbohydrates,
+        calories: ingredient.calories,
       })
     }
   }
