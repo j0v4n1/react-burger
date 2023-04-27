@@ -1,15 +1,12 @@
-// стили
 import styles from "./burger-constructor.module.css";
-// доп функции
 import getOrderNumber from "../../utils/order-api";
-// компоненты
 import Modal from "../modal/modal";
-// библиотеки
 import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useDispatch, useSelector} from "react-redux";
-import {useState, useMemo} from "react";
+import {useMemo} from "react";
 import {useDrop} from "react-dnd";
 import {setIngredient} from "../../services/actions/set-ingredient";
+import OrderDetails from "../order-details/order-details";
 
 const BurgerConstructor = () => {
 
@@ -27,10 +24,7 @@ const BurgerConstructor = () => {
     }
   })
   const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
-  const data = useSelector(store => store.burgerIngredients.ingredients);
   const orderNumber = useSelector(store => store.orderDetails.orderNumber);
-
-  const [modalContent, setModalContent] = useState('');
 
   const fetchOrderNumber = () => {
     const ingredientsAndBunsIdsList = [
@@ -50,10 +44,6 @@ const BurgerConstructor = () => {
           type: "REMOVE_ALL_INGREDIENTS"
         })
       })
-  }
-
-  function changeModalContent(modalElement) {
-    setModalContent(modalElement)
   }
 
   const isBurgerObjectEmpty = () => {
@@ -108,17 +98,15 @@ const BurgerConstructor = () => {
             </li>
           })}
           <div>
-            {
-              orderNumber &&
+            {orderNumber &&
               <Modal
-              data={data}
-              modalContent={modalContent}
-              onClose={() => {
-                dispatch({
-                  type: "REMOVE_ORDER_DETAILS"
-                })
-              }}/>
-            }
+                onClose={() => {
+                  dispatch({
+                    type: "REMOVE_ORDER_DETAILS"
+                  })
+                }}>
+                <OrderDetails/>
+              </Modal>}
           </div>
         </ul>
       </li>
@@ -144,7 +132,6 @@ const BurgerConstructor = () => {
       </div>
       <Button
         onClick={() => {
-          changeModalContent('order-details');
           fetchOrderNumber()
         }}
         htmlType="button"

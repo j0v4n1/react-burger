@@ -1,71 +1,71 @@
 import styles from "./ingredient-details.module.css";
-import ingredientsPropTypes from "../../utils/utils";
-import PropTypes from "prop-types";
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-const IngredientDetails = ({data, selectedIngredientId}) => {
+const IngredientDetails = () => {
 
-  const selectedIngredient = data.find(el => {
-    return el._id === selectedIngredientId
-  })
+  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch({
-      type: "SET_INGREDIENT_DETAILS", ingredient: selectedIngredient
+      type: "SET_INGREDIENT_DETAILS",
+      ingredient: currentIngredient
     })
   }, [])
 
-  return (<>
-    {!selectedIngredient ? null : <>
-      <div className={styles.titleWrapper}>
-        <h3 className={`${styles.title} text text_type_main-large`}>
-          Детали ингредиента
-        </h3>
+  return <>
+    <button
+      onClick={() => {
+        dispatch({
+          type: "REMOVE_INGREDIENT_DETAILS"
+        })
+      }}
+      aria-label="Закрыть"
+      type="button"
+      className={styles.closeButton}>
+    </button>
+    <div className={styles.titleWrapper}>
+      <h3 className={`${styles.title} text text_type_main-large`}>
+        Детали ингредиента
+      </h3>
+    </div>
+    <img
+      className={styles.image}
+      src={currentIngredient.image}
+      alt={currentIngredient.name}
+    />
+    <h4 className={`${styles.name} text text_type_main-medium`}>
+      {currentIngredient.name}
+    </h4>
+    <div className={styles.pfcWrapper}>
+      <div>
+        <h5 className={`text text_type_main-default text_color_inactive`}>Калории,ккал</h5>
+        <p className={'text text_type_digits-default text_color_inactive mt-2'}>
+          {currentIngredient.calories}
+        </p>
       </div>
-      <img
-        className={styles.image}
-        src={selectedIngredient.image}
-        alt={selectedIngredient.name}
-      />
-      <h4 className={`${styles.name} text text_type_main-medium`}>
-        {selectedIngredient.name}
-      </h4>
-      <div className={styles.pfcWrapper}>
-        <div>
-          <h5 className={`text text_type_main-default text_color_inactive`}>Калории,ккал</h5>
-          <p className={'text text_type_digits-default text_color_inactive mt-2'}>
-            {selectedIngredient.calories}
-          </p>
-        </div>
-        <div>
-          <h5 className={`text text_type_main-default text_color_inactive`}>Белки, г</h5>
-          <p className={'text text_type_digits-default text_color_inactive mt-2'}>
-            {selectedIngredient.proteins}
-          </p>
-        </div>
-        <div>
-          <h5 className={`text text_type_main-default text_color_inactive`}>Жиры, г</h5>
-          <p className={'text text_type_digits-default text_color_inactive mt-2'}>
-            {selectedIngredient.fat}
-          </p>
-        </div>
-        <div>
-          <h5 className={`text text_type_main-default text_color_inactive`}>Углеводы, г</h5>
-          <p className={'text text_type_digits-default text_color_inactive mt-2'}>
-            {selectedIngredient.carbohydrates}
-          </p>
-        </div>
+      <div>
+        <h5 className={`text text_type_main-default text_color_inactive`}>Белки, г</h5>
+        <p className={'text text_type_digits-default text_color_inactive mt-2'}>
+          {currentIngredient.proteins}
+        </p>
       </div>
-    </>}
-  </>);
-};
-
-IngredientDetails.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
-  selectedIngredientId: PropTypes.string.isRequired
+      <div>
+        <h5 className={`text text_type_main-default text_color_inactive`}>Жиры, г</h5>
+        <p className={'text text_type_digits-default text_color_inactive mt-2'}>
+          {currentIngredient.fat}
+        </p>
+      </div>
+      <div>
+        <h5 className={`text text_type_main-default text_color_inactive`}>Углеводы, г</h5>
+        <p className={'text text_type_digits-default text_color_inactive mt-2'}>
+          {currentIngredient.carbohydrates}
+        </p>
+      </div>
+    </div>
+  </>
 };
 
 export default IngredientDetails;

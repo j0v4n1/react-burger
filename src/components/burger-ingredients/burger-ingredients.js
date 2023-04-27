@@ -5,11 +5,14 @@ import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux"
 import {fetchIngredients} from "../../services/actions/fetch-ingredients";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
+import IngredientDetails from "../ingredient-details/ingredient-details";
 
 const BurgerIngredients = () => {
 
   const ingredients = useSelector(store => store.burgerIngredients.ingredients)
   const dispatch = useDispatch();
+
+  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
 
   const scrollRef = useRef(null);
 
@@ -31,34 +34,13 @@ const BurgerIngredients = () => {
     };
   }, [])
 
-
-  const [selectedIngredientId, setSelectedIngredientId] = useState("");
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const [modalContent, setModalContent] = useState("");
   const [current, setCurrent] = useState("bun");
-
-  function changeModalContent(modalElement) {
-    setModalContent(modalElement)
-  }
 
   const buns = ingredients.map(ingredient => {
     if (ingredient.type === "bun") {
       return <BurgerIngredient
-        setIsVisibleModal={setIsVisibleModal}
-        setSelectedIngredientId={setSelectedIngredientId}
-        changeModalContent={changeModalContent}
-        product={ingredient}
-        _id={ingredient._id}
-        newId={ingredient.newId}
-        proteins={ingredient.proteins}
-        fat={ingredient.fat}
-        carbohydrates={ingredient.carbohydrates}
-        calories={ingredient.calories}
-        type={ingredient.type}
-        image={ingredient.image}
-        price={ingredient.price}
-        name={ingredient.name}
         key={ingredient._id}
+        ingredient={ingredient}
         className={styles.item}
       />;
     }
@@ -66,21 +48,8 @@ const BurgerIngredients = () => {
   const sauces = ingredients.map(ingredient => {
     if (ingredient.type === "sauce") {
       return <BurgerIngredient
-        setIsVisibleModal={setIsVisibleModal}
-        setSelectedIngredientId={setSelectedIngredientId}
-        changeModalContent={changeModalContent}
-        product={ingredient}
-        _id={ingredient._id}
-        newId={ingredient.newId}
-        proteins={ingredient.proteins}
-        fat={ingredient.fat}
-        carbohydrates={ingredient.carbohydrates}
-        calories={ingredient.calories}
-        type={ingredient.type}
-        image={ingredient.image}
-        price={ingredient.price}
-        name={ingredient.name}
         key={ingredient._id}
+        ingredient={ingredient}
         className={styles.item}
       />;
     }
@@ -88,21 +57,8 @@ const BurgerIngredients = () => {
   const cutlets = ingredients.map(ingredient => {
     if (ingredient.type === "main") {
       return <BurgerIngredient
-        setIsVisibleModal={setIsVisibleModal}
-        setSelectedIngredientId={setSelectedIngredientId}
-        changeModalContent={changeModalContent}
-        newId={ingredient.newId}
-        product={ingredient}
-        _id={ingredient._id}
-        proteins={ingredient.proteins}
-        fat={ingredient.fat}
-        carbohydrates={ingredient.carbohydrates}
-        calories={ingredient.calories}
-        type={ingredient.type}
-        image={ingredient.image}
-        price={ingredient.price}
-        name={ingredient.name}
         key={ingredient._id}
+        ingredient={ingredient}
         className={styles.item}
       />;
     }
@@ -153,14 +109,14 @@ const BurgerIngredients = () => {
         Начинки
       </h2>
       <ul className={styles.list}>{cutlets}</ul>
-      <Modal data={ingredients}
-             setIsVisibleModal={setIsVisibleModal}
-             isVisibleModal={isVisibleModal}
-             selectedIngredientId={selectedIngredientId}
-             modalContent={modalContent}
-             onClose={() => {
-               setIsVisibleModal(false)
-             }}/>
+      {currentIngredient && <Modal
+              onClose={() => {
+                dispatch({
+                  type: "REMOVE_INGREDIENT_DETAILS"
+                })
+              }}>
+        <IngredientDetails/>
+      </Modal>}
     </div>
   </section>;
 };

@@ -2,62 +2,62 @@ import styles from "./burger-ingredient.module.css";
 import {useDrag} from "react-dnd";
 import {CurrencyIcon, Counter} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useMemo} from "react";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
-const BurgerIngredient = ({
-                            product,
-                            _id,
-                            newId,
-                            name,
-                            image,
-                            price,
-                            type,
-                            fat,
-                            calories,
-                            carbohydrates,
-                            proteins,
-                            setIsVisibleModal,
-                            setSelectedIngredientId,
-                            changeModalContent
-                          }) => {
+const BurgerIngredient = ({ingredient}) => {
 
   const [{isDragging}, dragRef] = useDrag({
     type: "ingredient",
-    item: {_id, newId, name, image, price, fat, calories, carbohydrates, proteins, type},
+    item: {
+      _id: ingredient._id,
+      newId: ingredient.newId,
+      name: ingredient.name,
+      image: ingredient.image,
+      price: ingredient.price,
+      fat: ingredient.fat,
+      calories: ingredient.calories,
+      carbohydrates: ingredient.carbohydrates,
+      proteins: ingredient.proteins,
+      type: ingredient.type
+    },
     collect: monitor => ({
       isDragging: monitor.isDragging()
     })
   })
 
   const burgerObject = useSelector(store => store.burgerConstructor.burgerObject);
+
   const burgerConstructorIngredients = [burgerObject.bun, ...burgerObject.ingredients.flatMap(ingredient => ingredient), burgerObject.bun];
 
+  const dispatch = useDispatch();
+
   const countIngredient = useMemo(() => {
-    return burgerConstructorIngredients.reduce((sum, ingredient) => {
-      if (ingredient.type === 'bun' && _id === ingredient._id) {
+    return burgerConstructorIngredients.reduce((sum, ingr) => {
+      if (ingr.type === 'bun' && ingredient._id === ingr._id) {
         return sum + 2;
-      } else if (ingredient._id === product._id) {
+      } else if (ingr._id === ingredient._id) {
         return sum + 1;
       } else {
         return sum;
       }
     }, 0);
-  }, [product, burgerConstructorIngredients, _id]);
+  }, [burgerConstructorIngredients, ingredient._id]);
 
   return <li
     onClick={() => {
-      setIsVisibleModal(true);
-      setSelectedIngredientId(_id);
-      changeModalContent('ingredient-details')
+      dispatch({
+        type: "SET_INGREDIENT_DETAILS",
+        ingredient
+      })
     }}
     style={isDragging ? {backgroundColor: "var(--colors-interface-accent)"} : null}
     ref={dragRef}
     className={styles.item}>
     <Counter count={countIngredient} size="default" extraClass="m-1"/>
-    <img className={styles.image} src={image} alt={name}/>
+    <img className={styles.image} src={ingredient.image} alt={ingredient.name}/>
     <div style={{display: "flex"}}>
       <p className={"text text_type_digits-default pb-1 pr-2"}>
-        {price}
+        {ingredient.price}
       </p>
       <CurrencyIcon type="primary"/>
     </div>
@@ -65,7 +65,7 @@ const BurgerIngredient = ({
       style={{textAlign: "center", paddingBottom: 24}}
       className={"text text_type_main-default"}
     >
-      {name}
+      {ingredient.name}
     </p>
   </li>
 }

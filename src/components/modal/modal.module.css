@@ -16,17 +16,3 @@
   max-width: 720px;
   background-color: #1C1C21;
 }
-
-.closeButton {
-  top: 60px;
-  right: 40px;
-  position: absolute;
-  cursor: pointer;
-  width: 18px;
-  height: 18px;
-  border: none;
-  background-color: rgba(0, 0, 0, 0);
-  background-image: url('../../images/close.svg');
-  background-position: 50% 50%;
-  background-size: 100%;
-}

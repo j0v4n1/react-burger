@@ -1,19 +1,10 @@
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import OrderDetails from "../order-details/order-details";
-import { useEffect, useRef } from "react";
+import {useEffect} from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import { Transition } from "react-transition-group";
 import PropTypes from "prop-types";
-import ingredientsPropTypes from "../../utils/utils";
-import { useDispatch, useSelector } from "react-redux";
 
-const Modal = ({data, selectedIngredientId, modalContent, onClose}) => {
-
-  const orderNumber = useSelector(store => store.orderDetails.orderNumber);
-
-  const dispatch = useDispatch();
+const Modal = ({onClose, children}) => {
 
   useEffect(() => {
     document.addEventListener('keydown', keydownHandler);
@@ -26,55 +17,20 @@ const Modal = ({data, selectedIngredientId, modalContent, onClose}) => {
     }
   };
 
-  const duration = 500;
-
-  const nodeRef = useRef(null);
-
-  const defaultStyle = {
-    transition: `all ${duration}ms ease-in-out`, visibility: 'hidden', opacity: 0,
-  }
-
-  const transitionStyles = {
-    entering: {opacity: 1, visibility: 'visible'},
-    entered: {opacity: 1, visibility: 'visible'},
-    exiting: {opacity: 0, visibility: 'hidden'},
-    exited: {opacity: 0, visibility: 'hidden'},
-  };
-
-  const orderDetailsState = modalContent === "order-details" ? <OrderDetails/> : null;
-  const ingredientDetailsState = modalContent === "ingredient-details" ?
-    <IngredientDetails selectedIngredientId={selectedIngredientId} data={data}/> : null;
-
-  return ReactDOM.createPortal(<Transition nodeRef={nodeRef} in={Boolean(orderNumber)} timeout={duration} unmountOnExit
-                                           mountOnEnter>
-    {state => (<div ref={nodeRef} className={styles.modals} style={{
-      ...defaultStyle,
-      ...transitionStyles[state]
-    }}>
-      <ModalOverlay onClose={() => {
-        dispatch({
-          type: "REMOVE_ORDER_DETAILS"
-        })
-      }}/>
+  return ReactDOM.createPortal(
+    <div className={styles.modals}>
+      <ModalOverlay onClose={onClose}/>
       <div className={styles.modal}>
-        <button
-          onClick={onClose}
-          aria-label="Закрыть"
-          type="button"
-          className={styles.closeButton}>
-        </button>
-        {orderDetailsState}
-        {ingredientDetailsState}
+        {children}
       </div>
-    </div>)}
-  </Transition>, document.getElementById('react-modals'));
+    </div>
+    , document.getElementById('react-modals')
+  );
 };
 
 Modal.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.shape(ingredientsPropTypes)).isRequired,
-  selectedIngredientId: PropTypes.string,
-  modalContent: PropTypes.string,
-  onClose: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  onClose: PropTypes.func.isRequired
 }
 
 export default Modal;
