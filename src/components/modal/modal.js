@@ -1,10 +1,10 @@
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
-import {useEffect} from "react";
+import { useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
 
-const Modal = ({onClose, children}) => {
+const Modal = ({ onClose, children }) => {
 
   useEffect(() => {
     document.addEventListener('keydown', keydownHandler);

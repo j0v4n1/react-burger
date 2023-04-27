@@ -1,12 +1,13 @@
 import styles from "./burger-constructor.module.css";
 import getOrderNumber from "../../utils/order-api";
 import Modal from "../modal/modal";
-import {ConstructorElement, DragIcon, Button, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import {useDispatch, useSelector} from "react-redux";
-import {useMemo} from "react";
-import {useDrop} from "react-dnd";
-import {setIngredient} from "../../services/actions/set-ingredient";
+import { ConstructorElement, DragIcon, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch, useSelector } from "react-redux";
+import { useMemo } from "react";
+import { useDrop } from "react-dnd";
+import { setIngredient } from "../../services/actions/set-ingredient";
 import OrderDetails from "../order-details/order-details";
+import { bun } from "../../constants/constants";
 
 const BurgerConstructor = () => {
 
@@ -57,7 +58,7 @@ const BurgerConstructor = () => {
 
   const totalPrice = useMemo(() => {
     return burgerConstructorIngredients.reduce((sum, item) => {
-      if (item.type === 'bun') {
+      if (item.type === bun) {
         return sum + item.price * 2;
       }
 

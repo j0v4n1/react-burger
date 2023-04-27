@@ -1,11 +1,12 @@
-import {useState, useEffect, useRef} from "react";
-import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
+import { useState, useEffect, useRef } from "react";
+import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
-import {useDispatch, useSelector} from "react-redux"
-import {fetchIngredients} from "../../services/actions/fetch-ingredients";
+import { useDispatch, useSelector } from "react-redux"
+import { fetchIngredients } from "../../services/actions/fetch-ingredients";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
+import { bun, sauce, main } from "../../constants/constants";
 
 const BurgerIngredients = () => {
 
@@ -18,11 +19,11 @@ const BurgerIngredients = () => {
 
   const scrollHandler = () => {
     if (scrollRef.current.scrollTop < 294) {
-      setCurrent("bun");
+      setCurrent(bun);
     } else if (scrollRef.current.scrollTop < 876) {
-      setCurrent("sauce");
+      setCurrent(sauce);
     } else {
-      setCurrent("main");
+      setCurrent(main);
     }
   };
 
@@ -34,10 +35,10 @@ const BurgerIngredients = () => {
     };
   }, [])
 
-  const [current, setCurrent] = useState("bun");
+  const [current, setCurrent] = useState(bun);
 
   const buns = ingredients.map(ingredient => {
-    if (ingredient.type === "bun") {
+    if (ingredient.type === bun) {
       return <BurgerIngredient
         key={ingredient._id}
         ingredient={ingredient}
@@ -46,7 +47,7 @@ const BurgerIngredients = () => {
     }
   });
   const sauces = ingredients.map(ingredient => {
-    if (ingredient.type === "sauce") {
+    if (ingredient.type === sauce) {
       return <BurgerIngredient
         key={ingredient._id}
         ingredient={ingredient}
@@ -55,7 +56,7 @@ const BurgerIngredients = () => {
     }
   });
   const cutlets = ingredients.map(ingredient => {
-    if (ingredient.type === "main") {
+    if (ingredient.type === main) {
       return <BurgerIngredient
         key={ingredient._id}
         ingredient={ingredient}
@@ -72,7 +73,7 @@ const BurgerIngredients = () => {
     >
       <li>
         <a href={"#buns"} className={styles.link}>
-          <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
+          <Tab value="bun" active={current === bun} onClick={setCurrent}>
             Булки
           </Tab>
         </a>
@@ -81,7 +82,7 @@ const BurgerIngredients = () => {
         <a href={"#sauce"} className={styles.link}>
           <Tab
             value="sauce"
-            active={current === "sauce"}
+            active={current === sauce}
             onClick={setCurrent}
           >
             Соусы
@@ -90,7 +91,7 @@ const BurgerIngredients = () => {
       </li>
       <li>
         <a href={"#main"} className={styles.link}>
-          <Tab value="main" active={current === "main"} onClick={setCurrent}>
+          <Tab value="main" active={current === main} onClick={setCurrent}>
             Начинки
           </Tab>
         </a>

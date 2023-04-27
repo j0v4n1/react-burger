@@ -1,7 +1,8 @@
 import checkResponse from "./check-response";
+import { getIngredientsURL } from "../constants/constants";
 
 function getIngredients() {
-  return fetch(`https://norma.nomoreparties.space/api/ingredients`)
+  return fetch(getIngredientsURL)
     .then((res) => {
       return checkResponse(res)
     })
