@@ -1,9 +1,13 @@
-import {GET_INGREDIENTS, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED} from "../actions/fetch-ingredients";
+import {
+  GET_INGREDIENTS,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED,
+} from "../actions/fetch-ingredients";
 
 const initialState = {
   ingredientsRequest: false,
   ingredientsFailed: false,
-  ingredients: []
+  ingredients: [],
 };
 
 const burgerIngredientsReducer = (state = initialState, action) => {
@@ -12,21 +16,21 @@ const burgerIngredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         ingredientsRequest: true,
-      }
+      };
     case GET_INGREDIENTS_SUCCESS:
       return {
         ...state,
-        ingredients: action.ingredients
-      }
+        ingredients: action.ingredients,
+      };
     case GET_INGREDIENTS_FAILED:
       return {
         ...state,
         ingredientsFailed: true,
-        ingredientsRequest: false
-      }
+        ingredientsRequest: false,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default burgerIngredientsReducer;

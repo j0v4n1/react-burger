@@ -1,3 +1,4 @@
+import update from 'immutability-helper'
 import styles from "./burger-constructor.module.css";
 import getOrderNumber from "../../utils/order-api";
 import Modal from "../modal/modal";
@@ -7,7 +8,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
-import { useMemo } from "react";
+import { useMemo, useCallback } from "react";
 import { useDrop } from "react-dnd";
 import { setIngredient } from "../../services/actions/set-ingredient";
 import OrderDetails from "../order-details/order-details";
@@ -21,10 +22,39 @@ import { REMOVE_ALL_INGREDIENTS } from "../../services/actions/set-ingredient";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-
+  const burgerConstructorIngredients = [
+    burgerObject.bun,
+    ...burgerObject.ingredients.flatMap((ingredient) => ingredient),
+    burgerObject.bun,
+  ];
   const dropHandler = (ingredient) => {
     dispatch(setIngredient(ingredient));
   };
+
+  const findCard = useCallback(
+    (id) => {
+      const ingredient = burgerConstructorIngredients.filter((ingredient) => `${ingredient._id}` === id)[0];
+      return {
+        ingredient,
+        index: burgerConstructorIngredients.indexOf(ingredient),
+      };
+    },
+    [burgerConstructorIngredients]
+  );
+  const moveCard = useCallback(
+    (id, atIndex) => {
+      const { ingredient, index } = findCard(id);
+      setCards(
+        update(burgerConstructorIngredients, {
+          $splice: [
+            [index, 1],
+            [atIndex, 0, ingredient],
+          ],
+        })
+      );
+    },
+    [findCard, burgerConstructorIngredients, setCards]
+  );
 
   const [{ isOver }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -70,12 +100,6 @@ const BurgerConstructor = () => {
     );
   };
   const disableButton = isBurgerObjectEmpty();
-
-  const burgerConstructorIngredients = [
-    burgerObject.bun,
-    ...burgerObject.ingredients.flatMap((ingredient) => ingredient),
-    burgerObject.bun,
-  ];
 
   const totalPrice = useMemo(() => {
     return burgerConstructorIngredients.reduce((sum, item) => {

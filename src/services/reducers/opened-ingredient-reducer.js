@@ -1,23 +1,26 @@
-import {SET_INGREDIENT_DETAILS, REMOVE_INGREDIENT_DETAILS} from "../actions/opened-ingredient";
+import {
+  SET_INGREDIENT_DETAILS,
+  REMOVE_INGREDIENT_DETAILS,
+} from "../actions/opened-ingredient";
 
 const initialState = {
-  currentIngredient: null
-}
+  currentIngredient: null,
+};
 
 const openedIngredientReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INGREDIENT_DETAILS:
       return {
         ...state,
-        currentIngredient: action.ingredient
-      }
+        currentIngredient: action.ingredient,
+      };
     case REMOVE_INGREDIENT_DETAILS:
       return {
-        currentIngredient: null
-      }
+        currentIngredient: null,
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default openedIngredientReducer;

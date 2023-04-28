@@ -1,4 +1,4 @@
-import {combineReducers} from "redux";
+import { combineReducers } from "redux";
 import burgerIngredientsReducer from "./burger-ingredients-reducer";
 import burgerConstructorReducer from "./burger-constructor-reducer";
 import openedIngredientReducer from "./opened-ingredient-reducer";
@@ -8,8 +8,7 @@ const rootReducer = combineReducers({
   burgerIngredients: burgerIngredientsReducer,
   burgerConstructor: burgerConstructorReducer,
   openedIngredient: openedIngredientReducer,
-  orderDetails: orderDetailsReducer
-
-})
+  orderDetails: orderDetailsReducer,
+});
 
 export default rootReducer;

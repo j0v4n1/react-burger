@@ -1,45 +1,60 @@
-import {SET_INGREDIENT, SET_INGREDIENT_BUN, REMOVE_INGREDIENT, REMOVE_ALL_INGREDIENTS} from "../actions/set-ingredient";
+import {
+  SET_INGREDIENT,
+  SET_INGREDIENT_BUN,
+  REMOVE_INGREDIENT,
+  REMOVE_ALL_INGREDIENTS,
+} from "../actions/set-ingredient";
 
 const initialState = {
   burgerObject: {
     bun: {},
-    ingredients: []
-  }
+    ingredients: [],
+  },
 };
 
 const burgerConstructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INGREDIENT_BUN:
       return {
-        ...state, burgerObject: {
-          ...state.burgerObject, bun: {...action, type: undefined}
-        }
-      }
+        ...state,
+        burgerObject: {
+          ...state.burgerObject,
+          bun: { ...action, type: undefined },
+        },
+      };
     case SET_INGREDIENT:
       return {
-        ...state, burgerObject: {
+        ...state,
+        burgerObject: {
           ...state.burgerObject,
-          ingredients: [...state.burgerObject.ingredients, {...action, type: undefined},]
-        }
-      }
+          ingredients: [
+            ...state.burgerObject.ingredients,
+            { ...action, type: undefined },
+          ],
+        },
+      };
     case REMOVE_INGREDIENT:
-      const ingredients = state.burgerObject.ingredients.filter(ingredient => ingredient.newId !== action.newId);
+      const ingredients = state.burgerObject.ingredients.filter(
+        (ingredient) => ingredient.newId !== action.newId
+      );
       return {
-        ...state, burgerObject: {
+        ...state,
+        burgerObject: {
           ...state.burgerObject,
-          ingredients
-        }
-      }
+          ingredients,
+        },
+      };
     case REMOVE_ALL_INGREDIENTS:
       return {
-        ...state, burgerObject: {
+        ...state,
+        burgerObject: {
           bun: {},
-          ingredients: []
-        }
-      }
+          ingredients: [],
+        },
+      };
     default:
-      return state
+      return state;
   }
-}
+};
 
 export default burgerConstructorReducer;
