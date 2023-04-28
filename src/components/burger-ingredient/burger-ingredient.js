@@ -57,7 +57,10 @@ const BurgerIngredient = ({ ingredient }) => {
       ref={dragRef}
       className={styles.item}
     >
-      <Counter count={countIngredient} size="default" extraClass="m-1" />
+      {countIngredient > 0 ? (
+        <Counter count={countIngredient} size="default" extraClass="m-1" />
+      ) : null}
+
       <img
         className={styles.image}
         src={ingredient.image}

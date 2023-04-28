@@ -1,4 +1,4 @@
-import update from 'immutability-helper'
+import update from "immutability-helper";
 import styles from "./burger-constructor.module.css";
 import getOrderNumber from "../../utils/order-api";
 import Modal from "../modal/modal";
@@ -21,6 +21,9 @@ import {
 import { REMOVE_ALL_INGREDIENTS } from "../../services/actions/set-ingredient";
 
 const BurgerConstructor = () => {
+  const burgerObject = useSelector(
+    (store) => store.burgerConstructor.burgerObject
+  );
   const dispatch = useDispatch();
   const burgerConstructorIngredients = [
     burgerObject.bun,
@@ -31,30 +34,32 @@ const BurgerConstructor = () => {
     dispatch(setIngredient(ingredient));
   };
 
-  const findCard = useCallback(
-    (id) => {
-      const ingredient = burgerConstructorIngredients.filter((ingredient) => `${ingredient._id}` === id)[0];
-      return {
-        ingredient,
-        index: burgerConstructorIngredients.indexOf(ingredient),
-      };
-    },
-    [burgerConstructorIngredients]
-  );
-  const moveCard = useCallback(
-    (id, atIndex) => {
-      const { ingredient, index } = findCard(id);
-      setCards(
-        update(burgerConstructorIngredients, {
-          $splice: [
-            [index, 1],
-            [atIndex, 0, ingredient],
-          ],
-        })
-      );
-    },
-    [findCard, burgerConstructorIngredients, setCards]
-  );
+  // const findCard = useCallback(
+  //   (id) => {
+  //     const ingredient = burgerConstructorIngredients.filter(
+  //       (ingredient) => `${ingredient._id}` === id
+  //     )[0];
+  //     return {
+  //       ingredient,
+  //       index: burgerConstructorIngredients.indexOf(ingredient),
+  //     };
+  //   },
+  //   [burgerConstructorIngredients]
+  // );
+  // const moveCard = useCallback(
+  //   (id, atIndex) => {
+  //     const { ingredient, index } = findCard(id);
+  //     setCards(
+  //       update(burgerConstructorIngredients, {
+  //         $splice: [
+  //           [index, 1],
+  //           [atIndex, 0, ingredient],
+  //         ],
+  //       })
+  //     );
+  //   },
+  //   [findCard, burgerConstructorIngredients, setCards]
+  // );
 
   const [{ isOver }, dropTarget] = useDrop({
     accept: "ingredient",
@@ -65,9 +70,7 @@ const BurgerConstructor = () => {
       dropHandler(ingredient);
     },
   });
-  const burgerObject = useSelector(
-    (store) => store.burgerConstructor.burgerObject
-  );
+
   const orderNumber = useSelector((store) => store.orderDetails.orderNumber);
 
   const fetchOrderNumber = () => {
