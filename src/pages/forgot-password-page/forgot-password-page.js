@@ -1,18 +1,16 @@
 import {
-  PasswordInput,
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./login-page.module.css";
+import styles from "./forgot-password-page.module.css";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
-  const [passwordValue, setPasswordValue] = useState("");
+const ForgotPasswordPage = () => {
   const [emailValue, setEmailValue] = useState("");
   return (
     <main className={styles.wrapper}>
-      <h2 className={styles.header}>Вход</h2>
+      <h2 className={styles.header}>Восстановление пароля</h2>
       <form style={{ display: "flex", flexDirection: "column" }}>
         <EmailInput
           onChange={(e) => setEmailValue(e.target.value)}
@@ -21,24 +19,15 @@ const LoginPage = () => {
           isIcon={false}
           extraClass="mb-6"
         />
-        <PasswordInput
-          onChange={(e) => setPasswordValue(e.target.value)}
-          value={passwordValue}
-          name={"password"}
-          extraClass="mb-2"
-        />
       </form>
       <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
-        Войти
+        Восстановить
       </Button>
       <p className="mt-20 mb-6">
-        Вы — новый пользователь? <Link to={'/register'}>Зарегистрироваться</Link>
-      </p>
-      <p style={{ margin: 0 }}>
-        Забыли пароль? <Link to={"/forgot-password"}>Восстановить пароль</Link>
+        Вспомнили пароль? <Link to={"/login"}>Войти</Link>
       </p>
     </main>
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

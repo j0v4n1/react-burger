@@ -8,6 +8,7 @@
 .header {
   margin: 0 0 24px;
 }
+
 ::-ms-reveal {
   display: none;
 }

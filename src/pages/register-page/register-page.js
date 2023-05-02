@@ -1,19 +1,32 @@
 import {
+  Input,
   PasswordInput,
   EmailInput,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./login-page.module.css";
+import styles from "./register-page.module.css";
 import { Link } from "react-router-dom";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
+  const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
   return (
     <main className={styles.wrapper}>
-      <h2 className={styles.header}>Вход</h2>
+      <h2 className={styles.header}>Регистрация</h2>
       <form style={{ display: "flex", flexDirection: "column" }}>
+        <Input
+          type={"text"}
+          placeholder={"Имя"}
+          onChange={(e) => setNameValue(e.target.value)}
+          value={nameValue}
+          name={"name"}
+          error={false}
+          errorText={"Ошибка"}
+          size={"default"}
+          extraClass="mb-6"
+        />
         <EmailInput
           onChange={(e) => setEmailValue(e.target.value)}
           value={emailValue}
@@ -32,13 +45,10 @@ const LoginPage = () => {
         Войти
       </Button>
       <p className="mt-20 mb-6">
-        Вы — новый пользователь? <Link to={'/register'}>Зарегистрироваться</Link>
-      </p>
-      <p style={{ margin: 0 }}>
-        Забыли пароль? <Link to={"/forgot-password"}>Восстановить пароль</Link>
+        Уже зарегистрированы? <Link to={"/login"}>Войти</Link>
       </p>
     </main>
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
