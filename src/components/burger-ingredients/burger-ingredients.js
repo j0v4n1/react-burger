@@ -31,9 +31,14 @@ const BurgerIngredients = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
-    scrollRef.current.addEventListener("scroll", scrollHandler);
+    const scrollNode = scrollRef.current;
+    if (scrollNode) {
+      scrollNode.addEventListener("scroll", scrollHandler);
+    }
     return () => {
-      scrollRef.current.removeEventListener("scroll", scrollHandler);
+      if (scrollNode) {
+        scrollNode.removeEventListener("scroll", scrollHandler);
+      }
     };
   }, []);
 
