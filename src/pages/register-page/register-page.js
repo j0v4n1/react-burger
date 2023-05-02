@@ -7,11 +7,25 @@ import {
 import { useState } from "react";
 import styles from "./register-page.module.css";
 import { Link } from "react-router-dom";
+import getRegistrationToken from "../../utils/registration-api";
 
 const RegisterPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
+
+  const registration = (email, password, name) => {
+    getRegistrationToken(email, password, name)
+      .then((data) => {
+        console.log(data);
+      })
+      .then(() => {
+        setEmailValue("");
+        setNameValue("");
+        setPasswordValue("");
+      });
+  };
+
   return (
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Регистрация</h2>
@@ -41,8 +55,17 @@ const RegisterPage = () => {
           extraClass="mb-2"
         />
       </form>
-      <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
-        Войти
+      <Button
+        extraClass="mt-4"
+        htmlType="button"
+        type="primary"
+        size="large"
+        disabled={!nameValue || !passwordValue || !emailValue}
+        onClick={() => {
+          registration(emailValue, passwordValue, nameValue);
+        }}
+      >
+        Зарегистрироваться
       </Button>
       <p className="mt-20 mb-6">
         Уже зарегистрированы? <Link to={"/login"}>Войти</Link>
