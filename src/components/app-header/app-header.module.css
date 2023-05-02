@@ -44,3 +44,7 @@
   display: flex;
   align-items: center;
 }
+
+.activeLink {
+  color: var(--text-primary-color)
+}

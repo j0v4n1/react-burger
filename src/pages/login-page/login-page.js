@@ -1,34 +1,25 @@
 import {
   PasswordInput,
-  Input,
+  EmailInput,
+  Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import React from "react";
+import styles from "./login-page.module.css";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
-  const inputRef = React.useRef(null);
   const [passwordValue, setPasswordValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0);
-    alert("Icon Click Callback");
-  };
   return (
-    <main className={"content"}>
+    <main className={styles.wrapper}>
+      <h2 className={styles.header}>Вход</h2>
       <div style={{ display: "flex", flexDirection: "column" }}>
-        <Input
-          type={"text"}
-          placeholder={"E-mail"}
+        <EmailInput
           onChange={(e) => setEmailValue(e.target.value)}
-          icon={"CurrencyIcon"}
           value={emailValue}
-          name={"name"}
-          error={false}
-          ref={inputRef}
-          onIconClick={onIconClick}
-          errorText={"Ошибка"}
-          size={"default"}
-          extraClass="ml-1"
+          name={"email"}
+          isIcon={false}
+          extraClass="mb-6"
         />
         <PasswordInput
           onChange={(e) => setPasswordValue(e.target.value)}
@@ -37,6 +28,15 @@ const LoginPage = () => {
           extraClass="mb-2"
         />
       </div>
+      <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
+        Войти
+      </Button>
+      <p className="mt-20 mb-6">
+        Вы — новый пользователь? <Link>Зарегистрироваться</Link>
+      </p>
+      <p style={{ margin: 0 }}>
+        Забыли пароль? <Link>Восстановить пароль</Link>
+      </p>
     </main>
   );
 };

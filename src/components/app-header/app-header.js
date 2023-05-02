@@ -5,7 +5,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const AppHeader = () => {
   return (
@@ -15,13 +15,17 @@ const AppHeader = () => {
           <ul className={styles.list}>
             <li className={styles.item}>
               <BurgerIcon type="primary" />
-              <Link to={"/"}
-                style={{ color: "var(--text-primary-color)" }}
+              <NavLink
+                to={"/"}
                 className={styles.link}
-                href={"#"}
+                style={({ isActive }) => ({
+                  color: isActive
+                    ? "var(--text-primary-color)"
+                    : "var(--text-inactive-color)",
+                })}
               >
                 Конструктор
-              </Link>
+              </NavLink>
             </li>
             <li className={styles.item}>
               <ListIcon type="secondary" />
@@ -34,9 +38,17 @@ const AppHeader = () => {
         </nav>
         <div className={styles.account}>
           <ProfileIcon type="secondary" />
-          <Link to={"/login"} className={styles.link}>
+          <NavLink
+            to={"/login"}
+            className={styles.link}
+            style={({ isActive }) => ({
+              color: isActive
+                ? "var(--text-primary-color)"
+                : "var(--text-inactive-color)",
+            })}
+          >
             Личный кабинет
-          </Link>
+          </NavLink>
         </div>
       </div>
     </header>
