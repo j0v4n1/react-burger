@@ -7,15 +7,11 @@ import { fetchIngredients } from "../../services/actions/fetch-ingredients";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { bun, sauce, main } from "../../constants/constants";
-import { REMOVE_INGREDIENT_DETAILS } from "../../services/actions/opened-ingredient";
+
 const BurgerIngredients = () => {
-  const ingredients = useSelector(
-    (store) => store.burgerIngredients.ingredients
-  );
+  const ingredients = useSelector(store => store.burgerIngredients.ingredients);
   const dispatch = useDispatch();
-  const currentIngredient = useSelector(
-    (store) => store.openedIngredient.currentIngredient
-  );
+  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState(bun);
 

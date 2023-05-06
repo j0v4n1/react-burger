@@ -1,11 +1,8 @@
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { REMOVE_INGREDIENT_DETAILS } from "../../services/actions/opened-ingredient";
 
 const IngredientDetails = () => {
-  const currentIngredient = useSelector(
-    (store) => store.openedIngredient.currentIngredient
-  );
+  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
 
   const dispatch = useDispatch();
 
