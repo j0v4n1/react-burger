@@ -11,7 +11,7 @@ import getRegistrationToken from "../../utils/registration-api";
 
 const RegisterPage = () => {
   const [passwordValue, setPasswordValue] = useState("");
-  const [nameValue, setNameValue] = useState("");
+  const [nameValue, setNameValue] = useState(null);
   const [emailValue, setEmailValue] = useState("");
 
   const registration = (email, password, name) => {
