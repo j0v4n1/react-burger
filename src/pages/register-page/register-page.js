@@ -14,7 +14,7 @@ const RegisterPage = () => {
   const [nameValue, setNameValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
 
-  const registration = (email, password, name) => {
+  const getToken = (email, password, name) => {
     getRegistrationToken(email, password, name)
       .then((data) => {
         console.log(data);
@@ -62,7 +62,7 @@ const RegisterPage = () => {
         size="large"
         disabled={!nameValue || !passwordValue || !emailValue}
         onClick={() => {
-          registration(emailValue, passwordValue, nameValue);
+          getToken(emailValue, passwordValue, nameValue);
         }}
       >
         Зарегистрироваться
