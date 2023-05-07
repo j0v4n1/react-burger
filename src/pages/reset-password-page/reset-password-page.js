@@ -1,9 +1,9 @@
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./new-password-page.module.css";
+import styles from "./reset-password-page.module.css";
 import { Link } from "react-router-dom";
 
-const NewPasswordPage = () => {
+const ResetPasswordPage = () => {
   const [newPasswordValue, setNewPasswordValue] = useState("");
   const [recoveryCodeValue, setRecoveryCodeValue] = useState("");
   return (
@@ -38,4 +38,4 @@ const NewPasswordPage = () => {
   );
 };
 
-export default NewPasswordPage;
+export default ResetPasswordPage;

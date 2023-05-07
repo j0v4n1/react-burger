@@ -1,13 +1,12 @@
-import { useState, useEffect, useRef } from "react";
-import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import {useState, useEffect, useRef} from "react";
+import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchIngredients } from "./burger-ingredients-slice";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchIngredients} from "./burger-ingredients-slice";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import { bun, sauce, main } from "../../constants/constants";
-import { remove } from "../ingredient-details/ingredient-details-slice";
+import {remove} from "../ingredient-details/ingredient-details-slice";
 
 const BurgerIngredients = () => {
 
@@ -15,7 +14,7 @@ const BurgerIngredients = () => {
   const dispatch = useDispatch();
   const currentIngredient = useSelector(store => store.ingredientDetails.currentIngredient);
   const scrollRef = useRef(null);
-  const [current, setCurrent] = useState(bun);
+  const [current, setCurrent] = useState("bun");
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -32,11 +31,11 @@ const BurgerIngredients = () => {
 
   const scrollHandler = () => {
     if (scrollRef.current.scrollTop < 294) {
-      setCurrent(bun);
+      setCurrent("bun");
     } else if (scrollRef.current.scrollTop < 876) {
-      setCurrent(sauce);
+      setCurrent("sauce");
     } else {
-      setCurrent(main);
+      setCurrent("main");
     }
   };
 
@@ -45,65 +44,58 @@ const BurgerIngredients = () => {
   }
 
   const buns = ingredients.map((ingredient) => {
-    if (ingredient.type === bun) {
-      return (
-        <BurgerIngredient
+    if (ingredient.type === "bun") {
+      return (<BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />
-      );
+        />);
     }
   });
 
   const sauces = ingredients.map((ingredient) => {
-    if (ingredient.type === sauce) {
-      return (
-        <BurgerIngredient
+    if (ingredient.type === "sauce") {
+      return (<BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />
-      );
+        />);
     }
   });
 
   const cutlets = ingredients.map((ingredient) => {
-    if (ingredient.type === main) {
-      return (
-        <BurgerIngredient
+    if (ingredient.type === "main") {
+      return (<BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />
-      );
+        />);
     }
   });
 
-  return (
-    <section className={`${styles.ingredients} text text_type_main-default`}>
+  return (<section className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
       <ul
         className={"mt-5"}
-        style={{ display: "flex", padding: 0, listStyle: "none" }}
+        style={{display: "flex", padding: 0, listStyle: "none"}}
       >
         <li>
           <a href={"#buns"} className={styles.link}>
-            <Tab value="bun" active={current === bun} onClick={setCurrent}>
+            <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
               Булки
             </Tab>
           </a>
         </li>
         <li>
           <a href={"#sauce"} className={styles.link}>
-            <Tab value="sauce" active={current === sauce} onClick={setCurrent}>
+            <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
               Соусы
             </Tab>
           </a>
         </li>
         <li>
           <a href={"#main"} className={styles.link}>
-            <Tab value="main" active={current === main} onClick={setCurrent}>
+            <Tab value="main" active={current === "main"} onClick={setCurrent}>
               Начинки
             </Tab>
           </a>
@@ -111,7 +103,7 @@ const BurgerIngredients = () => {
       </ul>
       <div
         ref={scrollRef}
-        style={{ scrollBehavior: "smooth" }}
+        style={{scrollBehavior: "smooth"}}
         className={styles.wrapper}
       >
         <h2 id="buns" className={"text text_type_main-medium"}>
@@ -126,16 +118,13 @@ const BurgerIngredients = () => {
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
-        {currentIngredient && (
-          <Modal
-            onClose={ handleCloseIngredientDetails }
+        {currentIngredient && (<Modal
+            onClose={handleCloseIngredientDetails}
           >
-            <IngredientDetails />
-          </Modal>
-        )}
+            <IngredientDetails/>
+          </Modal>)}
       </div>
-    </section>
-  );
+    </section>);
 };
 
 export default BurgerIngredients;
