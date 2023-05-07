@@ -1,14 +1,14 @@
 import styles from "./burger-ingredient.module.css";
 import { useDrag } from "react-dnd";
-import {
-  CurrencyIcon,
-  Counter,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SET_INGREDIENT_DETAILS } from "../../services/actions/opened-ingredient";
+import { set } from "../ingredient-details/ingredient-details-slice";
 
 const BurgerIngredient = ({ ingredient }) => {
+
+  const dispatch = useDispatch();
+
   const [{ isDragging }, dragRef] = useDrag({
     type: "ingredient",
     item: { ingredient },
@@ -17,23 +17,21 @@ const BurgerIngredient = ({ ingredient }) => {
     }),
   });
 
-  const burgerObject = useSelector(
-    (store) => store.burgerConstructor.burgerObject
-  );
-
+  const {bun, ingredients} = useSelector(store => store.burgerConstructor);
   const burgerConstructorIngredients = [
-    burgerObject.bun,
-    ...burgerObject.ingredients.flatMap((ingredient) => ingredient),
-    burgerObject.bun,
+    bun, ...ingredients.flatMap(ingredient => ingredient), bun
   ];
 
-  const dispatch = useDispatch();
+  const handleOpenIngredientDetails = () => {
+    dispatch(set(ingredient))
+  }
 
   const countIngredient = useMemo(() => {
-    return burgerConstructorIngredients.reduce((sum, ingr) => {
-      if (ingr.type === "bun" && ingredient._id === ingr._id) {
-        return sum + 2;
-      } else if (ingr._id === ingredient._id) {
+    return burgerConstructorIngredients.reduce((sum, el) => {
+      if (!el) {
+        return sum;
+      }
+      if (el._id === ingredient._id) {
         return sum + 1;
       } else {
         return sum;
@@ -43,12 +41,7 @@ const BurgerIngredient = ({ ingredient }) => {
 
   return (
     <li
-      onClick={() => {
-        dispatch({
-          type: SET_INGREDIENT_DETAILS,
-          ingredient,
-        });
-      }}
+      onClick={ handleOpenIngredientDetails }
       style={
         isDragging
           ? { backgroundColor: "var(--colors-interface-accent)" }
@@ -57,9 +50,9 @@ const BurgerIngredient = ({ ingredient }) => {
       ref={dragRef}
       className={styles.item}
     >
-      {countIngredient > 0 ? (
-        <Counter count={countIngredient} size="default" extraClass="m-1" />
-      ) : null}
+      {countIngredient > 0
+      ? <Counter count={countIngredient} size="default" extraClass="m-1" />
+      : null}
 
       <img
         className={styles.image}

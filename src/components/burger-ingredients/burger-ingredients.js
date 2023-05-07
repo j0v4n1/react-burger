@@ -3,27 +3,19 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchIngredients } from "../../services/actions/fetch-ingredients";
+import { fetchIngredients } from "./burger-ingredients-slice";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import { bun, sauce, main } from "../../constants/constants";
+import { remove } from "../ingredient-details/ingredient-details-slice";
 
 const BurgerIngredients = () => {
+
   const ingredients = useSelector(store => store.burgerIngredients.ingredients);
   const dispatch = useDispatch();
-  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
+  const currentIngredient = useSelector(store => store.ingredientDetails.currentIngredient);
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState(bun);
-
-  const scrollHandler = () => {
-    if (scrollRef.current.scrollTop < 294) {
-      setCurrent(bun);
-    } else if (scrollRef.current.scrollTop < 876) {
-      setCurrent(sauce);
-    } else {
-      setCurrent(main);
-    }
-  };
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -37,6 +29,20 @@ const BurgerIngredients = () => {
       }
     };
   }, []);
+
+  const scrollHandler = () => {
+    if (scrollRef.current.scrollTop < 294) {
+      setCurrent(bun);
+    } else if (scrollRef.current.scrollTop < 876) {
+      setCurrent(sauce);
+    } else {
+      setCurrent(main);
+    }
+  };
+
+  const handleCloseIngredientDetails = () => {
+    dispatch(remove());
+  }
 
   const buns = ingredients.map((ingredient) => {
     if (ingredient.type === bun) {
@@ -122,11 +128,7 @@ const BurgerIngredients = () => {
         <ul className={styles.list}>{cutlets}</ul>
         {currentIngredient && (
           <Modal
-            onClose={() => {
-              dispatch({
-                type: REMOVE_INGREDIENT_DETAILS,
-              });
-            }}
+            onClose={ handleCloseIngredientDetails }
           >
             <IngredientDetails />
           </Modal>

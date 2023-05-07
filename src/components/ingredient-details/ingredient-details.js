@@ -1,19 +1,27 @@
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
+import { remove } from "../ingredient-details/ingredient-details-slice";
 
 const IngredientDetails = () => {
-  const currentIngredient = useSelector(store => store.openedIngredient.currentIngredient);
+  const {
+    image,
+    name,
+    proteins,
+    calories,
+    fat,
+    carbohydrates
+  } = useSelector(store => store.ingredientDetails.currentIngredient);
 
   const dispatch = useDispatch();
+
+  const handleCloseIngredientDetails = () => {
+    dispatch(remove());
+  }
 
   return (
     <>
       <button
-        onClick={() => {
-          dispatch({
-            type: REMOVE_INGREDIENT_DETAILS,
-          });
-        }}
+        onClick={ handleCloseIngredientDetails }
         aria-label="Закрыть"
         type="button"
         className={styles.closeButton}
@@ -25,11 +33,11 @@ const IngredientDetails = () => {
       </div>
       <img
         className={styles.image}
-        src={currentIngredient.image}
-        alt={currentIngredient.name}
+        src={ image }
+        alt={ name }
       />
       <h4 className={`${styles.name} text text_type_main-medium`}>
-        {currentIngredient.name}
+        { name }
       </h4>
       <div className={styles.pfcWrapper}>
         <div>
@@ -39,7 +47,7 @@ const IngredientDetails = () => {
           <p
             className={"text text_type_digits-default text_color_inactive mt-2"}
           >
-            {currentIngredient.calories}
+            { calories }
           </p>
         </div>
         <div>
@@ -49,7 +57,7 @@ const IngredientDetails = () => {
           <p
             className={"text text_type_digits-default text_color_inactive mt-2"}
           >
-            {currentIngredient.proteins}
+            { proteins }
           </p>
         </div>
         <div>
@@ -59,7 +67,7 @@ const IngredientDetails = () => {
           <p
             className={"text text_type_digits-default text_color_inactive mt-2"}
           >
-            {currentIngredient.fat}
+            { fat }
           </p>
         </div>
         <div>
@@ -69,7 +77,7 @@ const IngredientDetails = () => {
           <p
             className={"text text_type_digits-default text_color_inactive mt-2"}
           >
-            {currentIngredient.carbohydrates}
+            { carbohydrates }
           </p>
         </div>
       </div>

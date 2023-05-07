@@ -1,4 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import getIngredients from "../../utils/burger-api";
+
+export const fetchIngredients = createAsyncThunk(
+  'ingredients/fetchIngredients',
+   async () => {
+     return await getIngredients()
+  }
+)
 
 const initialState = {
   ingredientsRequest: false,
@@ -9,16 +17,22 @@ const initialState = {
 const burgerIngredientsSlice = createSlice({
   name: "burgerIngredients",
   initialState,
-  reducers: {
-    getIngredients: (state) => {
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(fetchIngredients.pending, state => {
       state.ingredientsRequest = true;
-    },
-    getIngredientsFullfilled: (state, action) => {
-      state.ingredients.push(action.payload);
-    },
-    getIngredientsRejected: (state) => {
+    })
+    builder.addCase(fetchIngredients.fulfilled, (state, action) => {
+      state.ingredients = action.payload.data;
+    })
+    builder.addCase(fetchIngredients.rejected, state => {
       state.ingredientsFailed = true;
       state.ingredientsRequest = false;
-    },
-  },
+    })
+    builder.addDefaultCase(() => {})
+  }
 });
+
+const { reducer } = burgerIngredientsSlice;
+
+export default reducer;

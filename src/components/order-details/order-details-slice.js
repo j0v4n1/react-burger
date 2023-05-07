@@ -16,3 +16,9 @@ const orderDetailsSlice = createSlice({
     },
   },
 });
+
+const { actions, reducer } = orderDetailsSlice;
+
+export default reducer;
+
+export const { set, remove } = actions;

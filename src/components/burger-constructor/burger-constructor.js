@@ -2,34 +2,29 @@ import update from "immutability-helper";
 import styles from "./burger-constructor.module.css";
 import getOrderNumber from "../../utils/order-api";
 import Modal from "../modal/modal";
-import {
-  ConstructorElement,
-  Button,
-  CurrencyIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement, Button, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch, useSelector } from "react-redux";
 import { useMemo, useCallback } from "react";
 import { useDrop } from "react-dnd";
-import { setIngredient } from "../../services/actions/set-ingredient";
 import OrderDetails from "../order-details/order-details";
-import { bun } from "../../constants/constants";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
-import {
-  REMOVE_ORDER_DETAILS,
-  SET_ORDER_DETAILS,
-} from "../../services/actions/order-details";
-import { REMOVE_ALL_INGREDIENTS } from "../../services/actions/set-ingredient";
+import { set, remove } from "../order-details/order-details-slice";
+import { removeAllIngredients, setIngredient } from "./burger-constructor-slice";
 
 const BurgerConstructor = () => {
-  const burgerObject = useSelector(
-    (store) => store.burgerConstructor.burgerObject
-  );
+
   const dispatch = useDispatch();
+
+  const {ingredients, bun} = useSelector(store => store.burgerConstructor);
+
+  const handleRemoveOrder = () => {
+    dispatch(remove());
+  }
+
   const burgerConstructorIngredients = [
-    burgerObject.bun,
-    ...burgerObject.ingredients.flatMap((ingredient) => ingredient),
-    burgerObject.bun,
+    bun, ...ingredients.flatMap((ingredient) => ingredient), bun
   ];
+
   const dropHandler = (ingredient) => {
     dispatch(setIngredient(ingredient));
   };
@@ -71,87 +66,59 @@ const BurgerConstructor = () => {
     },
   });
 
-  const orderNumber = useSelector((store) => store.orderDetails.orderNumber);
+  const orderNumber = useSelector(store => store.orderDetails.orderNumber);
 
   const fetchOrderNumber = () => {
     const ingredientsAndBunsIdsList = [
-      burgerObject.bun._id,
-      ...burgerObject.ingredients.flatMap(({ _id }) => _id),
-      burgerObject.bun._id,
+      bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id,
     ];
     getOrderNumber(ingredientsAndBunsIdsList)
       .then((orderData) => {
-        dispatch({
-          type: SET_ORDER_DETAILS,
-          number: orderData.order.number,
-        });
+        dispatch(set(orderData.order.number))
       })
       .catch((error) => {
         console.error(error);
       })
       .finally(() => {
-        dispatch({
-          type: REMOVE_ALL_INGREDIENTS,
-        });
+        dispatch(removeAllIngredients());
       });
   };
 
-  const isBurgerObjectEmpty = () => {
-    return (
-      Object.keys(burgerObject.bun).length === 0 &&
-      Object.keys(burgerObject.ingredients).length === 0
-    );
-  };
-  const disableButton = isBurgerObjectEmpty();
-
   const totalPrice = useMemo(() => {
     return burgerConstructorIngredients.reduce((sum, item) => {
-      if (item.type === bun) {
-        return sum + item.price * 2;
+      if (item && item.price) {
+        return sum + item.price;
       }
-      return sum + item.price;
+      return sum;
     }, 0);
   }, [burgerConstructorIngredients]);
 
-  return (
-    <div className={styles.constructor}>
+  return <div className={styles.constructor}>
       <ul
         className={styles.mainList}
         ref={dropTarget}
         style={isOver ? { outlineStyle: "solid" } : null}
       >
-        {Object.entries(burgerObject.bun).length === 0 ? null : (
+        {!bun ? null : (
           <li className="ml-8" style={{ cursor: "pointer" }}>
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${burgerObject.bun.name} (верх)`}
-              price={burgerObject.bun.price}
-              thumbnail={burgerObject.bun.image}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
             />
           </li>
         )}
         <li>
           <ul className={styles.list}>
-            {burgerObject.ingredients.map(({ newId, name, price, image }) => {
-              return (
-                <BurgerConstructorIngredient
-                  key={newId}
-                  name={name}
-                  image={image}
-                  newId={newId}
-                  price={price}
-                />
-              );
+            {ingredients.map(ingredient => {
+              return <BurgerConstructorIngredient key={ingredient.uniqueId} ingredient ={ingredient}/>
             })}
             <div>
               {orderNumber && (
                 <Modal
-                  onClose={() => {
-                    dispatch({
-                      type: REMOVE_ORDER_DETAILS,
-                    });
-                  }}
+                  onClose={ handleRemoveOrder }
                 >
                   <OrderDetails />
                 </Modal>
@@ -159,14 +126,14 @@ const BurgerConstructor = () => {
             </div>
           </ul>
         </li>
-        {Object.entries(burgerObject.bun).length === 0 ? null : (
+        {!bun ? null : (
           <li className="ml-8" style={{ cursor: "pointer" }}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${burgerObject.bun.name} (верх)`}
-              price={burgerObject.bun.price}
-              thumbnail={burgerObject.bun.image}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
             />
           </li>
         )}
@@ -184,19 +151,16 @@ const BurgerConstructor = () => {
           </div>
         </div>
         <Button
-          onClick={() => {
-            fetchOrderNumber();
-          }}
+          disabled={!bun}
+          onClick={fetchOrderNumber}
           htmlType="button"
           type="primary"
           size="large"
-          disabled={disableButton}
         >
           Оформить заказ
         </Button>
       </div>
     </div>
-  );
 };
 
 export default BurgerConstructor;
