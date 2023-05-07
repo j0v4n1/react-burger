@@ -3,10 +3,10 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./forgot-password-page.module.css";
+import styles from "./recovery-password-page.module.css";
 import { Link } from "react-router-dom";
 
-const ForgotPasswordPage = () => {
+const RecoveryPasswordPage = () => {
   const [emailValue, setEmailValue] = useState("");
   return (
     <main className={styles.wrapper}>
@@ -30,4 +30,4 @@ const ForgotPasswordPage = () => {
   );
 };
 
-export default ForgotPasswordPage;
+export default RecoveryPasswordPage;
