@@ -1,6 +1,6 @@
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { remove } from "../ingredient-details/ingredient-details-slice";
+import { remove } from "../../services/slices/ingredient-details-slice";
 
 const IngredientDetails = () => {
   const {

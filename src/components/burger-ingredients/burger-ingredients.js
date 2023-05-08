@@ -3,10 +3,10 @@ import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchIngredients} from "./burger-ingredients-slice";
+import {fetchIngredients} from "../../services/slices/burger-ingredients-slice";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 import IngredientDetails from "../ingredient-details/ingredient-details";
-import {remove} from "../ingredient-details/ingredient-details-slice";
+import {remove} from "../../services/slices/ingredient-details-slice";
 
 const BurgerIngredients = () => {
 

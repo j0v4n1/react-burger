@@ -8,8 +8,8 @@ import {useMemo, useCallback} from "react";
 import {useDrop} from "react-dnd";
 import OrderDetails from "../order-details/order-details";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
-import {set, remove} from "../order-details/order-details-slice";
-import {removeAllIngredients, setIngredient} from "./burger-constructor-slice";
+import {set, remove} from "../../services/slices/order-details-slice";
+import {removeAllIngredients, setIngredient} from "../../services/slices/burger-constructor-slice";
 
 const BurgerConstructor = () => {
 

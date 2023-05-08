@@ -39,7 +39,7 @@ const AppHeader = () => {
         <div className={styles.account}>
           <ProfileIcon type="secondary"/>
           <NavLink
-            to={"/profile"}
+            to={"/login"}
             className={styles.link}
             style={({isActive}) => ({
               color: isActive
