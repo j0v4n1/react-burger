@@ -3,9 +3,9 @@ import {useState} from "react";
 import styles from "./register-page.module.css";
 import {Link} from "react-router-dom";
 import authentication from "../../utils/authentication-api";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {setAccessToken} from "../../services/slices/authentication-slice";
-import {registrationURL} from "../../constants/constants";
+import {registrationURL, profileURL} from "../../constants/constants";
 
 const RegisterPage = () => {
 
@@ -15,13 +15,28 @@ const RegisterPage = () => {
 
     const dispatch = useDispatch();
 
+    const accessToken = useSelector(store => store.authentication.accessToken)
+
     const getTokens = (email, password, name) => {
-        authentication(registrationURL, {email, password, name})
+        authentication(registrationURL, {
+            body: {
+                email,
+                name,
+                password
+            }
+        })
             .then((data) => {
                 dispatch(setAccessToken(data.accessToken))
-                localStorage.setItem('accessToken', JSON.stringify(data.refreshToken));
+                localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
+                authentication(profileURL, {
+                    method: "GET",
+                    headers: {
+                        authorization: accessToken
+                    }
+                })
             })
-            .then(() => {
+            .then((data) => {
+                console.log(data);
                 setEmail("");
                 setName("");
                 setPassword("");

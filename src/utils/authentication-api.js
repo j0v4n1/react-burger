@@ -1,15 +1,15 @@
 import checkResponse from "./check-response";
 
-const authentication = (url, body) => {
+const authentication = (url, options = {}) => {
+    const { method = "POST", headers = { "Content-type": "application/json" }, body } = options;
+
     return fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-type": "application/json"
-        },
-        body: JSON.stringify({...body}),
+      method,
+      headers,
+      body: body && JSON.stringify(body),
     }).then((res) => {
-        return checkResponse(res);
+      return checkResponse(res);
     });
-}
+  };
 
 export default authentication;

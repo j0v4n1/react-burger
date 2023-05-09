@@ -5,3 +5,4 @@ export const registrationURL = "https://norma.nomoreparties.space/api/auth/regis
 export const authorizationURL = "https://norma.nomoreparties.space/api/auth/login";
 export const logoutURL = "https://norma.nomoreparties.space/api/auth/logout";
 export const refreshTokenURL = "https://norma.nomoreparties.space/api/auth/token";
+export const profileURL = "https://norma.nomoreparties.space/api/auth/user";
