@@ -5,9 +5,11 @@ import {NavLink} from "react-router-dom";
 import classNames from "classnames";
 
 const ProfilePage = () => {
-  const [nameValue, setNameValue] = useState("Марк");
-  const [emailValue, setEmailValue] = useState("mail@stellar.burgers");
-  const [passwordValue, setPasswordValue] = useState("dfsfsfsdf");
+
+  const [nameValue, setNameValue] = useState("");
+  const [emailValue, setEmailValue] = useState("");
+  const [passwordValue, setPasswordValue] = useState("");
+  
   return (
     <main className={styles.wrapper}>
       <div className={styles.menuWrapper}>

@@ -1,11 +1,11 @@
 import {Input, PasswordInput, EmailInput, Button,} from "@ya.praktikum/react-developer-burger-ui-components";
 import {useState} from "react";
 import styles from "./register-page.module.css";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import {useDispatch, useSelector} from "react-redux";
-import {setAccessToken} from "../../services/slices/authentication-slice";
-import {registrationURL, profileURL} from "../../constants/constants";
+import {setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn} from "../../services/slices/profile-slice";
+import {registrationURL, profileURL, refreshTokenURL} from "../../constants/constants";
 
 const RegisterPage = () => {
 
@@ -14,8 +14,9 @@ const RegisterPage = () => {
     const [email, setEmail] = useState("");
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const accessToken = useSelector(store => store.authentication.accessToken)
+    const accessToken = useSelector(store => store.profile.accessToken);
 
     const getTokens = (email, password, name) => {
         authentication(registrationURL, {
@@ -31,17 +32,46 @@ const RegisterPage = () => {
                 authentication(profileURL, {
                     method: "GET",
                     headers: {
-                        authorization: accessToken
+                        authorization: accessToken,
+                        "Content-type": "application/json"
                     }
                 })
+                    .then(data => {
+                        console.log(data)
+                        if (data.success) {
+                            dispatch(setProfileName(data.name));
+                            dispatch(setProfileEmail(data.email));
+                            dispatch(setIsLoggedIn(true));
+                            navigate('/')
+                        }
+                        else {
+                            authentication(refreshTokenURL, {
+                                body: {
+                                    token: JSON.parse(localStorage.getItem('refreshToken'))
+                            }
+                            })
+                                .then((data) => {
+                                    dispatch(setAccessToken(data.accessToken))
+                                    localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
+                                    dispatch(setProfileName(data.name));
+                                    dispatch(setProfileEmail(data.email));
+                                    dispatch(setIsLoggedIn(true));
+                                    navigate('/')
+                                })
+                        }
+                    })
             })
-            .then((data) => {
-                console.log(data);
+            .catch((error) => {
+                console.error(error)
+            })
+            .finally(() => {
                 setEmail("");
                 setName("");
                 setPassword("");
             });
     };
+
+    const handleGetTokens = () => getTokens(email, password, name)
 
     return (
         <main className={styles.wrapper}>
@@ -78,9 +108,7 @@ const RegisterPage = () => {
                 type="primary"
                 size="large"
                 disabled={!name || !password || !email}
-                onClick={() => {
-                    getTokens(email, password, name);
-                }}
+                onClick={handleGetTokens}
             >
                 Зарегистрироваться
             </Button>

@@ -1,13 +1,11 @@
-import {
-  Logo,
-  BurgerIcon,
-  ListIcon,
-  ProfileIcon,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import {Logo, BurgerIcon, ListIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
 import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const AppHeader = () => {
+
+    const isLoggedIn = useSelector(store => store.profile.isLoggedIn)
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -39,7 +37,7 @@ const AppHeader = () => {
         <div className={styles.account}>
           <ProfileIcon type="secondary"/>
           <NavLink
-            to={"/login"}
+            to={isLoggedIn ? "/profile" : "/login"}
             className={styles.link}
             style={({isActive}) => ({
               color: isActive
