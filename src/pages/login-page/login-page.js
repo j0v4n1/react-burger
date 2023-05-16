@@ -1,15 +1,39 @@
-import {
-  PasswordInput,
-  EmailInput,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { PasswordInput, EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./login-page.module.css";
-import { Link } from "react-router-dom";
+import { setAccessToken, setIsLoggedIn, setProfileEmail, setProfileName } from "../../services/slices/profile-slice";
+import { Link, useNavigate } from "react-router-dom";
+import authentication from "../../utils/authentication-api";
+import { AUTHORIZATION_URL } from "../../constants/constants";
+import { useDispatch } from "react-redux";
+import { setAuthData } from "../../utils/utils";
 
 const LoginPage = () => {
+
   const [passwordValue, setPasswordValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogIn = () => {
+    authentication(AUTHORIZATION_URL, {
+        body: {
+            email: emailValue,
+            password: passwordValue
+        }
+    })
+    .then((data) => {
+      setAuthData(
+        dispatch,
+        data.refreshToken,
+        data.accessToken,
+        data.user.name,
+        data.user.email)
+        navigate('/')
+    })
+  }
+
   return (
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Вход</h2>
@@ -18,7 +42,6 @@ const LoginPage = () => {
           onChange={(e) => setEmailValue(e.target.value)}
           value={emailValue}
           name={"email"}
-          isIcon={false}
           extraClass="mb-6"
         />
         <PasswordInput
@@ -28,7 +51,7 @@ const LoginPage = () => {
           extraClass="mb-2"
         />
       </form>
-      <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
+      <Button onClick={handleLogIn} extraClass="mt-4" htmlType="button" type="primary" size="large">
         Войти
       </Button>
       <p className="mt-20 mb-6">

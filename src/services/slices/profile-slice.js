@@ -20,7 +20,9 @@ const profileSlice = createSlice({
         setProfileEmail: (state, action) => {
             state.profileEmail = action.payload
         },
-        setIsLoggedIn: state => {state.isLoggedIn = true}
+        setIsLoggedIn: (state, action) => {
+            state.isLoggedIn = action.payload
+        }
     }
 })
 

@@ -1,8 +1,8 @@
 import checkResponse from "./check-response";
-import { getIngredientsURL } from "../constants/constants";
+import { GET_INGREDIENTS_URL } from "../constants/constants";
 
 function getIngredients() {
-  return fetch(getIngredientsURL).then((res) => {
+  return fetch(GET_INGREDIENTS_URL).then((res) => {
     return checkResponse(res);
   });
 }

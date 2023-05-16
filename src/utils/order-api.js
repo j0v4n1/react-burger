@@ -1,8 +1,8 @@
 import checkResponse from "./check-response";
-import { getOrderNumberURL } from "../constants/constants";
+import { GET_ORDER_NUMBER_URL } from "../constants/constants";
 
 function getOrderNumber(ingredientsList) {
-  return fetch(getOrderNumberURL, {
+  return fetch(GET_ORDER_NUMBER_URL, {
     method: "POST",
     headers: {
       "Content-type": "application/json",

@@ -1,11 +1,29 @@
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./reset-password-page.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authentication from "../../utils/authentication-api";
+import { SET_NEW_PASSWORD_URL } from "../../constants/constants";
 
 const ResetPasswordPage = () => {
+
   const [newPasswordValue, setNewPasswordValue] = useState("");
   const [recoveryCodeValue, setRecoveryCodeValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleResetPassword = () => {
+    authentication(SET_NEW_PASSWORD_URL, {
+      body: {
+        password: newPasswordValue,
+        token: recoveryCodeValue
+      }
+    })
+    .then(() => {
+      navigate('/login')
+    })
+  }
+
   return (
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Восстановление пароля</h2>
@@ -28,7 +46,7 @@ const ResetPasswordPage = () => {
         extraClass="ml-1 mt-6"
       />
       </form>
-      <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
+      <Button onClick={handleResetPassword} extraClass="mt-4" htmlType="button" type="primary" size="large">
         Сохранить
       </Button>
       <p className="mt-20 mb-6">

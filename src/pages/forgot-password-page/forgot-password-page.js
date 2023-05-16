@@ -1,13 +1,26 @@
-import {
-  EmailInput,
-  Button,
-} from "@ya.praktikum/react-developer-burger-ui-components";
+import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./forgot-password-page.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authentication from "../../utils/authentication-api";
+import { RESET_PASSWORD_URL } from "../../constants/constants";
 
 const ForgotPasswordPage = () => {
+
   const [emailValue, setEmailValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleResetPassword = () => {
+    authentication(RESET_PASSWORD_URL, {
+      body: {
+        email: emailValue
+      }
+    }).then(() => {
+      navigate('/reset-password')
+    })
+  }
+
   return (
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Восстановление пароля</h2>
@@ -20,7 +33,7 @@ const ForgotPasswordPage = () => {
           extraClass="mb-6"
         />
       </form>
-      <Button extraClass="mt-4" htmlType="button" type="primary" size="large">
+      <Button onClick={handleResetPassword} extraClass="mt-4" htmlType="button" type="primary" size="large">
         Восстановить
       </Button>
       <p className="mt-20 mb-6">

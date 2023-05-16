@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-
+import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from "../services/slices/profile-slice";
 const ingredientsPropTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
@@ -12,5 +12,13 @@ const ingredientsPropTypes = {
   type: PropTypes.string.isRequired,
   __v: PropTypes.number.isRequired,
 };
+
+export const setAuthData = (dispatch, refreshToken, accessToken, name, email) => {
+  localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+  dispatch(setAccessToken(accessToken))
+  dispatch(setProfileName(name))
+  dispatch(setProfileEmail(email))
+  dispatch(setIsLoggedIn(true))
+}
 
 export default ingredientsPropTypes;
