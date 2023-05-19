@@ -10,6 +10,7 @@ import OrderDetails from "../order-details/order-details";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
 import {set, remove} from "../../services/slices/order-details-slice";
 import {removeAllIngredients, setIngredient} from "../../services/slices/burger-constructor-slice";
+import {useNavigate} from "react-router-dom";
 
 const BurgerConstructor = () => {
 
@@ -62,20 +63,26 @@ const BurgerConstructor = () => {
     },
   });
 
+  const isLoggedIn = useSelector(store => store.profile.isLoggedIn)
   const orderNumber = useSelector(store => store.orderDetails.orderNumber);
+  const navigate = useNavigate();
 
   const fetchOrderNumber = () => {
-    const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({_id}) => _id), bun._id,];
-    getOrderNumber(ingredientsAndBunsIdsList)
-      .then((orderData) => {
-        dispatch(set(orderData.order.number))
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        dispatch(removeAllIngredients());
-      });
+    if (isLoggedIn) {
+      const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({_id}) => _id), bun._id,];
+      getOrderNumber(ingredientsAndBunsIdsList)
+        .then((orderData) => {
+          dispatch(set(orderData.order.number))
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          dispatch(removeAllIngredients());
+        });
+    } else {
+      navigate('/login')
+    }
   };
 
   const totalPrice = useMemo(() => {

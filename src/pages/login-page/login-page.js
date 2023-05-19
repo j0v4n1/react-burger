@@ -1,7 +1,6 @@
 import { PasswordInput, EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./login-page.module.css";
-import { setAccessToken, setIsLoggedIn, setProfileEmail, setProfileName } from "../../services/slices/profile-slice";
 import { Link, useNavigate } from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { AUTHORIZATION_URL } from "../../constants/constants";

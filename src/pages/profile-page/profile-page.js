@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useDispatch, useSelector } from 'react-redux';
 import authentication from '../../utils/authentication-api';
 import { LOGOUT_URL, PROFILE_URL } from '../../constants/constants';
-import { setProfileEmail, setProfileName } from "../../services/slices/profile-slice";
+import {setIsLoggedIn, setProfileEmail, setProfileName, setAccessToken} from "../../services/slices/profile-slice";
 
 const ProfilePage = () => {
 
@@ -27,11 +27,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
 
   const isFormChanged = () => {
-    if ((profileName === nameValue) && (profileEmail === emailValue)) {
-      return false
-    } else {
-      return true
-    }
+    return !((profileName === nameValue) && (profileEmail === emailValue));
   }
 
   const handleLogOut = () => {
@@ -42,7 +38,9 @@ const ProfilePage = () => {
     })
       .then(() => {
         localStorage.removeItem('refreshToken');
+        dispatch(setAccessToken(null))
         navigate('/login')
+        dispatch(setIsLoggedIn(false))
       })
   }
 
