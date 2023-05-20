@@ -1,7 +1,7 @@
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
 import styles from "./reset-password-page.module.css";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { SET_NEW_PASSWORD_URL } from "../../constants/constants";
 
@@ -11,6 +11,9 @@ const ResetPasswordPage = () => {
   const [recoveryCodeValue, setRecoveryCodeValue] = useState("");
 
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isRedirectFromForgotPasswordPage = location.state === '/forgot-password'
 
   const handleResetPassword = () => {
     authentication(SET_NEW_PASSWORD_URL, {
@@ -25,6 +28,7 @@ const ResetPasswordPage = () => {
   }
 
   return (
+    isRedirectFromForgotPasswordPage ?
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Восстановление пароля</h2>
       <form style={{ display: "flex", flexDirection: "column" }}>
@@ -52,7 +56,7 @@ const ResetPasswordPage = () => {
       <p className="mt-20 mb-6">
         Вспомнили пароль? <Link to={"/login"}>Войти</Link>
       </p>
-    </main>
+    </main> : <Navigate to={'/forgot-password'} replace/>
   );
 };
 

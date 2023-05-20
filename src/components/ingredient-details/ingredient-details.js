@@ -1,6 +1,7 @@
 import styles from "./ingredient-details.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { remove } from "../../services/slices/ingredient-details-slice";
+import {useNavigate} from "react-router-dom";
 
 const IngredientDetails = () => {
   const {
@@ -13,8 +14,10 @@ const IngredientDetails = () => {
   } = useSelector(store => store.ingredientDetails.currentIngredient);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleCloseIngredientDetails = () => {
+    navigate('/');
     dispatch(remove());
   }
 

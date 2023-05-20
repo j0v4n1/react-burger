@@ -1,18 +1,14 @@
 import {useState, useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
-import Modal from "../modal/modal";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchIngredients} from "../../services/slices/burger-ingredients-slice";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
-import IngredientDetails from "../ingredient-details/ingredient-details";
-import {remove} from "../../services/slices/ingredient-details-slice";
 
 const BurgerIngredients = () => {
 
   const ingredients = useSelector(store => store.burgerIngredients.ingredients);
   const dispatch = useDispatch();
-  const currentIngredient = useSelector(store => store.ingredientDetails.currentIngredient);
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState("bun");
 
@@ -39,41 +35,44 @@ const BurgerIngredients = () => {
     }
   };
 
-  const handleCloseIngredientDetails = () => {
-    dispatch(remove());
-  }
-
   const buns = ingredients.map((ingredient) => {
     if (ingredient.type === "bun") {
-      return (<BurgerIngredient
+      return (
+        <BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />);
+        />
+      );
     }
   });
 
   const sauces = ingredients.map((ingredient) => {
     if (ingredient.type === "sauce") {
-      return (<BurgerIngredient
+      return (
+        <BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />);
+        />
+      );
     }
   });
 
   const cutlets = ingredients.map((ingredient) => {
     if (ingredient.type === "main") {
-      return (<BurgerIngredient
+      return (
+        <BurgerIngredient
           key={ingredient._id}
           ingredient={ingredient}
           className={styles.item}
-        />);
+        />
+      );
     }
   });
 
-  return (<section className={`${styles.ingredients} text text_type_main-default`}>
+  return (
+    <section className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
       <ul
         className={"mt-5"}
@@ -118,13 +117,9 @@ const BurgerIngredients = () => {
           Начинки
         </h2>
         <ul className={styles.list}>{cutlets}</ul>
-        {currentIngredient && (<Modal
-            onClose={handleCloseIngredientDetails}
-          >
-            <IngredientDetails/>
-          </Modal>)}
       </div>
-    </section>);
+    </section>
+  );
 };
 
 export default BurgerIngredients;

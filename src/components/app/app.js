@@ -13,6 +13,8 @@ import {useEffect} from "react";
 import getUserInformation from "../../utils/getUserInformation";
 import ProtectedRouteElement from "../protected-route-element/protected-route-element";
 import ProtectedRouteAuthorized from "../protected-route-authorized/protected-route-authorized";
+import IngredientDetails from "../ingredient-details/ingredient-details";
+import Modal from "../modal/modal";
 
 const App = () => {
 
@@ -29,10 +31,11 @@ const App = () => {
       <AppHeader/>
       <Routes>
         <Route path="/" element={<MainPage/>}/>
+        <Route path='/ingredients/:id' element={<Modal><IngredientDetails/></Modal>}/>
         <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
         <Route path="/login" element={<ProtectedRouteAuthorized element={<LoginPage/>}/>}/>
         <Route path="/register" element={<ProtectedRouteAuthorized element={<RegisterPage/>}/>}/>
-        <Route path="/reset-password" element={<ProtectedRouteAuthorized element={<ResetPasswordPage/>} />}/>
+        <Route path="/reset-password" element={<ProtectedRouteAuthorized element={<ResetPasswordPage/>}/>}/>
         <Route path="/forgot-password" element={<ProtectedRouteAuthorized element={<ForgotPasswordPage/>}/>}/>
         <Route path="*" element={<Page404/>}/>
       </Routes>

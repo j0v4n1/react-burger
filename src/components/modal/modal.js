@@ -1,24 +1,36 @@
 import styles from "./modal.module.css";
 import ReactDOM from "react-dom";
-import { useEffect } from "react";
+import {useEffect} from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
+import {remove} from "../../services/slices/ingredient-details-slice";
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
-const Modal = ({ onClose, children }) => {
+const Modal = ({children}) => {
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   useEffect(() => {
     document.addEventListener("keydown", keydownHandler);
     return () => document.removeEventListener("keydown", keydownHandler);
   });
 
-  const keydownHandler = ({ key }) => {
+  const handleCloseIngredientDetails = () => {
+    navigate('/');
+    dispatch(remove());
+  }
+
+  const keydownHandler = ({key}) => {
     if (key === "Escape") {
-      onClose();
+      handleCloseIngredientDetails()
     }
   };
 
   return ReactDOM.createPortal(
     <div className={styles.modals}>
-      <ModalOverlay onClose={onClose} />
+      <ModalOverlay onClose={handleCloseIngredientDetails}/>
       <div className={styles.modal}>{children}</div>
     </div>,
     document.getElementById("react-modals")
@@ -27,7 +39,6 @@ const Modal = ({ onClose, children }) => {
 
 Modal.propTypes = {
   children: PropTypes.element,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default Modal;

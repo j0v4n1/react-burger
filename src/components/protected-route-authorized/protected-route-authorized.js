@@ -17,7 +17,7 @@ const ProtectedRouteAuthorized = ({element}) => {
     init();
   }, [accessToken]);
 
-  return element;
+  return element
 
 }
 

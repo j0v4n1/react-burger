@@ -4,6 +4,7 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { set } from "../../services/slices/ingredient-details-slice";
+import {Link} from "react-router-dom";
 
 const BurgerIngredient = ({ ingredient }) => {
 
@@ -50,27 +51,29 @@ const BurgerIngredient = ({ ingredient }) => {
       ref={dragRef}
       className={styles.item}
     >
-      {countIngredient > 0
-      ? <Counter count={countIngredient} size="default" extraClass="m-1" />
-      : null}
+      <Link className={styles.link} to={`/ingredients/${ingredient._id}`}>
+        {countIngredient > 0
+          ? <Counter count={countIngredient} size="default" extraClass="m-1" />
+          : null}
 
-      <img
-        className={styles.image}
-        src={ingredient.image}
-        alt={ingredient.name}
-      />
-      <div style={{ display: "flex" }}>
-        <p className={"text text_type_digits-default pb-1 pr-2"}>
-          {ingredient.price}
+        <img
+          className={styles.image}
+          src={ingredient.image}
+          alt={ingredient.name}
+        />
+        <div style={{ display: "flex" }}>
+          <p className={"text text_type_digits-default pb-1 pr-2"}>
+            {ingredient.price}
+          </p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p
+          style={{ textAlign: "center", paddingBottom: 24 }}
+          className={"text text_type_main-default"}
+        >
+          {ingredient.name}
         </p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p
-        style={{ textAlign: "center", paddingBottom: 24 }}
-        className={"text text_type_main-default"}
-      >
-        {ingredient.name}
-      </p>
+      </Link>
     </li>
   );
 };
