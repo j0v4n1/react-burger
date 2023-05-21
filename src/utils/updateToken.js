@@ -2,7 +2,7 @@ import authentication from "./authentication-api";
 import {PROFILE_URL, REFRESH_TOKEN_URL} from "../constants/constants";
 import {setAccessToken, setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile-slice";
 
-const updateRefreshToken = (dispatch) => {
+const updateToken = (dispatch) => {
   authentication(REFRESH_TOKEN_URL, {
     body: {
       token: JSON.parse(localStorage.getItem('refreshToken'))
@@ -25,4 +25,4 @@ const updateRefreshToken = (dispatch) => {
     })
 }
 
-export default updateRefreshToken;
+export default updateToken;

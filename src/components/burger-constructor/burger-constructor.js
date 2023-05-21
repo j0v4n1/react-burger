@@ -94,21 +94,21 @@ const BurgerConstructor = () => {
     }, 0);
   }, [burgerConstructorIngredients]);
 
-  return <div className={styles.constructor}>
+  return <section className={styles.constructor}>
     <ul
       className={styles.mainList}
       ref={dropTarget}
       style={isOver ? {outlineStyle: "solid"} : null}
     >
       {!bun ? null : (<li className="ml-8" style={{cursor: "pointer"}}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </li>)}
+        <ConstructorElement
+          type="top"
+          isLocked={true}
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
+      </li>)}
       <li>
         <ul className={styles.list}>
           {ingredients.map(ingredient => {
@@ -116,22 +116,22 @@ const BurgerConstructor = () => {
           })}
           <div>
             {orderNumber && (<Modal
-                onClose={handleRemoveOrder}
-              >
-                <OrderDetails/>
-              </Modal>)}
+              onClose={handleRemoveOrder}
+            >
+              <OrderDetails/>
+            </Modal>)}
           </div>
         </ul>
       </li>
       {!bun ? null : (<li className="ml-8" style={{cursor: "pointer"}}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </li>)}
+        <ConstructorElement
+          type="bottom"
+          isLocked={true}
+          text={`${bun.name} (верх)`}
+          price={bun.price}
+          thumbnail={bun.image}
+        />
+      </li>)}
     </ul>
     <div className={styles.bottom}>
       <div
@@ -155,7 +155,7 @@ const BurgerConstructor = () => {
         Оформить заказ
       </Button>
     </div>
-  </div>
+  </section>
 };
 
 export default BurgerConstructor;

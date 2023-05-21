@@ -61,14 +61,15 @@ const ProfilePage = () => {
         password: passwordValue
       }
     })
-    .then(data => {
-      dispatch(setProfileName(data.user.name))
-      dispatch(setProfileEmail(data.user.email))
-    })
+      .then(data => {
+        dispatch(setProfileName(data.user.name))
+        dispatch(setProfileEmail(data.user.email))
+      })
+      .catch(error => console.log(error))
   }
 
   return (
-    <main className={styles.wrapper}>
+    <div className={styles.wrapper}>
       <div className={styles.menuWrapper}>
         <ul className={styles.menu}>
           <li>
@@ -138,12 +139,12 @@ const ProfilePage = () => {
           {isFormChanged() ? <Button onClick={handleCancelButton} htmlType="button" type="secondary" size="large">
             Отмена
           </Button> : null}
-          <Button onClick={handleChangeFields} extraClass="mt-4" htmlType="button" type="primary" size="large">
+          <Button disabled={!isFormChanged()} onClick={handleChangeFields} extraClass="mt-4" htmlType="button" type="primary" size="large">
             Сохранить
           </Button>
         </div>
       </form>
-    </main>
+    </div>
   );
 }
 

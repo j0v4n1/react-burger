@@ -1,7 +1,7 @@
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import {Logo, BurgerIcon, ListIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./app-header.module.css";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {NavLink} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const AppHeader = () => {
 
@@ -13,11 +13,11 @@ const AppHeader = () => {
         <nav className={styles.menu}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <BurgerIcon type="primary" />
+              <BurgerIcon type="primary"/>
               <NavLink
                 to={"/"}
                 className={styles.link}
-                style={({ isActive }) => ({
+                style={({isActive}) => ({
                   color: isActive
                     ? "var(--text-primary-color)"
                     : "var(--text-inactive-color)",
@@ -27,20 +27,24 @@ const AppHeader = () => {
               </NavLink>
             </li>
             <li className={styles.item}>
-              <ListIcon type="secondary" />
-              <a className={styles.link} href={"#"}>
+              <ListIcon type="secondary"/>
+              <NavLink to={'/feed'} style={({isActive}) => ({
+                color: isActive
+                  ? "var(--text-primary-color)"
+                  : "var(--text-inactive-color)",
+              })} className={styles.link} href={"#"}>
                 Лента заказов
-              </a>
+              </NavLink>
             </li>
           </ul>
-          <Logo />
+          <Logo/>
         </nav>
         <div className={styles.account}>
-          <ProfileIcon type="secondary" />
+          <ProfileIcon type="secondary"/>
           <NavLink
             to={isLoggedIn ? "/profile" : "/login"}
             className={styles.link}
-            style={({ isActive }) => ({
+            style={({isActive}) => ({
               color: isActive
                 ? "var(--text-primary-color)"
                 : "var(--text-inactive-color)",

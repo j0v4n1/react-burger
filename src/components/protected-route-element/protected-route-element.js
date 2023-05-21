@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 import {useEffect} from "react";
 import getUserData from "../../utils/getUserData";
-import updateRefreshToken from "../../utils/updateRefreshToken";
+import updateToken from "../../utils/updateToken";
 
 const ProtectedRouteElement = ({element}) => {
 
@@ -15,7 +15,7 @@ const ProtectedRouteElement = ({element}) => {
     if (accessToken) {
       getUserData(accessToken, dispatch)
     } else if (refreshToken) {
-      updateRefreshToken(dispatch)
+      updateToken(dispatch)
     } else {
       navigate('/login')
     }

@@ -1,4 +1,4 @@
-import updateRefreshToken from "./updateRefreshToken";
+import updateToken from "./updateToken";
 import getUserData from "./getUserData";
 
 const getUserInformation = (dispatch, accessToken, refreshToken) => {
@@ -6,7 +6,7 @@ const getUserInformation = (dispatch, accessToken, refreshToken) => {
     getUserData(accessToken, dispatch)
   } else {
     if (refreshToken) {
-      updateRefreshToken(dispatch);
+      updateToken(dispatch);
     }
   }
 }

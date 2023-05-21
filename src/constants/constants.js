@@ -8,3 +8,4 @@ export const PROFILE_URL = "https://norma.nomoreparties.space/api/auth/user";
 export const RESET_PASSWORD_URL = "https://norma.nomoreparties.space/api/password-reset";
 export const SET_NEW_PASSWORD_URL = "https://norma.nomoreparties.space/api/password-reset/reset"
 export const DEFAULT_HEADERS = {"Content-type": "application/json"};
+export const ORDERS_LIST_URL = "wss://norma.nomoreparties.space/orders/all"

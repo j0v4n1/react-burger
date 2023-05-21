@@ -1,7 +1,7 @@
 import authentication from "./authentication-api";
 import {PROFILE_URL} from "../constants/constants";
 import {setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile-slice";
-import updateRefreshToken from "./updateRefreshToken";
+import updateToken from "./updateToken";
 
 const getUserData = (accessToken, dispatch) => {
   authentication(PROFILE_URL, {
@@ -10,17 +10,13 @@ const getUserData = (accessToken, dispatch) => {
       authorization: accessToken
     }
   })
-    .then(data => {
-      dispatch(setProfileName(data.user.name))
-      dispatch(setProfileEmail(data.user.email))
+    .then(({user}) => {
+      dispatch(setProfileName(user.name))
+      dispatch(setProfileEmail(user.email))
       dispatch(setIsLoggedIn(true))
     })
-    .catch(err => {
-      if (err.message === 'jwt expired') {
-        updateRefreshToken(dispatch);
-      } else {
-        console.error(err);
-      }
+    .catch(() => {
+      updateToken(dispatch);
     })
 }
 
