@@ -3,9 +3,7 @@ import page404 from "../../images/404.jpg"
 
 const Page404 = () => {
   return (
-    <main className={styles.content}>
-     <img className={styles.image} src={page404} alt="Страница не найдена" />
-    </main>
+    <img className={styles.image} src={page404} alt="Страница не найдена" />
   )
 }
 

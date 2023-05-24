@@ -14,7 +14,7 @@ const initialState = {
   ingredients: [],
 };
 
-const burgerIngredientsSlice = createSlice({
+const burgerIngredients = createSlice({
   name: "burgerIngredients",
   initialState,
   reducers: {},
@@ -24,6 +24,7 @@ const burgerIngredientsSlice = createSlice({
     })
     builder.addCase(fetchIngredients.fulfilled, (state, action) => {
       state.ingredients = action.payload.data;
+
     })
     builder.addCase(fetchIngredients.rejected, state => {
       state.ingredientsFailed = true;
@@ -33,6 +34,6 @@ const burgerIngredientsSlice = createSlice({
   }
 });
 
-const { reducer } = burgerIngredientsSlice;
+const { reducer } = burgerIngredients;
 
 export default reducer;

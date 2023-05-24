@@ -1,7 +1,7 @@
 import styles from "./order-details.module.css";
 import done from "../../images/done.png";
 import { useDispatch, useSelector } from "react-redux";
-import { remove } from "../../services/slices/order-details-slice";
+import { remove } from "../../services/slices/order-details";
 
 const OrderDetails = () => {
 

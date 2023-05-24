@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {useEffect} from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from "prop-types";
-import {remove} from "../../services/slices/ingredient-details-slice";
+import {remove} from "../../services/slices/ingredient-details";
 import {useDispatch} from "react-redux";
 import {useNavigate} from "react-router-dom";
 

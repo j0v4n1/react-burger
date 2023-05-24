@@ -3,7 +3,7 @@ import { useDrag } from "react-dnd";
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { set } from "../../services/slices/ingredient-details-slice";
+import { set } from "../../services/slices/ingredient-details";
 import {Link} from "react-router-dom";
 
 const BurgerIngredient = ({ ingredient }) => {

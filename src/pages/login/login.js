@@ -1,13 +1,13 @@
 import { PasswordInput, EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./login-page.module.css";
+import styles from "./login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { AUTHORIZATION_URL } from "../../constants/constants";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../../utils/utils";
 
-const LoginPage = () => {
+const Login = () => {
 
   const [passwordValue, setPasswordValue] = useState("");
   const [emailValue, setEmailValue] = useState("");
@@ -34,7 +34,7 @@ const LoginPage = () => {
   }
 
   return (
-    <main className={styles.wrapper}>
+    <section className={styles.wrapper}>
       <h2 className={styles.header}>Вход</h2>
       <form style={{ display: "flex", flexDirection: "column" }}>
         <EmailInput
@@ -59,8 +59,8 @@ const LoginPage = () => {
       <p style={{ margin: 0 }}>
         Забыли пароль? <Link to={"/forgot-password"}>Восстановить пароль</Link>
       </p>
-    </main>
+    </section>
   );
 };
 
-export default LoginPage;
+export default Login;

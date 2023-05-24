@@ -1,6 +1,6 @@
 import authentication from "./authentication-api";
 import {PROFILE_URL, REFRESH_TOKEN_URL} from "../constants/constants";
-import {setAccessToken, setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile-slice";
+import {setAccessToken, setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile";
 
 const updateToken = (dispatch) => {
   authentication(REFRESH_TOKEN_URL, {

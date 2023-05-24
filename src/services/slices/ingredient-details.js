@@ -1,23 +1,23 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  orderNumber: null,
+  currentIngredient: null,
 };
 
-const orderDetailsSlice = createSlice({
-  name: "orderDetails",
+const ingredientDetails = createSlice({
+  name: "ingredientDetails",
   initialState,
   reducers: {
     set: (state, action) => {
-      state.orderNumber = action.payload;
+      state.currentIngredient = action.payload;
     },
     remove: (state) => {
-      state.orderNumber = null;
+      state.currentIngredient = null;
     },
   },
 });
 
-const { actions, reducer } = orderDetailsSlice;
+const { actions, reducer } = ingredientDetails;
 
 export default reducer;
 

@@ -1,12 +1,12 @@
 import "./app.css";
 import {
-  MainPage,
+  Main,
   Page404,
-  ProfilePage,
-  LoginPage,
-  RegisterPage,
-  ResetPasswordPage,
-  ForgotPasswordPage
+  Profile,
+  Login,
+  Register,
+  ResetPassword,
+  ForgotPassword
 } from "../../pages";
 import AppHeader from "../app-header/app-header";
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
@@ -17,8 +17,8 @@ import ProtectedRouteElement from "../protected-route-element/protected-route-el
 import ProtectedRouteAuthorized from "../protected-route-authorized/protected-route-authorized";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import {ORDERS_LIST_URL} from "../../constants/constants";
-import Feed from "../feed/feed";
+import Feed from "../../pages/feed/feed";
+import OrderInformation from "../../pages/order-information/order-information";
 
 const App = () => {
 
@@ -30,23 +30,22 @@ const App = () => {
     getUserInformation(dispatch, accessToken, refreshToken)
   }, [])
 
-  // const socket = new WebSocket(ORDERS_LIST_URL)
-  // socket.onopen = event => console.log(event)
-
   return (
     <Router>
       <AppHeader/>
       <main className={'content'}>
         <Routes>
-          <Route path="/" element={<MainPage/>}/>
+          <Route path='/' element={<Main/>}/>
           <Route path='/ingredients/:id' element={<Modal><IngredientDetails/></Modal>}/>
-          <Route path="/profile" element={<ProtectedRouteElement element={<ProfilePage/>}/>}/>
-          <Route path="/login" element={<ProtectedRouteAuthorized element={<LoginPage/>}/>}/>
-          <Route path={'/feed'} element={<Feed/>}/>
-          <Route path="/register" element={<ProtectedRouteAuthorized element={<RegisterPage/>}/>}/>
-          <Route path="/reset-password" element={<ProtectedRouteAuthorized element={<ResetPasswordPage/>}/>}/>
-          <Route path="/forgot-password" element={<ProtectedRouteAuthorized element={<ForgotPasswordPage/>}/>}/>
-          <Route path="*" element={<Page404/>}/>
+          <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile/>}/>}/>
+          <Route path='/login' element={<ProtectedRouteAuthorized element={<Login/>}/>}/>
+          <Route path='/feed' element={<Feed/>}/>
+          <Route path='/profile/orders/:id' element={<OrderInformation/>}/>
+          <Route path='/feed/:id' element={<OrderInformation/>}/>
+          <Route path='/register' element={<ProtectedRouteAuthorized element={<Register/>}/>}/>
+          <Route path='/reset-password' element={<ProtectedRouteAuthorized element={<ResetPassword/>}/>}/>
+          <Route path='/forgot-password' element={<ProtectedRouteAuthorized element={<ForgotPassword/>}/>}/>
+          <Route path='*' element={<Page404/>}/>
         </Routes>
       </main>
     </Router>

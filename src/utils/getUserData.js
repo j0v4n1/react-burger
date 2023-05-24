@@ -1,6 +1,6 @@
 import authentication from "./authentication-api";
 import {PROFILE_URL} from "../constants/constants";
-import {setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile-slice";
+import {setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile";
 import updateToken from "./updateToken";
 
 const getUserData = (accessToken, dispatch) => {

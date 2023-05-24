@@ -2,7 +2,7 @@ import {useState, useEffect, useRef} from "react";
 import {Tab} from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from "./burger-ingredients.module.css";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchIngredients} from "../../services/slices/burger-ingredients-slice";
+import {fetchIngredients} from "../../services/slices/burger-ingredients";
 import BurgerIngredient from "../burger-ingredient/burger-ingredient";
 
 const BurgerIngredients = () => {

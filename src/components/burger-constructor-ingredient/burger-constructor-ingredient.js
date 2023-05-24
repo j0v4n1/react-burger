@@ -1,7 +1,7 @@
 import styles from "../burger-constructor-ingredient/burger-constructor-ingredient.module.css";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
-import { removeIngredient } from "../../services/slices/burger-constructor-slice";
+import { removeIngredient } from "../../services/slices/burger-constructor";
 
 const BurgerConstructorIngredient = ({ ingredient }) => {
   const dispatch = useDispatch();

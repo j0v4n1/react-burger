@@ -7,7 +7,7 @@ const initialState = {
   accessToken: null
 }
 
-const profileSlice = createSlice({
+const profile = createSlice({
   name: 'profile',
   initialState,
   reducers: {
@@ -26,6 +26,6 @@ const profileSlice = createSlice({
   }
 })
 
-export const {actions, reducer} = profileSlice;
+export const {actions, reducer} = profile;
 export const {setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn} = actions;
 export default reducer;

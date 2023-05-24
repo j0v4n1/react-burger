@@ -20,7 +20,7 @@ const initialState = {
   ingredients: [],
 };
 
-const burgerConstructorSlice = createSlice({
+const burgerConstructor = createSlice({
   name: "burgerConstructor",
   initialState,
   reducers: {
@@ -42,7 +42,7 @@ const burgerConstructorSlice = createSlice({
   }
 });
 
-const { actions, reducer } = burgerConstructorSlice;
+const { actions, reducer } = burgerConstructor;
 
 export default reducer;
 

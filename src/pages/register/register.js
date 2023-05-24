@@ -1,13 +1,13 @@
 import { Input, PasswordInput, EmailInput, Button, } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./register-page.module.css";
+import styles from "./register.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { useDispatch } from "react-redux";
 import { REGISTRATION_URL } from "../../constants/constants";
 import { setAuthData } from "../../utils/utils";
 
-const RegisterPage = () => {
+const Register = () => {
 
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -80,4 +80,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Register;

@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import burgerConstructor from "../slices/burger-constructor-slice";
-import burgerIngredients from "../slices/burger-ingredients-slice";
-import orderDetails from "../slices/order-details-slice";
-import ingredientDetails from "../slices/ingredient-details-slice";
-import profile from "../slices/profile-slice";
+import burgerConstructor from "../slices/burger-constructor";
+import burgerIngredients from "../slices/burger-ingredients";
+import orderDetails from "../slices/order-details";
+import ingredientDetails from "../slices/ingredient-details";
+import profile from "../slices/profile";
 
 const rootReducer = combineReducers({
     burgerIngredients,

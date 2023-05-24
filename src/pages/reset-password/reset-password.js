@@ -1,11 +1,11 @@
 import { PasswordInput, Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useState } from "react";
-import styles from "./reset-password-page.module.css";
+import styles from "./reset-password.module.css";
 import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { SET_NEW_PASSWORD_URL } from "../../constants/constants";
 
-const ResetPasswordPage = () => {
+const ResetPassword = () => {
 
   const [newPasswordValue, setNewPasswordValue] = useState("");
   const [recoveryCodeValue, setRecoveryCodeValue] = useState("");
@@ -60,4 +60,4 @@ const ResetPasswordPage = () => {
   );
 };
 
-export default ResetPasswordPage;
+export default ResetPassword;
