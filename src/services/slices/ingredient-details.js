@@ -18,7 +18,5 @@ const ingredientDetails = createSlice({
 });
 
 const { actions, reducer } = ingredientDetails;
-
 export default reducer;
-
 export const { set, remove } = actions;
