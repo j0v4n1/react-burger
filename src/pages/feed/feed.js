@@ -19,6 +19,25 @@ const Feed = () => {
       })
     : null;
 
+  const checkOrderStatus = (status, className) => {
+    return orders.map((order, index) => {
+      return order.status === status && index <= 9 ? (
+        <li key={order._id} className={className}>
+          {order.number}
+        </li>
+      ) : null;
+    });
+  };
+
+  const readyOrders = checkOrderStatus(
+    'done',
+    `text text_type_digits-default ${styles['feed__orders-ready-list-item']}`
+  );
+  const pendingOrders = checkOrderStatus(
+    'pending',
+    'text text_type_digits-default mb-2'
+  );
+
   useEffect(() => {
     dispatch(connectionStart());
 
@@ -37,34 +56,13 @@ const Feed = () => {
             <div className={styles['feed__orders-ready']}>
               <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
               <ul className={styles['feed__orders-ready-list']}>
-                <li
-                  className={`text text_type_digits-default ${styles['feed__orders-ready-list-item']}`}>
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles['feed__orders-ready-list-item']}`}>
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles['feed__orders-ready-list-item']}`}>
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles['feed__orders-ready-list-item']}`}>
-                  034533
-                </li>
-                <li
-                  className={`text text_type_digits-default ${styles['feed__orders-ready-list-item']}`}>
-                  034533
-                </li>
+                {readyOrders}
               </ul>
             </div>
             <div className={styles['feed__orders-pending']}>
               <h3 className="text text_type_main-medium mb-6">В работе:</h3>
               <ul className={styles['feed__orders-pending-list']}>
-                <li className="text text_type_digits-default mb-2">034533</li>
-                <li className="text text_type_digits-default mb-2">034533</li>
-                <li className="text text_type_digits-default mb-2">034533</li>
+                {pendingOrders}
               </ul>
             </div>
           </div>
