@@ -6,13 +6,14 @@ import {
   connectionClose,
   connectionStart,
 } from '../../services/slices/websocketFeed';
+import Spinner from '../../components/spinner/spinner';
 
 const Feed = () => {
   const dispatch = useDispatch();
   const { orders, total, totalToday } = useSelector(
     (store) => store.websocketFeed.messages
   );
-
+  const { loading } = useSelector((store) => store.websocketFeed);
   const ordersList = orders
     ? orders.map((order) => {
         return <Order key={order._id} order={order} />;
@@ -20,13 +21,15 @@ const Feed = () => {
     : null;
 
   const checkOrderStatus = (status, className) => {
-    return orders.map((order, index) => {
-      return order.status === status && index <= 9 ? (
-        <li key={order._id} className={className}>
-          {order.number}
-        </li>
-      ) : null;
-    });
+    return orders
+      ? orders.map((order, index) => {
+          return order.status === status && index <= 9 ? (
+            <li key={order._id} className={className}>
+              {order.number}
+            </li>
+          ) : null;
+        })
+      : null;
   };
 
   const readyOrders = checkOrderStatus(
@@ -46,7 +49,9 @@ const Feed = () => {
     };
   }, []);
 
-  return (
+  return loading ? (
+    <Spinner height={'calc(100vh - 128px)'} />
+  ) : (
     <section className={styles['feed']}>
       <h2 className="text text_type_main-large mb-5">Лента заказов</h2>
       <div className={styles['feed__orders']}>

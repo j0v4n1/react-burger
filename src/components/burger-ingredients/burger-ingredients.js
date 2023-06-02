@@ -1,20 +1,17 @@
 import { useState, useEffect, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchIngredients } from '../../services/slices/burger-ingredients';
+import { useSelector } from 'react-redux';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
 const BurgerIngredients = () => {
   const ingredients = useSelector(
     (store) => store.burgerIngredients.ingredients
   );
-  const dispatch = useDispatch();
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState('bun');
 
   useEffect(() => {
-    dispatch(fetchIngredients());
     const scrollNode = scrollRef.current;
     if (scrollNode) {
       scrollNode.addEventListener('scroll', scrollHandler);

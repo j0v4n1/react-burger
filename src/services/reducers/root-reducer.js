@@ -5,7 +5,7 @@ import orderDetails from '../slices/order-details';
 import ingredientDetails from '../slices/ingredient-details';
 import profile from '../slices/profile';
 import websocketFeed from '../slices/websocketFeed';
-
+import orderInformation from '../slices/order-information';
 const rootReducer = combineReducers({
   burgerIngredients,
   burgerConstructor,
@@ -13,6 +13,7 @@ const rootReducer = combineReducers({
   orderDetails,
   profile,
   websocketFeed,
+  orderInformation,
 });
 
 export default rootReducer;

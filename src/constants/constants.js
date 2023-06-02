@@ -23,6 +23,7 @@ export const SET_NEW_PASSWORD_URL =
   'https://norma.nomoreparties.space/api/password-reset/reset';
 export const DEFAULT_HEADERS = { 'Content-type': 'application/json' };
 export const WS_ALL_ORDERS_LIST = 'wss://norma.nomoreparties.space/orders/all';
+export const WS_HISTORY_ORDERS_LIST = '';
 export const WS_FEED_ACTIONS = {
   connectionStart: 'websocketFeed/connectionStart',
   connectionSuccess,

@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  loading: true,
   websocketState: 'closed',
   connectionStarted: false,
   wsConnected: false,
@@ -16,6 +17,7 @@ const websocketFeed = createSlice({
       state.connectionStarted = true;
     },
     connectionSuccess: (state, action) => {
+      state.loading = false;
       state.wsConnected = true;
       state.websocketState = action.payload;
     },
@@ -23,9 +25,11 @@ const websocketFeed = createSlice({
       state.messages = action.payload;
     },
     connectionError: (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     },
     connectionClose: (state) => {
+      state.loading = true;
       state.wsConnected = false;
       state.websocketState = 'closed';
       state.connectionStarted = false;

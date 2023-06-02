@@ -4,7 +4,7 @@
   margin-bottom: 24px;
 }
 
-.order__name{
+.order__name {
   margin: 0 0 24px;
 }
 
@@ -14,26 +14,6 @@
   list-style: none;
   margin: 0 0 0 14px;
   padding: 0;
-}
-
-.order__images-item {
-  align-items: center;
-  display: -webkit-flex;
-  display: flex;
-  height: 64px;
-  justify-content: center;
-  position: relative;
-  width: 64px;
-  margin-left: -14px;
-}
-
-.order__image {
-  background-color: #000;
-  border: 2px solid #801AB2;
-  border-radius: 50%;
-  height: 100%;
-  object-fit: cover;
-  width: 100%;
 }
 
 .order {
@@ -51,7 +31,7 @@
   justify-content: space-between;
 }
 
-.order__icon-and-price{
+.order__icon-and-price {
   display: flex;
   align-items: center;
 }
@@ -59,3 +39,5 @@
 .order__price {
   margin-right: 8px;
 }
+
+
