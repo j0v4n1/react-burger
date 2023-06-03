@@ -10,7 +10,6 @@
   min-height: calc(100vh - (543px - 160px - 32px));
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   gap: 16px;
   list-style: none;
   padding: 0;

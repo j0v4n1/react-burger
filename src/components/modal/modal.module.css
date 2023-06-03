@@ -10,6 +10,7 @@
 }
 
 .modal {
+  z-index: 9999;
   position: relative;
   border-radius: 40px;
   width: 100%;

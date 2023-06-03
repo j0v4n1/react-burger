@@ -1,40 +1,34 @@
-import styles from "./modal.module.css";
-import ReactDOM from "react-dom";
-import {useEffect} from "react";
-import ModalOverlay from "../modal-overlay/modal-overlay";
-import PropTypes from "prop-types";
-import {remove} from "../../services/slices/ingredient-details";
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router-dom";
+import styles from './modal.module.css';
+import ReactDOM from 'react-dom';
+import { useEffect } from 'react';
+import ModalOverlay from '../modal-overlay/modal-overlay';
+import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
-const Modal = ({children}) => {
+const Modal = ({ children, closeModalPath, onRemove }) => {
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.addEventListener("keydown", keydownHandler);
-    return () => document.removeEventListener("keydown", keydownHandler);
+    document.addEventListener('keydown', keydownHandler);
+    return () => document.removeEventListener('keydown', keydownHandler);
   });
 
-  const handleCloseIngredientDetails = () => {
-    navigate('/');
-    dispatch(remove());
-  }
+  const handleCloseModal = () => {
+    onRemove()
+    navigate(closeModalPath);
+  };
 
-  const keydownHandler = ({key}) => {
-    if (key === "Escape") {
-      handleCloseIngredientDetails()
+  const keydownHandler = ({ key }) => {
+    if (key === 'Escape') {
+      handleCloseModal();
     }
   };
 
-  return ReactDOM.createPortal(
-    <div className={styles.modals}>
-      <ModalOverlay onClose={handleCloseIngredientDetails}/>
-      <div className={styles.modal}>{children}</div>
-    </div>,
-    document.getElementById("react-modals")
-  );
+  return ReactDOM.createPortal(<div className={styles.modals}>
+    <ModalOverlay onClose={handleCloseModal} />
+    <div className={styles.modal}>{children}</div>
+  </div>, document.getElementById('react-modals'));
 };
 
 Modal.propTypes = {

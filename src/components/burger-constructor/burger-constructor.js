@@ -2,21 +2,14 @@ import update from 'immutability-helper';
 import styles from './burger-constructor.module.css';
 import getOrderNumber from '../../utils/order-api';
 import Modal from '../modal/modal';
-import {
-  ConstructorElement,
-  Button,
-  CurrencyIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector, useStore } from 'react-redux';
 import { useMemo, useCallback, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
 import { set, remove } from '../../services/slices/order-details';
-import {
-  removeAllIngredients,
-  setIngredient,
-} from '../../services/slices/burger-constructor';
+import { removeAllIngredients, setIngredient, } from '../../services/slices/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
 
@@ -85,28 +78,26 @@ const BurgerConstructor = () => {
 
   const fetchOrderNumber = () => {
     setLoadingOrder(true);
-    setTimeout(() => {
-      if (isLoggedIn) {
-        const ingredientsAndBunsIdsList = [
-          bun._id,
-          ...ingredients.flatMap(({ _id }) => _id),
-          bun._id,
-        ];
-        getOrderNumber(ingredientsAndBunsIdsList, accessToken)
-          .then((orderData) => {
-            dispatch(set(orderData.order.number));
-          })
-          .catch((error) => {
-            console.error(error);
-          })
-          .finally(() => {
-            dispatch(removeAllIngredients());
-            setLoadingOrder(false);
-          });
-      } else {
-        navigate('/login');
-      }
-    }, 15000);
+    if (isLoggedIn) {
+      const ingredientsAndBunsIdsList = [
+        bun._id,
+        ...ingredients.flatMap(({ _id }) => _id),
+        bun._id,
+      ];
+      getOrderNumber(ingredientsAndBunsIdsList, accessToken)
+        .then((orderData) => {
+          dispatch(set(orderData.order.number));
+        })
+        .catch((error) => {
+          console.error(error);
+        })
+        .finally(() => {
+          dispatch(removeAllIngredients());
+          setLoadingOrder(false);
+        });
+    } else {
+      navigate('/login');
+    }
   };
 
   const totalPrice = useMemo(() => {
@@ -156,7 +147,7 @@ const BurgerConstructor = () => {
                 })}
                 <div>
                   {orderNumber && (
-                    <Modal onClose={handleRemoveOrder}>
+                    <Modal onRemove={handleRemoveOrder} closeModalPath={'/'} onClose={handleRemoveOrder}>
                       <OrderDetails />
                     </Modal>
                   )}
@@ -164,7 +155,7 @@ const BurgerConstructor = () => {
               </ul>
             </li>
             {!bun ? null : (
-              <li className="ml-8" style={{ cursor: 'pointer' }}>
+              <li className="ml-8" style={{ cursor: 'pointer', margin: 'auto 0 0 32px' }}>
                 <ConstructorElement
                   type="bottom"
                   isLocked={true}
@@ -189,7 +180,7 @@ const BurgerConstructor = () => {
           </div>
         </div>
         <Button
-          disabled={!bun}
+          disabled={!bun || loadingOrder}
           onClick={fetchOrderNumber}
           htmlType="button"
           type="primary"

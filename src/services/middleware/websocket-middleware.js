@@ -4,7 +4,8 @@ const websocketMiddleware = (wsUrl, wsActions) => {
 
     return (next) => (action) => {
       const { dispatch } = store;
-      const { type } = action;
+      const { type, payload } = action;
+      const { accessToken } = payload || {};
       const {
         connectionStart,
         connectionSuccess,
@@ -12,8 +13,14 @@ const websocketMiddleware = (wsUrl, wsActions) => {
         connectionError,
         connectionClose,
       } = wsActions;
+      let isProfileRequest = false;
 
-      if (type === connectionStart) {
+      if (type === connectionStart && accessToken) {
+        isProfileRequest = true;
+        socket = new WebSocket(`${wsUrl}?token=${accessToken.slice(7)}`);
+      }
+
+      if (type === connectionStart && !isProfileRequest) {
         socket = new WebSocket(wsUrl);
       }
 
@@ -28,13 +35,12 @@ const websocketMiddleware = (wsUrl, wsActions) => {
 
         socket.onmessage = (event) => {
           const data = JSON.parse(event.data);
-
           dispatch(getMessages(data));
         };
 
-        socket.onclose = (event) => {
-          dispatch(connectionClose(event.type));
-        };
+        if (type === connectionClose) {
+          socket.close();
+        }
       }
 
       next(action);

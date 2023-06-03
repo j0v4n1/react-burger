@@ -1,10 +1,9 @@
-import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {useEffect} from "react";
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
-const ProtectedRouteAuthorized = ({element}) => {
-
-  const accessToken = useSelector(store => store.profile.accessToken);
+const ProtectedRouteAuthorized = ({ element }) => {
+  const accessToken = useSelector((store) => store.profile.accessToken);
   const navigate = useNavigate();
 
   const init = () => {
@@ -17,8 +16,7 @@ const ProtectedRouteAuthorized = ({element}) => {
     init();
   }, [accessToken]);
 
-  return element
-
-}
+  return element;
+};
 
 export default ProtectedRouteAuthorized;

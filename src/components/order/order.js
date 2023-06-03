@@ -10,7 +10,7 @@ import OrderIngredientsImageList from '../order-ingredients-image-list/order-ing
 import { set } from '../../services/slices/order-information';
 import { countTotalPrice } from '../../utils/utils';
 
-const Order = ({ order }) => {
+const Order = ({ order, path }) => {
   const { _id, name, createdAt, number, ingredients } = order;
 
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ const Order = ({ order }) => {
       className={styles['order']}>
       <Link
         style={{ textDecoration: 'none', color: 'inherit' }}
-        to={`/feed/${_id}`}>
+        to={`${path}${_id}`}>
         <div className={styles['order__number-and-date']}>
           <p className="text text_type_digits-default">{`#${number}`}</p>
           <p className="text text_type_main-small text_color_inactive">

@@ -9,8 +9,8 @@ const initialState = {
   error: undefined,
 };
 
-const websocketFeed = createSlice({
-  name: 'websocketFeed',
+const websocketHistoryOrders = createSlice({
+  name: 'websocketHistoryOrders',
   initialState,
   reducers: {
     connectionStart: (state) => {
@@ -37,7 +37,7 @@ const websocketFeed = createSlice({
   },
 });
 
-const { actions, reducer } = websocketFeed;
+const { actions, reducer } = websocketHistoryOrders;
 export default reducer;
 export const {
   connectionStart,
