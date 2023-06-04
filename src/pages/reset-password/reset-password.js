@@ -4,6 +4,8 @@ import styles from "./reset-password.module.css";
 import {Link, useLocation, useNavigate, Navigate} from "react-router-dom";
 import authentication from "../../utils/authentication-api";
 import { SET_NEW_PASSWORD_URL } from "../../constants/constants";
+import { useDispatch } from "react-redux";
+import { resetPasswordFailed, resetPasswordRequest, resetPasswordSuccess } from "../../services/slices/reset-password";
 
 const ResetPassword = () => {
 
@@ -12,10 +14,12 @@ const ResetPassword = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
 
   const isRedirectFromForgotPasswordPage = location.state === '/forgot-password'
 
   const handleResetPassword = () => {
+    dispatch(resetPasswordRequest())
     authentication(SET_NEW_PASSWORD_URL, {
       body: {
         password: newPasswordValue,
@@ -23,7 +27,12 @@ const ResetPassword = () => {
       }
     })
     .then(() => {
+      dispatch(resetPasswordSuccess())
       navigate('/login')
+    })
+    .catch((error) => {
+      dispatch(resetPasswordFailed())
+      console.log(error);
     })
   }
 

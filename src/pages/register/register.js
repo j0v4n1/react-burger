@@ -6,6 +6,7 @@ import authentication from "../../utils/authentication-api";
 import { useDispatch } from "react-redux";
 import { REGISTRATION_URL } from "../../constants/constants";
 import { setAuthData } from "../../utils/utils";
+import { registerFailed, registerRequest, registerSuccess } from "../../services/slices/profile";
 
 const Register = () => {
 
@@ -17,6 +18,7 @@ const Register = () => {
   const navigate = useNavigate();
 
   const handleRegister = () => {
+    dispatch(registerRequest())
     authentication(REGISTRATION_URL, {
       body: {
         email,
@@ -24,6 +26,7 @@ const Register = () => {
         name
       }
     }).then((data) => {
+      dispatch(registerSuccess())
       setAuthData(
         dispatch,
         data.refreshToken,
@@ -31,6 +34,10 @@ const Register = () => {
         data.user.name,
         data.user.email)
       navigate('/profile');
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(registerFailed())
     })
   }
 

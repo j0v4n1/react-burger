@@ -7,6 +7,8 @@ import profile from '../slices/profile';
 import websocketFeed from '../slices/websocketFeed';
 import websocketHistoryOrders from '../slices/websocket-history-orders';
 import orderInformation from '../slices/order-information';
+import resetPassword from '../slices/reset-password';
+
 const rootReducer = combineReducers({
   burgerIngredients,
   burgerConstructor,
@@ -16,6 +18,7 @@ const rootReducer = combineReducers({
   websocketFeed,
   websocketHistoryOrders,
   orderInformation,
+  resetPassword
 });
 
 export default rootReducer;

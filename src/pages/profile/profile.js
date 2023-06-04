@@ -3,7 +3,7 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 import classNames from 'classnames';
 import authentication from '../../utils/authentication-api';
 import { LOGOUT_URL } from '../../constants/constants';
-import { setIsLoggedIn, setAccessToken } from '../../services/slices/profile';
+import { setIsLoggedIn, setAccessToken, logOutRequest, logOutSuccess, logOutFailed } from '../../services/slices/profile';
 import { useDispatch } from 'react-redux';
 import ProfileForm from '../profile-form/profile-form';
 import Orders from '../orders/orders';
@@ -13,15 +13,21 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
+    dispatch(logOutRequest())
     authentication(LOGOUT_URL, {
       body: {
         token: JSON.parse(localStorage.getItem('refreshToken')),
       },
     }).then(() => {
+      dispatch(logOutSuccess())
       localStorage.removeItem('refreshToken');
       dispatch(setAccessToken(null));
       dispatch(setIsLoggedIn(false));
-    });
+    })
+    .catch((error) => {
+      dispatch(logOutFailed())
+      console.log(error);
+    })
   };
 
   return <>

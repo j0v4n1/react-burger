@@ -18,7 +18,6 @@ export const setIngredient = (ingredient) => {
 const initialState = {
   bun: null,
   ingredients: [],
-  log: null
 };
 
 const burgerConstructor = createSlice({

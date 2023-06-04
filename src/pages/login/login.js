@@ -6,6 +6,7 @@ import authentication from "../../utils/authentication-api";
 import { AUTHORIZATION_URL } from "../../constants/constants";
 import { useDispatch } from "react-redux";
 import { setAuthData } from "../../utils/utils";
+import { logInFailed, logInRequest, logInSuccess } from "../../services/slices/profile";
 
 const Login = () => {
 
@@ -16,6 +17,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogIn = () => {
+    dispatch(logInRequest())
     authentication(AUTHORIZATION_URL, {
         body: {
             email: emailValue,
@@ -23,6 +25,7 @@ const Login = () => {
         }
     })
     .then((data) => {
+      dispatch(logInSuccess())
       setAuthData(
         dispatch,
         data.refreshToken,
@@ -30,6 +33,10 @@ const Login = () => {
         data.user.name,
         data.user.email)
         navigate('/')
+    })
+    .catch((error) => {
+      console.log(error);
+      dispatch(logInFailed())
     })
   }
 

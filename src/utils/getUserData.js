@@ -1,6 +1,6 @@
 import authentication from "./authentication-api";
 import {PROFILE_URL} from "../constants/constants";
-import {setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile";
+import {getProfileInformationFailed, getProfileInformationSuccess, setIsLoggedIn, setProfileEmail, setProfileName} from "../services/slices/profile";
 import updateToken from "./updateToken";
 
 const getUserData = (accessToken, dispatch) => {
@@ -11,11 +11,13 @@ const getUserData = (accessToken, dispatch) => {
     }
   })
     .then(({user}) => {
+      dispatch(getProfileInformationSuccess())
       dispatch(setProfileName(user.name))
       dispatch(setProfileEmail(user.email))
       dispatch(setIsLoggedIn(true))
     })
     .catch(() => {
+      dispatch(getProfileInformationFailed())
       updateToken(dispatch);
     })
 }
