@@ -5,13 +5,14 @@ import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { set } from "../../services/slices/ingredient-details";
 import {Link} from "react-router-dom";
+import { INGREDIENT_TYPE } from "../../constants/constants";
 
 const BurgerIngredient = ({ ingredient }) => {
 
   const dispatch = useDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({
-    type: "ingredient",
+    type: INGREDIENT_TYPE,
     item: { ingredient },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

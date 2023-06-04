@@ -28,6 +28,8 @@ export const SET_NEW_PASSWORD_URL =
 export const DEFAULT_HEADERS = { 'Content-type': 'application/json' };
 export const WS_ALL_ORDERS_LIST = 'wss://norma.nomoreparties.space/orders/all';
 export const WS_HISTORY_ORDERS_LIST = 'wss://norma.nomoreparties.space/orders';
+export const INGREDIENT_TYPE = 'ingredient';
+export const BURGER_CONSRTUCTOR_INGREDIENT_TYPE = 'burgerConstructorIngredient';
 export const WS_FEED_ACTIONS = {
   connectionStart: 'websocketFeed/connectionStart',
   connectionSuccess: connectionSuccessFeed,

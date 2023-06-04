@@ -18,6 +18,7 @@ export const setIngredient = (ingredient) => {
 const initialState = {
   bun: null,
   ingredients: [],
+  log: null
 };
 
 const burgerConstructor = createSlice({
@@ -39,6 +40,12 @@ const burgerConstructor = createSlice({
       state.bun = null;
       state.ingredients = [];
     },
+    reOrder: (state, action) => {
+      const { dragIndex, hoverIndex } = action.payload;
+      const dragIngredient = state.ingredients[dragIndex];
+      state.ingredients[dragIndex] = state.ingredients[hoverIndex];
+      state.ingredients[hoverIndex] = dragIngredient;
+    }
   }
 });
 
@@ -46,5 +53,5 @@ const { actions, reducer } = burgerConstructor;
 
 export default reducer;
 
-export const { addBun, addIngredient, removeIngredient, removeAllIngredients } =
+export const { addBun, addIngredient, removeIngredient, removeAllIngredients, reOrder } =
   actions;
