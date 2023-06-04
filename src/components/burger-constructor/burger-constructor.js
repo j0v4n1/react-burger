@@ -3,8 +3,8 @@ import styles from './burger-constructor.module.css';
 import getOrderNumber from '../../utils/order-api';
 import Modal from '../modal/modal';
 import { ConstructorElement, Button, CurrencyIcon, } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector, useStore } from 'react-redux';
-import { useMemo, useCallback, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useMemo, useCallback, useState, memo } from 'react';
 import { useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
@@ -13,9 +13,10 @@ import { removeAllIngredients, setIngredient, } from '../../services/slices/burg
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
 
-const BurgerConstructor = () => {
-  const [loadingOrder, setLoadingOrder] = useState(false);
+const BurgerConstructor = memo(function BurgerConstructor(){
 
+
+  const [loadingOrder, setLoadingOrder] = useState(false);
   const dispatch = useDispatch();
 
   const { ingredients, bun } = useSelector((store) => store.burgerConstructor);
@@ -35,32 +36,32 @@ const BurgerConstructor = () => {
     dispatch(setIngredient(ingredient));
   };
 
-  // const findCard = useCallback(
-  //   (id) => {
-  //     const ingredient = burgerConstructorIngredients.filter(
-  //       (ingredient) => `${ingredient._id}` === id
-  //     )[0];
-  //     return {
-  //       ingredient,
-  //       index: burgerConstructorIngredients.indexOf(ingredient),
-  //     };
-  //   },
-  //   [burgerConstructorIngredients]
-  // );
-  // const moveCard = useCallback(
-  //   (id, atIndex) => {
-  //     const { ingredient, index } = findCard(id);
-  //     setCards(
-  //       update(burgerConstructorIngredients, {
-  //         $splice: [
-  //           [index, 1],
-  //           [atIndex, 0, ingredient],
-  //         ],
-  //       })
-  //     );
-  //   },
-  //   [findCard, burgerConstructorIngredients, setCards]
-  // );
+  const findCard = useCallback(
+    (id) => {
+      const ingredient = burgerConstructorIngredients.filter(
+        (ingredient) => `${ingredient.uniqueId}` === id
+      )[0];
+      return {
+        ingredient,
+        index: burgerConstructorIngredients.indexOf(ingredient),
+      };
+    },
+    [burgerConstructorIngredients]
+  );
+  const moveCard = useCallback(
+    (id, atIndex) => {
+      const { ingredient, index } = findCard(id);
+      dispatch(setIngredient(
+        update(burgerConstructorIngredients, {
+          $splice: [
+            [index, 1],
+            [atIndex, 0, ingredient],
+          ],
+        })
+      ))
+    },
+    [findCard, burgerConstructorIngredients, setIngredient]
+  );
 
   const [{ isOver }, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -140,6 +141,8 @@ const BurgerConstructor = () => {
                 {ingredients.map((ingredient) => {
                   return (
                     <BurgerConstructorIngredient
+                      moveCard={moveCard}
+                      findCard={findCard}
                       key={ingredient.uniqueId}
                       ingredient={ingredient}
                     />
@@ -190,6 +193,6 @@ const BurgerConstructor = () => {
       </div>
     </section>
   );
-};
+})
 
 export default BurgerConstructor;
