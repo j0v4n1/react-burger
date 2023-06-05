@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   currentIngredient: null,
+  showModal: false
 };
 
 const ingredientDetails = createSlice({
@@ -14,9 +15,12 @@ const ingredientDetails = createSlice({
     remove: (state) => {
       state.currentIngredient = null;
     },
+    setShowModal: (state, action) => {
+      state.showModal = action.payload
+    }
   },
 });
 
 const { actions, reducer } = ingredientDetails;
 export default reducer;
-export const { set, remove } = actions;
+export const { set, remove, setShowModal } = actions;
