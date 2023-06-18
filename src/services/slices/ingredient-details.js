@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   currentIngredient: null,
-  showModal: false
+  showModal: false,
 };
 
 const ingredientDetails = createSlice({
-  name: "ingredientDetails",
+  name: 'ingredientDetails',
   initialState,
   reducers: {
     set: (state, action) => {
@@ -16,8 +16,8 @@ const ingredientDetails = createSlice({
       state.currentIngredient = null;
     },
     setShowModal: (state, action) => {
-      state.showModal = action.payload
-    }
+      state.showModal = action.payload;
+    },
   },
 });
 

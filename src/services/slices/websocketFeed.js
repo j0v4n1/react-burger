@@ -39,10 +39,4 @@ const websocketFeed = createSlice({
 
 const { actions, reducer } = websocketFeed;
 export default reducer;
-export const {
-  connectionStart,
-  connectionSuccess,
-  getMessages,
-  connectionError,
-  connectionClose,
-} = actions;
+export const { connectionStart, connectionSuccess, getMessages, connectionError, connectionClose } = actions;

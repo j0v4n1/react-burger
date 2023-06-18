@@ -24,21 +24,25 @@ const App = () => {
   const loading = useSelector((store) => store.burgerIngredients.loading);
   const isLoggedIn = useSelector((store) => store.profile.isLoggedIn);
 
-  return loading && !isLoggedIn ? <Spinner height={'calc(100vh - 128px)'} /> : <Router>
-    <AppHeader />
-    <main className={'content'}>
-      <Routes>
-        <Route path='/*' element={<Main />} />
-        <Route path='/profile/*' element={<ProtectedRouteElement element={<Profile />} />} />
-        <Route path='/login' element={<ProtectedRouteAuthorized element={<Login />} />} />
-        <Route path='/feed/*' element={<Feed />} />
-        <Route path='/register' element={<ProtectedRouteAuthorized element={<Register />} />} />
-        <Route path='/reset-password' element={<ProtectedRouteAuthorized element={<ResetPassword />} />} />
-        <Route path='/forgot-password' element={<ProtectedRouteAuthorized element={<ForgotPassword />} />} />
-        <Route path='*' element={<Page404 />} />
-      </Routes>
-    </main>
-  </Router>;
+  return loading && !isLoggedIn ? (
+    <Spinner height={'calc(100vh - 128px)'} />
+  ) : (
+    <Router>
+      <AppHeader />
+      <main className={'content'}>
+        <Routes>
+          <Route path="/*" element={<Main />} />
+          <Route path="/profile/*" element={<ProtectedRouteElement element={<Profile />} />} />
+          <Route path="/login" element={<ProtectedRouteAuthorized element={<Login />} />} />
+          <Route path="/feed/*" element={<Feed />} />
+          <Route path="/register" element={<ProtectedRouteAuthorized element={<Register />} />} />
+          <Route path="/reset-password" element={<ProtectedRouteAuthorized element={<ResetPassword />} />} />
+          <Route path="/forgot-password" element={<ProtectedRouteAuthorized element={<ForgotPassword />} />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+      </main>
+    </Router>
+  );
 };
 
 export default App;

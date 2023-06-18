@@ -1,17 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { v4 as uuidv4 } from "uuid";
+import { createSlice } from '@reduxjs/toolkit';
+import { v4 as uuidv4 } from 'uuid';
 
 export const setIngredient = (ingredient) => {
   return function (dispatch) {
-
     const uniqueId = uuidv4();
 
-    if (ingredient.type === "bun") {
-      dispatch(addBun({...ingredient, uniqueId}));
+    if (ingredient.type === 'bun') {
+      dispatch(addBun({ ...ingredient, uniqueId }));
     } else {
-      dispatch(addIngredient({...ingredient, uniqueId}));
+      dispatch(addIngredient({ ...ingredient, uniqueId }));
     }
-
   };
 };
 
@@ -21,7 +19,7 @@ const initialState = {
 };
 
 const burgerConstructor = createSlice({
-  name: "burgerConstructor",
+  name: 'burgerConstructor',
   initialState,
   reducers: {
     addBun: (state, action) => {
@@ -44,13 +42,12 @@ const burgerConstructor = createSlice({
       const dragIngredient = state.ingredients[dragIndex];
       state.ingredients[dragIndex] = state.ingredients[hoverIndex];
       state.ingredients[hoverIndex] = dragIngredient;
-    }
-  }
+    },
+  },
 });
 
 const { actions, reducer } = burgerConstructor;
 
 export default reducer;
 
-export const { addBun, addIngredient, removeIngredient, removeAllIngredients, reOrder } =
-  actions;
+export const { addBun, addIngredient, removeIngredient, removeAllIngredients, reOrder } = actions;

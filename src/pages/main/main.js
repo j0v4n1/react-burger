@@ -9,27 +9,33 @@ import IngredientDetails from '../../components/ingredient-details/ingredient-de
 import { remove } from '../../services/slices/ingredient-details';
 
 const Main = () => {
-
   const dispatch = useDispatch();
-  const ingredientsFailed = useSelector(state => state.burgerIngredients.ingredientsFailed);
+  const ingredientsFailed = useSelector((state) => state.burgerIngredients.ingredientsFailed);
 
   const handleCloseIngredientDetails = () => {
-    dispatch(remove())
-  }
+    dispatch(remove());
+  };
 
-  return ingredientsFailed ? <h1>Что-то пошло не так, перезагрузите страницу или зайдите на страницу попозже</h1> :
+  return ingredientsFailed ? (
+    <h1>Что-то пошло не так, перезагрузите страницу или зайдите на страницу попозже</h1>
+  ) : (
     <>
       <DndProvider backend={HTML5Backend}>
         <BurgerIngredients />
         <BurgerConstructor />
       </DndProvider>
       <Routes>
-        <Route path='/ingredients/:id' element={
-          <Modal onRemove={handleCloseIngredientDetails} closeModalPath={'/'}>
-            <IngredientDetails />
-          </Modal>} />
+        <Route
+          path="/ingredients/:id"
+          element={
+            <Modal onRemove={handleCloseIngredientDetails} closeModalPath={'/'}>
+              <IngredientDetails />
+            </Modal>
+          }
+        />
       </Routes>
-    </>;
+    </>
+  );
 };
 
 export default Main;

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   profileInformationRequest: false,
@@ -30,103 +30,103 @@ const initialState = {
 
   isLoggedIn: false,
 
-  accessToken: null
-
-}
+  accessToken: null,
+};
 
 const profile = createSlice({
   name: 'profile',
   initialState,
   reducers: {
-    getProfileInformationRequest: state => {
+    getProfileInformationRequest: (state) => {
       state.profileInformationRequest = true;
     },
-    getProfileInformationSuccess: state => {
+    getProfileInformationSuccess: (state) => {
       state.profileInformationRequest = false;
       state.profileInformationSuccess = true;
     },
-    getProfileInformationFailed: state => {
+    getProfileInformationFailed: (state) => {
       state.profileInformationRequest = false;
       state.profileInformationFailed = true;
     },
 
-    updateTokenRequest: state => {
+    updateTokenRequest: (state) => {
       state.updateTokenRequest = true;
     },
-    updateTokenSuccess: state => {
+    updateTokenSuccess: (state) => {
       state.updateTokenRequest = false;
       state.updateTokenSuccess = true;
     },
-    updateTokenFailed: state => {
+    updateTokenFailed: (state) => {
       state.updateTokenRequest = false;
       state.updateTokenFailed = true;
     },
 
-    registerRequest: state => {
+    registerRequest: (state) => {
       state.registerRequest = true;
     },
-    registerSuccess: state => {
+    registerSuccess: (state) => {
       state.registerRequest = false;
       state.registerSuccess = true;
     },
-    registerFailed: state => {
+    registerFailed: (state) => {
       state.registerRequest = false;
       state.registerFailed = true;
     },
 
-    logOutRequest: state => {
+    logOutRequest: (state) => {
       state.logOutRequest = true;
     },
-    logOutSuccess: state => {
+    logOutSuccess: (state) => {
       state.logOutRequest = false;
       state.logOutSuccess = true;
     },
-    logOutFailed: state => {
+    logOutFailed: (state) => {
       state.logOutRequest = false;
       state.logOutFailed = true;
     },
 
-    logInRequest: state => {
+    logInRequest: (state) => {
       state.logInRequest = true;
     },
-    logInSuccess: state => {
+    logInSuccess: (state) => {
       state.logInRequest = false;
       state.logInSuccess = true;
     },
-    logInFailed: state => {
+    logInFailed: (state) => {
       state.logInRequest = false;
       state.logInFailed = true;
     },
 
-    updateProfileInformationRequest: state => {
+    updateProfileInformationRequest: (state) => {
       state.updateProfileInformationRequest = true;
     },
-    updateProfileInformationSuccess: state => {
+    updateProfileInformationSuccess: (state) => {
       state.updateProfileInformationRequest = false;
       state.updateProfileInformationSuccess = true;
     },
-    updateProfileInformationFailed: state => {
+    updateProfileInformationFailed: (state) => {
       state.updateProfileInformationRequest = false;
       state.updateProfileInformationFailed = true;
     },
 
     setAccessToken: (state, action) => {
-      state.accessToken = action.payload
+      state.accessToken = action.payload;
     },
     setProfileName: (state, action) => {
-      state.profileName = action.payload
+      state.profileName = action.payload;
     },
     setProfileEmail: (state, action) => {
-      state.profileEmail = action.payload
+      state.profileEmail = action.payload;
     },
     setIsLoggedIn: (state, action) => {
-      state.isLoggedIn = action.payload
-    }
-  }
-})
+      state.isLoggedIn = action.payload;
+    },
+  },
+});
 
 export const { actions, reducer } = profile;
-export const { setAccessToken,
+export const {
+  setAccessToken,
   setProfileName,
   setProfileEmail,
   setIsLoggedIn,
@@ -147,6 +147,6 @@ export const { setAccessToken,
   logOutFailed,
   updateProfileInformationRequest,
   updateProfileInformationSuccess,
-  updateProfileInformationFailed
- } = actions;
+  updateProfileInformationFailed,
+} = actions;
 export default reducer;

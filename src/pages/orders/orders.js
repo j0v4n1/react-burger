@@ -12,14 +12,12 @@ import { remove } from '../../services/slices/order-information';
 const Orders = () => {
   const dispatch = useDispatch();
   const accessToken = useSelector((store) => store.profile.accessToken);
-  const { orders } = useSelector(
-    (store) => store.websocketHistoryOrders.messages,
-  );
+  const { orders } = useSelector((store) => store.websocketHistoryOrders.messages);
   const { loading } = useSelector((store) => store.websocketHistoryOrders);
 
   const handleCloseOrderInformation = () => {
-    dispatch(remove())
-  }
+    dispatch(remove());
+  };
 
   useEffect(() => {
     dispatch(connectionStart({ accessToken }));
@@ -31,22 +29,28 @@ const Orders = () => {
 
   const ordersList = orders
     ? orders
-      .map((order) => {
-        return <Order path={'/profile/orders/'} key={order._id} order={order} />;
-      })
-      .reverse()
+        .map((order) => {
+          return <Order path={'/profile/orders/'} key={order._id} order={order} />;
+        })
+        .reverse()
     : null;
 
-  return loading ? <Spinner height={'calc(100vh - 128px)'} /> :
+  return loading ? (
+    <Spinner height={'calc(100vh - 128px)'} />
+  ) : (
     <>
       <ul className={styles['profile__orders']}>{ordersList}</ul>
       <Routes>
-        <Route path='/:id' element={
-          <Modal closeModalPath={'/profile/orders'} onRemove={handleCloseOrderInformation}>
-            <OrderInformation closeModalPath={'profile/orders'} />
-          </Modal>
-        } />
+        <Route
+          path="/:id"
+          element={
+            <Modal closeModalPath={'/profile/orders'} onRemove={handleCloseOrderInformation}>
+              <OrderInformation closeModalPath={'profile/orders'} />
+            </Modal>
+          }
+        />
       </Routes>
-    </>;
+    </>
+  );
 };
 export default Orders;

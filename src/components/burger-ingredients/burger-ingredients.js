@@ -5,9 +5,7 @@ import { useSelector } from 'react-redux';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 
 const BurgerIngredients = () => {
-  const ingredients = useSelector(
-    (store) => store.burgerIngredients.ingredients
-  );
+  const ingredients = useSelector((store) => store.burgerIngredients.ingredients);
   const scrollRef = useRef(null);
   const [current, setCurrent] = useState('bun');
 
@@ -35,46 +33,26 @@ const BurgerIngredients = () => {
 
   const buns = ingredients.map((ingredient) => {
     if (ingredient.type === 'bun') {
-      return (
-        <BurgerIngredient
-          key={ingredient._id}
-          ingredient={ingredient}
-          className={styles.item}
-        />
-      );
+      return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
   });
 
   const sauces = ingredients.map((ingredient) => {
     if (ingredient.type === 'sauce') {
-      return (
-        <BurgerIngredient
-          key={ingredient._id}
-          ingredient={ingredient}
-          className={styles.item}
-        />
-      );
+      return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
   });
 
   const cutlets = ingredients.map((ingredient) => {
     if (ingredient.type === 'main') {
-      return (
-        <BurgerIngredient
-          key={ingredient._id}
-          ingredient={ingredient}
-          className={styles.item}
-        />
-      );
+      return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
   });
 
   return (
     <section className={`${styles.ingredients} text text_type_main-default`}>
       <h1 className={styles.title}>Соберите бургер</h1>
-      <ul
-        className={'mt-5'}
-        style={{ display: 'flex', padding: 0, listStyle: 'none' }}>
+      <ul className={'mt-5'} style={{ display: 'flex', padding: 0, listStyle: 'none' }}>
         <li>
           <a href={'#buns'} className={styles.link}>
             <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
@@ -84,10 +62,7 @@ const BurgerIngredients = () => {
         </li>
         <li>
           <a href={'#sauce'} className={styles.link}>
-            <Tab
-              value="sauce"
-              active={current === 'sauce'}
-              onClick={setCurrent}>
+            <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
               Соусы
             </Tab>
           </a>
@@ -100,10 +75,7 @@ const BurgerIngredients = () => {
           </a>
         </li>
       </ul>
-      <div
-        ref={scrollRef}
-        style={{ scrollBehavior: 'smooth' }}
-        className={styles.wrapper}>
+      <div ref={scrollRef} style={{ scrollBehavior: 'smooth' }} className={styles.wrapper}>
         <h2 id="buns" className={'text text_type_main-medium'}>
           Булки
         </h2>

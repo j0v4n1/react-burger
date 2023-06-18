@@ -1,10 +1,5 @@
 import PropTypes from 'prop-types';
-import {
-  setAccessToken,
-  setProfileName,
-  setProfileEmail,
-  setIsLoggedIn,
-} from '../services/slices/profile';
+import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from '../services/slices/profile';
 const ingredientsPropTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
@@ -18,13 +13,7 @@ const ingredientsPropTypes = {
   __v: PropTypes.number.isRequired,
 };
 
-export const setAuthData = (
-  dispatch,
-  refreshToken,
-  accessToken,
-  name,
-  email
-) => {
+export const setAuthData = (dispatch, refreshToken, accessToken, name, email) => {
   localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
   dispatch(setAccessToken(accessToken));
   dispatch(setProfileName(name));
@@ -41,12 +30,7 @@ export const filterIngredients = (ingredients, burgerIngredients) => {
     })
     .flat(2)
     .filter((ingredient, index, array) => {
-      return (
-        !index ||
-        !array
-          .slice(0, index)
-          .some((prevItem) => prevItem._id === ingredient._id)
-      );
+      return !index || !array.slice(0, index).some((prevItem) => prevItem._id === ingredient._id);
     });
 };
 

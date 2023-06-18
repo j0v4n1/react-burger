@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
 
 const Modal = ({ children, closeModalPath, onRemove }) => {
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,7 +14,7 @@ const Modal = ({ children, closeModalPath, onRemove }) => {
   });
 
   const handleCloseModal = () => {
-    onRemove()
+    onRemove();
     navigate(closeModalPath);
   };
 
@@ -25,10 +24,13 @@ const Modal = ({ children, closeModalPath, onRemove }) => {
     }
   };
 
-  return ReactDOM.createPortal(<div className={styles.modals}>
-    <ModalOverlay onClose={handleCloseModal} />
-    <div className={styles.modal}>{children}</div>
-  </div>, document.getElementById('react-modals'));
+  return ReactDOM.createPortal(
+    <div className={styles.modals}>
+      <ModalOverlay onClose={handleCloseModal} />
+      <div className={styles.modal}>{children}</div>
+    </div>,
+    document.getElementById('react-modals')
+  );
 };
 
 Modal.propTypes = {

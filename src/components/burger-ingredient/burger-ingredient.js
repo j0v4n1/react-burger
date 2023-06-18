@@ -1,32 +1,30 @@
-import styles from "./burger-ingredient.module.css";
-import { useDrag } from "react-dnd";
-import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { set } from "../../services/slices/ingredient-details";
-import {Link} from "react-router-dom";
-import { INGREDIENT_TYPE } from "../../constants/constants";
+import styles from './burger-ingredient.module.css';
+import { useDrag } from 'react-dnd';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { set } from '../../services/slices/ingredient-details';
+import { Link } from 'react-router-dom';
+import { INGREDIENT_TYPE } from '../../constants/constants';
 
 const BurgerIngredient = ({ ingredient }) => {
-
   const dispatch = useDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({
     type: INGREDIENT_TYPE,
+
     item: { ingredient },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
   });
 
-  const {bun, ingredients} = useSelector(store => store.burgerConstructor);
-  const burgerConstructorIngredients = [
-    bun, ...ingredients.flatMap(ingredient => ingredient), bun
-  ];
+  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+  const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
 
   const handleOpenIngredientDetails = () => {
-    dispatch(set(ingredient))
-  }
+    dispatch(set(ingredient));
+  };
 
   const countIngredient = useMemo(() => {
     return burgerConstructorIngredients.reduce((sum, el) => {
@@ -43,35 +41,19 @@ const BurgerIngredient = ({ ingredient }) => {
 
   return (
     <li
-      onClick={ handleOpenIngredientDetails }
-      style={
-        isDragging
-          ? { backgroundColor: "var(--colors-interface-accent)" }
-          : null
-      }
+      onClick={handleOpenIngredientDetails}
+      style={isDragging ? { backgroundColor: 'var(--colors-interface-accent)' } : null}
       ref={dragRef}
-      className={styles.item}
-    >
+      className={styles.item}>
       <Link className={styles.link} to={`/ingredients/${ingredient._id}`}>
-        {countIngredient > 0
-          ? <Counter count={countIngredient} size="default" extraClass="m-1" />
-          : null}
+        {countIngredient > 0 ? <Counter count={countIngredient} size="default" extraClass="m-1" /> : null}
 
-        <img
-          className={styles.image}
-          src={ingredient.image}
-          alt={ingredient.name}
-        />
-        <div style={{ display: "flex" }}>
-          <p className={"text text_type_digits-default pb-1 pr-2"}>
-            {ingredient.price}
-          </p>
+        <img className={styles.image} src={ingredient.image} alt={ingredient.name} />
+        <div style={{ display: 'flex' }}>
+          <p className={'text text_type_digits-default pb-1 pr-2'}>{ingredient.price}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <p
-          style={{ textAlign: "center", paddingBottom: 24 }}
-          className={"text text_type_main-default"}
-        >
+        <p style={{ textAlign: 'center', paddingBottom: 24 }} className={'text text_type_main-default'}>
           {ingredient.name}
         </p>
       </Link>

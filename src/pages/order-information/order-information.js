@@ -7,7 +7,6 @@ import { remove } from '../../services/slices/order-information';
 import { useNavigate } from 'react-router-dom';
 
 const OrderInformation = ({ closeModalPath }) => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,57 +32,52 @@ const OrderInformation = ({ closeModalPath }) => {
   };
 
   const ingredientsList = flattedIngredients.map(({ _id, image, name, price }) => {
-    return <li key={_id} className={styles['ingredients-item']}>
-      <div className={styles['ingredients-item-image-and-name-wrapper']}>
-        <div className={styles['ingredients-item-image-wrapper']}>
-          <img
-            className={styles['ingredients-item-image']}
-            src={image}
-            alt={name}
-          />
+    return (
+      <li key={_id} className={styles['ingredients-item']}>
+        <div className={styles['ingredients-item-image-and-name-wrapper']}>
+          <div className={styles['ingredients-item-image-wrapper']}>
+            <img className={styles['ingredients-item-image']} src={image} alt={name} />
+          </div>
+          <p className="text text_type_main-default">{name}</p>
         </div>
-        <p className='text text_type_main-default'>{name}</p>
-      </div>
-      <div className={styles['ingredients-item-price']}>
-        <div className='text text_type_digits-default'>{`${countById[_id]} x`}</div>
-        <div className='text text_type_digits-default ml-1 mr-2'>
-          {price}
+        <div className={styles['ingredients-item-price']}>
+          <div className="text text_type_digits-default">{`${countById[_id]} x`}</div>
+          <div className="text text_type_digits-default ml-1 mr-2">{price}</div>
+          <CurrencyIcon type={'primary'} />
         </div>
-        <CurrencyIcon type={'primary'} />
-      </div>
-    </li>;
+      </li>
+    );
   });
 
-  return <>
-    <article className={styles['order-information']}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <p
-          className={`text text_type_digits-default ${styles.number}`}>{`#${number}`}
+  return (
+    <>
+      <article className={styles['order-information']}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p className={`text text_type_digits-default ${styles.number}`}>{`#${number}`}</p>
+          <button
+            onClick={handleCloseOrderInformation}
+            aria-label="Закрыть"
+            type="button"
+            className={styles.closeButton}></button>
+        </div>
+        <h3 className="text text_type_main-medium mt-10 mb-3">{name}</h3>
+        <p style={{ color: '#00CCCC' }} className="text text_type_main-small">
+          {status === 'done' ? 'Выполнено' : 'Готовится'}
         </p>
-        <button
-          onClick={handleCloseOrderInformation}
-          aria-label='Закрыть'
-          type='button'
-          className={styles.closeButton}
-        ></button>
-      </div>
-      <h3 className='text text_type_main-medium mt-10 mb-3'>{name}</h3>
-      <p style={{ color: '#00CCCC' }} className='text text_type_main-small'>
-        {status === 'done' ? 'Выполнено' : 'Готовится'}
-      </p>
-      <h4 className='text text_type_main-medium mt-15 mb-6'>Состав:</h4>
-      <ul className={styles['ingredients-list']}>{ingredientsList}</ul>
-      <div className={styles['date-and-total-price-wrapper']}>
-        <div className='ext text_type_main-small text_color_inactive'>
-          <FormattedDate date={new Date(createdAt)} />
+        <h4 className="text text_type_main-medium mt-15 mb-6">Состав:</h4>
+        <ul className={styles['ingredients-list']}>{ingredientsList}</ul>
+        <div className={styles['date-and-total-price-wrapper']}>
+          <div className="ext text_type_main-small text_color_inactive">
+            <FormattedDate date={new Date(createdAt)} />
+          </div>
+          <div className={styles['total-price']}>
+            <div className="text text_type_digits-default mr-2">{totalPrice}</div>
+            <CurrencyIcon type="primary" />
+          </div>
         </div>
-        <div className={styles['total-price']}>
-          <div className='text text_type_digits-default mr-2'>{totalPrice}</div>
-          <CurrencyIcon type='primary' />
-        </div>
-      </div>
-    </article>
-  </>;
+      </article>
+    </>
+  );
 };
 
 export default OrderInformation;

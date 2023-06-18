@@ -3,9 +3,7 @@ import { useSelector } from 'react-redux';
 import { filterIngredients } from '../../utils/utils';
 
 const OrderIngredientsImageList = ({ order }) => {
-  const burgerIngredients = useSelector(
-    (store) => store.burgerIngredients.ingredients
-  );
+  const burgerIngredients = useSelector((store) => store.burgerIngredients.ingredients);
   const { ingredients } = order;
 
   const flattedIngredients = filterIngredients(ingredients, burgerIngredients);
@@ -19,17 +17,12 @@ const OrderIngredientsImageList = ({ order }) => {
           className={styles['order__images-item']}>
           <img
             className={styles['order__image']}
-            style={
-              index >= 5 && flattedIngredients.length > 6
-                ? { opacity: '.6', backgroundColor: '#1C1C21' }
-                : null
-            }
+            style={index >= 5 && flattedIngredients.length > 6 ? { opacity: '.6', backgroundColor: '#1C1C21' } : null}
             src={ingredient.image}
             alt={ingredient.name}
           />
           {index >= 5 && flattedIngredients.length > 6 ? (
-            <div
-              className={`text text_type_digits-default ${styles['order__image-invisible-ingredients-counter']}`}>
+            <div className={`text text_type_digits-default ${styles['order__image-invisible-ingredients-counter']}`}>
               +{flattedIngredients.length - 6}
             </div>
           ) : null}

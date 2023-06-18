@@ -39,10 +39,4 @@ const websocketHistoryOrders = createSlice({
 
 const { actions, reducer } = websocketHistoryOrders;
 export default reducer;
-export const {
-  connectionStart,
-  connectionSuccess,
-  getMessages,
-  connectionError,
-  connectionClose,
-} = actions;
+export const { connectionStart, connectionSuccess, getMessages, connectionError, connectionClose } = actions;

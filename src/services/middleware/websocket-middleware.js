@@ -6,13 +6,7 @@ const websocketMiddleware = (wsUrl, wsActions) => {
       const { dispatch } = store;
       const { type, payload } = action;
       const { accessToken } = payload || {};
-      const {
-        connectionStart,
-        connectionSuccess,
-        getMessages,
-        connectionError,
-        connectionClose,
-      } = wsActions;
+      const { connectionStart, connectionSuccess, getMessages, connectionError, connectionClose } = wsActions;
       let isProfileRequest = false;
 
       if (type === connectionStart && accessToken) {

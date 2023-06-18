@@ -1,44 +1,48 @@
-import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useState } from "react";
-import styles from "./forgot-password.module.css";
-import {Link, useLocation, useNavigate} from "react-router-dom";
-import authentication from "../../utils/authentication-api";
-import { RESET_PASSWORD_URL } from "../../constants/constants";
-import { useDispatch } from "react-redux";
-import { forgotPasswordFailed, forgotPasswordRequest, forgotPasswordSuccess } from "../../services/slices/reset-password";
+import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useState } from 'react';
+import styles from './forgot-password.module.css';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import authentication from '../../utils/authentication-api';
+import { RESET_PASSWORD_URL } from '../../constants/constants';
+import { useDispatch } from 'react-redux';
+import {
+  forgotPasswordFailed,
+  forgotPasswordRequest,
+  forgotPasswordSuccess,
+} from '../../services/slices/reset-password';
 
 const ForgotPassword = () => {
-
-  const [emailValue, setEmailValue] = useState("");
+  const [emailValue, setEmailValue] = useState('');
 
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
 
   const handleResetPassword = () => {
-    dispatch(forgotPasswordRequest())
+    dispatch(forgotPasswordRequest());
     authentication(RESET_PASSWORD_URL, {
       body: {
-        email: emailValue
-      }
-    }).then(() => {
-      dispatch(forgotPasswordSuccess())
-      navigate('/reset-password', {state: location.pathname})
+        email: emailValue,
+      },
     })
-    .catch((error) => {
-      dispatch(forgotPasswordFailed())
-      console.log(error);
-    })
-  }
+      .then(() => {
+        dispatch(forgotPasswordSuccess());
+        navigate('/reset-password', { state: location.pathname });
+      })
+      .catch((error) => {
+        dispatch(forgotPasswordFailed());
+        console.log(error);
+      });
+  };
 
   return (
     <main className={styles.wrapper}>
       <h2 className={styles.header}>Восстановление пароля</h2>
-      <form style={{ display: "flex", flexDirection: "column" }}>
+      <form style={{ display: 'flex', flexDirection: 'column' }}>
         <EmailInput
           onChange={(e) => setEmailValue(e.target.value)}
           value={emailValue}
-          name={"email"}
+          name={'email'}
           isIcon={false}
           extraClass="mb-6"
         />
@@ -47,7 +51,7 @@ const ForgotPassword = () => {
         Восстановить
       </Button>
       <p className="mt-20 mb-6">
-        Вспомнили пароль? <Link to={"/login"}>Войти</Link>
+        Вспомнили пароль? <Link to={'/login'}>Войти</Link>
       </p>
     </main>
   );

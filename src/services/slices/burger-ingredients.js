@@ -1,12 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import getIngredients from '../../utils/burger-api';
 
-export const fetchIngredients = createAsyncThunk(
-  'ingredients/fetchIngredients',
-  async () => {
-    return await getIngredients();
-  }
-);
+export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
+  return await getIngredients();
+});
 
 const initialState = {
   loading: true,

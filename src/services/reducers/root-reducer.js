@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   websocketFeed,
   websocketHistoryOrders,
   orderInformation,
-  resetPassword
+  resetPassword,
 });
 
 export default rootReducer;

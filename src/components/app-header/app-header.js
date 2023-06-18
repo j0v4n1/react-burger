@@ -1,11 +1,10 @@
-import {Logo, BurgerIcon, ListIcon, ProfileIcon} from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from "./app-header.module.css";
-import {NavLink} from "react-router-dom";
-import {useSelector} from "react-redux";
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './app-header.module.css';
+import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const AppHeader = () => {
-
-  const isLoggedIn = useSelector(store => store.profile.isLoggedIn)
+  const isLoggedIn = useSelector((store) => store.profile.isLoggedIn);
 
   return (
     <header className={styles.header}>
@@ -13,43 +12,39 @@ const AppHeader = () => {
         <nav className={styles.menu}>
           <ul className={styles.list}>
             <li className={styles.item}>
-              <BurgerIcon type="primary"/>
+              <BurgerIcon type="primary" />
               <NavLink
-                to={"/"}
+                to={'/'}
                 className={styles.link}
-                style={({isActive}) => ({
-                  color: isActive
-                    ? "var(--text-primary-color)"
-                    : "var(--text-inactive-color)",
-                })}
-              >
+                style={({ isActive }) => ({
+                  color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
+                })}>
                 Конструктор
               </NavLink>
             </li>
             <li className={styles.item}>
-              <ListIcon type="secondary"/>
-              <NavLink to={'/feed'} style={({isActive}) => ({
-                color: isActive
-                  ? "var(--text-primary-color)"
-                  : "var(--text-inactive-color)",
-              })} className={styles.link} href={"#"}>
+              <ListIcon type="secondary" />
+              <NavLink
+                to={'/feed'}
+                style={({ isActive }) => ({
+                  color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
+                })}
+                className={styles.link}
+                href={'#'}>
                 Лента заказов
               </NavLink>
             </li>
           </ul>
-          <Logo/>
+          <Logo />
         </nav>
         <div className={styles.account}>
-          <ProfileIcon type="secondary"/>
+          <ProfileIcon type="secondary" />
           <NavLink
-            to={isLoggedIn ? "/profile" : "/login"}
+            to={isLoggedIn ? '/profile' : '/login'}
             className={styles.link}
-            style={({isActive}) => ({
-              color: isActive
-                ? "var(--text-primary-color)"
-                : "var(--text-inactive-color)",
-            })}
-          >
+            style={({ isActive }) => ({
+              color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
+            })}>
             Личный кабинет
           </NavLink>
         </div>

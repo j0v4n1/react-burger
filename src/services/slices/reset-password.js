@@ -1,7 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-
   forgotPasswordRequest: false,
   forgotPasswordSuccess: false,
   forgotPasswordFailed: false,
@@ -9,44 +8,44 @@ const initialState = {
   resetPasswordRequest: false,
   resetPasswordSuccess: false,
   resetPasswordFailed: false,
-
-}
+};
 
 const resetPassword = createSlice({
   name: 'resetPassword',
   initialState,
   reducers: {
-    forgotPasswordRequest: state => {
+    forgotPasswordRequest: (state) => {
       state.forgotPasswordRequest = true;
     },
-    forgotPasswordSuccess: state => {
+    forgotPasswordSuccess: (state) => {
       state.forgotPasswordRequest = false;
       state.forgotPasswordSuccess = true;
     },
-    forgotPasswordFailed: state => {
+    forgotPasswordFailed: (state) => {
       state.forgotPasswordRequest = false;
       state.forgotPasswordFailed = true;
     },
-    resetPasswordRequest: state => {
+    resetPasswordRequest: (state) => {
       state.resetPasswordRequest = true;
     },
-    resetPasswordSuccess: state => {
+    resetPasswordSuccess: (state) => {
       state.resetPasswordRequest = false;
       state.resetPasswordSuccess = true;
     },
-    resetPasswordFailed: state => {
+    resetPasswordFailed: (state) => {
       state.resetPasswordRequest = false;
       state.resetPasswordFailed = true;
     },
-  }
-})
+  },
+});
 
 export const { actions, reducer } = resetPassword;
-export const { forgotPasswordRequest,
+export const {
+  forgotPasswordRequest,
   forgotPasswordSuccess,
   forgotPasswordFailed,
   resetPasswordRequest,
   resetPasswordSuccess,
-  resetPasswordFailed
- } = actions;
+  resetPasswordFailed,
+} = actions;
 export default reducer;

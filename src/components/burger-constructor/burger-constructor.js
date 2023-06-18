@@ -1,24 +1,19 @@
 import styles from './burger-constructor.module.css';
 import getOrderNumber from '../../utils/order-api';
 import Modal from '../modal/modal';
-import {
-  ConstructorElement,
-  Button,
-  CurrencyIcon
-} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMemo, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
 import { set, remove } from '../../services/slices/order-details';
-import { removeAllIngredients, setIngredient, } from '../../services/slices/burger-constructor';
+import { removeAllIngredients, setIngredient } from '../../services/slices/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
 import { BURGER_CONSRTUCTOR_INGREDIENT_TYPE, INGREDIENT_TYPE } from '../../constants/constants';
 
 const BurgerConstructor = () => {
-
   const [loadingOrder, setLoadingOrder] = useState(false);
   const dispatch = useDispatch();
   const { ingredients, bun } = useSelector((store) => store.burgerConstructor);
@@ -28,11 +23,7 @@ const BurgerConstructor = () => {
     dispatch(remove());
   };
 
-  const burgerConstructorIngredients = [
-    bun,
-    ...ingredients.flatMap((ingredient) => ingredient),
-    bun,
-  ];
+  const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
 
   const dropHandler = (ingredient) => {
     dispatch(setIngredient(ingredient));
@@ -55,11 +46,7 @@ const BurgerConstructor = () => {
   const fetchOrderNumber = () => {
     setLoadingOrder(true);
     if (isLoggedIn) {
-      const ingredientsAndBunsIdsList = [
-        bun._id,
-        ...ingredients.flatMap(({ _id }) => _id),
-        bun._id,
-      ];
+      const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id];
       getOrderNumber(ingredientsAndBunsIdsList, accessToken)
         .then((orderData) => {
           dispatch(set(orderData.order.number));
@@ -87,15 +74,10 @@ const BurgerConstructor = () => {
 
   return (
     <section className={styles.constructor}>
-      <ul
-        className={styles.mainList}
-        ref={dropTarget}
-        style={isOver ? { outlineStyle: 'solid' } : null}>
+      <ul className={styles.mainList} ref={dropTarget} style={isOver ? { outlineStyle: 'solid' } : null}>
         {loadingOrder ? (
           <>
-            <h2 style={{ textAlign: 'center' }}>
-              Ваш заказ готовится, ожидайте...
-            </h2>
+            <h2 style={{ textAlign: 'center' }}>Ваш заказ готовится, ожидайте...</h2>
             <Spinner height={'auto'} />
           </>
         ) : (
@@ -115,18 +97,12 @@ const BurgerConstructor = () => {
               <ul className={styles.list}>
                 {ingredients.map((ingredient, index) => {
                   return (
-                    <BurgerConstructorIngredient
-                      key={ingredient.uniqueId}
-                      ingredient={ingredient}
-                      index={index}
-                    />
+                    <BurgerConstructorIngredient key={ingredient.uniqueId} ingredient={ingredient} index={index} />
                   );
                 })}
                 <div>
                   {orderNumber && (
-                    <Modal onRemove={handleRemoveOrder}
-                      closeModalPath={'/'}
-                      onClose={handleRemoveOrder}>
+                    <Modal onRemove={handleRemoveOrder} closeModalPath={'/'} onClose={handleRemoveOrder}>
                       <OrderDetails />
                     </Modal>
                   )}
@@ -148,12 +124,8 @@ const BurgerConstructor = () => {
         )}
       </ul>
       <div className={styles.bottom}>
-        <div
-          className="mr-10"
-          style={{ display: 'flex', alignItems: 'center' }}>
-          <div className="mr-2 text text_type_digits-medium">
-            {totalPrice ? totalPrice : 0}
-          </div>
+        <div className="mr-10" style={{ display: 'flex', alignItems: 'center' }}>
+          <div className="mr-2 text text_type_digits-medium">{totalPrice ? totalPrice : 0}</div>
           <div className={styles.svgWrapper}>
             <CurrencyIcon type="primary" />
           </div>
@@ -169,6 +141,6 @@ const BurgerConstructor = () => {
       </div>
     </section>
   );
-}
+};
 
 export default BurgerConstructor;
