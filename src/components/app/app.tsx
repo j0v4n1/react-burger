@@ -2,27 +2,28 @@ import './app.css';
 import { Main, Page404, Profile, Login, Register, ResetPassword, ForgotPassword } from '../../pages';
 import AppHeader from '../app-header/app-header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import getUserInformation from '../../utils/getUserInformation';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import ProtectedRouteAuthorized from '../protected-route-authorized/protected-route-authorized';
 import Feed from '../../pages/feed/feed';
 import { fetchIngredients } from '../../services/slices/burger-ingredients';
 import Spinner from '../spinner/spinner';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { TToken } from '../../types';
 
-const App = () => {
-  const dispatch = useDispatch();
-  const accessToken = useSelector((store) => store.profile.accessToken);
-  const refreshToken = JSON.parse(localStorage.getItem('refreshToken'));
+const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const accessToken: TToken = useAppSelector((store) => store.profile.accessToken);
+  const refreshToken: TToken = localStorage.getItem('refreshToken');
 
   useEffect(() => {
     dispatch(fetchIngredients());
     getUserInformation(dispatch, accessToken, refreshToken);
   }, []);
 
-  const loading = useSelector((store) => store.burgerIngredients.loading);
-  const isLoggedIn = useSelector((store) => store.profile.isLoggedIn);
+  const loading: boolean = useAppSelector((store) => store.burgerIngredients.loading);
+  const isLoggedIn: boolean = useAppSelector((store) => store.profile.isLoggedIn);
 
   return loading && !isLoggedIn ? (
     <Spinner height={'calc(100vh - 128px)'} />

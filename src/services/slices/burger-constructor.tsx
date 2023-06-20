@@ -1,8 +1,11 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
+import { AppDispatch } from '../store/store';
+import { TBurgerConstructorState, IDragAndHoverIndex } from '../../types';
+import { IBurgerConstructorIngredient } from '../../components/burger-constructor/burger-constructor.types';
 
-export const setIngredient = (ingredient) => {
-  return function (dispatch) {
+export const setIngredient = (ingredient: IBurgerConstructorIngredient) => {
+  return function (dispatch: AppDispatch) {
     const uniqueId = uuidv4();
 
     if (ingredient.type === 'bun') {
@@ -13,7 +16,7 @@ export const setIngredient = (ingredient) => {
   };
 };
 
-const initialState = {
+const initialState: TBurgerConstructorState = {
   bun: null,
   ingredients: [],
 };
@@ -22,13 +25,13 @@ const burgerConstructor = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addBun: (state, action) => {
+    addBun: (state, action: PayloadAction<IBurgerConstructorIngredient>) => {
       state.bun = action.payload;
     },
-    addIngredient: (state, action) => {
+    addIngredient: (state, action: PayloadAction<IBurgerConstructorIngredient>) => {
       state.ingredients.push(action.payload);
     },
-    removeIngredient: (state, action) => {
+    removeIngredient: (state, action: PayloadAction<string>) => {
       state.ingredients = state.ingredients.filter((ingredient) => {
         return ingredient.uniqueId !== action.payload;
       });
@@ -37,7 +40,7 @@ const burgerConstructor = createSlice({
       state.bun = null;
       state.ingredients = [];
     },
-    reOrder: (state, action) => {
+    reOrder: (state, action: PayloadAction<IDragAndHoverIndex>) => {
       const { dragIndex, hoverIndex } = action.payload;
       const dragIngredient = state.ingredients[dragIndex];
       state.ingredients[dragIndex] = state.ingredients[hoverIndex];

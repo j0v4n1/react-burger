@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ProfileState } from './types';
 
-const initialState = {
+const initialState: ProfileState = {
   profileInformationRequest: false,
   profileInformationSuccess: false,
   profileInformationFailed: false,
@@ -109,16 +110,16 @@ const profile = createSlice({
       state.updateProfileInformationFailed = true;
     },
 
-    setAccessToken: (state, action) => {
+    setAccessToken: (state, action: PayloadAction<string>) => {
       state.accessToken = action.payload;
     },
-    setProfileName: (state, action) => {
+    setProfileName: (state, action: PayloadAction<string>) => {
       state.profileName = action.payload;
     },
-    setProfileEmail: (state, action) => {
+    setProfileEmail: (state, action: PayloadAction<string>) => {
       state.profileEmail = action.payload;
     },
-    setIsLoggedIn: (state, action) => {
+    setIsLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload;
     },
   },

@@ -9,7 +9,7 @@ import {
   logOutRequest,
   logOutSuccess,
   logOutFailed,
-} from '../../services/slices/profile';
+} from '../../services/slices/profile/profile';
 import { useDispatch } from 'react-redux';
 import ProfileForm from '../profile-form/profile-form';
 import Orders from '../orders/orders';

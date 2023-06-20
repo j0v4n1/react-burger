@@ -8,7 +8,7 @@ import {
   updateProfileInformationFailed,
   updateProfileInformationRequest,
   updateProfileInformationSuccess,
-} from '../../services/slices/profile';
+} from '../../services/slices/profile/profile';
 import styles from './profile-form.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 

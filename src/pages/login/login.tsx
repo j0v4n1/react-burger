@@ -6,7 +6,7 @@ import authentication from '../../utils/authentication-api';
 import { AUTHORIZATION_URL } from '../../constants/constants';
 import { useDispatch } from 'react-redux';
 import { setAuthData } from '../../utils/utils';
-import { logInFailed, logInRequest, logInSuccess } from '../../services/slices/profile';
+import { logInFailed, logInRequest, logInSuccess } from '../../services/slices/profile/profile';
 
 const Login = () => {
   const [passwordValue, setPasswordValue] = useState('');

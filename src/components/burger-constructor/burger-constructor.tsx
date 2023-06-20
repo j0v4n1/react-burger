@@ -2,8 +2,7 @@ import styles from './burger-constructor.module.css';
 import getOrderNumber from '../../utils/order-api';
 import Modal from '../modal/modal';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
@@ -11,21 +10,24 @@ import { set, remove } from '../../services/slices/order-details';
 import { removeAllIngredients, setIngredient } from '../../services/slices/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
-import { BURGER_CONSRTUCTOR_INGREDIENT_TYPE, INGREDIENT_TYPE } from '../../constants/constants';
+import { INGREDIENT_TYPE } from '../../constants/constants';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { IBurgerConstructorIngredient } from './burger-constructor.types';
 
-const BurgerConstructor = () => {
-  const [loadingOrder, setLoadingOrder] = useState(false);
-  const dispatch = useDispatch();
-  const { ingredients, bun } = useSelector((store) => store.burgerConstructor);
-  const accessToken = useSelector((store) => store.profile.accessToken);
-
+const BurgerConstructor: React.FC = () => {
+  const [loadingOrder, setLoadingOrder] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const { ingredients, bun } = useAppSelector((store) => store.burgerConstructor);
+  const accessToken = useAppSelector((store) => store.profile.accessToken);
+  const isLoggedIn = useAppSelector((store) => store.profile.isLoggedIn);
+  const orderNumber = useAppSelector((store) => store.orderDetails.orderNumber);
   const handleRemoveOrder = () => {
     dispatch(remove());
   };
 
   const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
 
-  const dropHandler = (ingredient) => {
+  const dropHandler = (ingredient: IBurgerConstructorIngredient) => {
     dispatch(setIngredient(ingredient));
   };
 
@@ -39,8 +41,6 @@ const BurgerConstructor = () => {
     },
   });
 
-  const isLoggedIn = useSelector((store) => store.profile.isLoggedIn);
-  const orderNumber = useSelector((store) => store.orderDetails.orderNumber);
   const navigate = useNavigate();
 
   const fetchOrderNumber = () => {

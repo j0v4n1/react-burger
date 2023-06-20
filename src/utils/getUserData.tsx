@@ -6,7 +6,7 @@ import {
   setIsLoggedIn,
   setProfileEmail,
   setProfileName,
-} from '../services/slices/profile';
+} from '../services/slices/profile/profile';
 import updateToken from './updateToken';
 
 const getUserData = (accessToken, dispatch) => {

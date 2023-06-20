@@ -6,7 +6,7 @@ import authentication from '../../utils/authentication-api';
 import { useDispatch } from 'react-redux';
 import { REGISTRATION_URL } from '../../constants/constants';
 import { setAuthData } from '../../utils/utils';
-import { registerFailed, registerRequest, registerSuccess } from '../../services/slices/profile';
+import { registerFailed, registerRequest, registerSuccess } from '../../services/slices/profile/profile';
 
 const Register = () => {
   const [password, setPassword] = useState('');

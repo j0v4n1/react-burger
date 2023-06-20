@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from '../services/slices/profile';
+import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from '../services/slices/profile/profile';
 const ingredientsPropTypes = {
   name: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,

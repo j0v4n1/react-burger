@@ -10,7 +10,7 @@ import {
   setProfileName,
   updateTokenSuccess,
   updateTokenFailed,
-} from '../services/slices/profile';
+} from '../services/slices/profile/profile';
 
 const updateToken = (dispatch) => {
   authentication(REFRESH_TOKEN_URL, {

@@ -1,10 +1,11 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './app-header.module.css';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../types/hooks';
+import { RootState } from '../../services/store/store';
 
 const AppHeader = () => {
-  const isLoggedIn = useSelector((store) => store.profile.isLoggedIn);
+  const isLoggedIn: boolean = useAppSelector((store: RootState) => store.profile.isLoggedIn);
 
   return (
     <header className={styles.header}>
@@ -29,8 +30,7 @@ const AppHeader = () => {
                 style={({ isActive }) => ({
                   color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
                 })}
-                className={styles.link}
-                href={'#'}>
+                className={styles.link}>
                 Лента заказов
               </NavLink>
             </li>

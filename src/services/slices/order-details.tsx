@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IOrderNumberState } from '../../types';
 
-const initialState = {
+const initialState: IOrderNumberState = {
   orderNumber: null,
 };
 
@@ -8,7 +9,7 @@ const orderDetails = createSlice({
   name: 'orderDetails',
   initialState,
   reducers: {
-    set: (state, action) => {
+    set: (state, action: PayloadAction<number>) => {
       state.orderNumber = action.payload;
     },
     remove: (state) => {
