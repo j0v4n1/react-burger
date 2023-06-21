@@ -11,6 +11,15 @@ import { fetchIngredients } from '../../services/slices/burger-ingredients';
 import Spinner from '../spinner/spinner';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 import { TToken } from '../../types';
+import {
+  PATH_CONSTRUCTOR_PAGE,
+  PATH_FEED,
+  PATH_FORGOT_PASSWORD_PAGE,
+  PATH_LOGIN_PAGE,
+  PATH_PROFILE_PAGE,
+  PATH_REGISTER_PAGE,
+  PATH_RESET_PASSWORD_PAGE,
+} from '../../constants/constants';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,13 +41,13 @@ const App: React.FC = () => {
       <AppHeader />
       <main className={'content'}>
         <Routes>
-          <Route path="/*" element={<Main />} />
-          <Route path="/profile/*" element={<ProtectedRouteElement element={<Profile />} />} />
-          <Route path="/login" element={<ProtectedRouteAuthorized element={<Login />} />} />
-          <Route path="/feed/*" element={<Feed />} />
-          <Route path="/register" element={<ProtectedRouteAuthorized element={<Register />} />} />
-          <Route path="/reset-password" element={<ProtectedRouteAuthorized element={<ResetPassword />} />} />
-          <Route path="/forgot-password" element={<ProtectedRouteAuthorized element={<ForgotPassword />} />} />
+          <Route path={`${PATH_CONSTRUCTOR_PAGE}*`} element={<Main />} />
+          <Route path={`${PATH_PROFILE_PAGE}/*`} element={<ProtectedRouteElement element={<Profile />} />} />
+          <Route path={PATH_LOGIN_PAGE} element={<ProtectedRouteAuthorized element={<Login />} />} />
+          <Route path={`${PATH_FEED}/*`} element={<Feed />} />
+          <Route path={PATH_REGISTER_PAGE} element={<ProtectedRouteAuthorized element={<Register />} />} />
+          <Route path={PATH_RESET_PASSWORD_PAGE} element={<ProtectedRouteAuthorized element={<ResetPassword />} />} />
+          <Route path={PATH_FORGOT_PASSWORD_PAGE} element={<ProtectedRouteAuthorized element={<ForgotPassword />} />} />
           <Route path="*" element={<Page404 />} />
         </Routes>
       </main>

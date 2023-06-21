@@ -3,7 +3,7 @@ import getOrderNumber from '../../utils/order-api';
 import Modal from '../modal/modal';
 import { ConstructorElement, Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useMemo, useState } from 'react';
-import { useDrop } from 'react-dnd';
+import { DropTargetMonitor, useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
 import { set, remove } from '../../services/slices/order-details';
@@ -33,11 +33,11 @@ const BurgerConstructor: React.FC = () => {
 
   const [{ isOver }, dropTarget] = useDrop({
     accept: INGREDIENT_TYPE,
-    collect: (monitor) => ({
+    collect: (monitor: DropTargetMonitor) => ({
       isOver: monitor.isOver(),
     }),
-    drop: ({ ingredient }) => {
-      dropHandler(ingredient);
+    drop: (item: { ingredient: IBurgerConstructorIngredient }) => {
+      dropHandler(item.ingredient);
     },
   });
 
@@ -46,7 +46,7 @@ const BurgerConstructor: React.FC = () => {
   const fetchOrderNumber = () => {
     setLoadingOrder(true);
     if (isLoggedIn) {
-      const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id];
+      const ingredientsAndBunsIdsList = bun ? [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id] : null;
       getOrderNumber(ingredientsAndBunsIdsList, accessToken)
         .then((orderData) => {
           dispatch(set(orderData.order.number));
@@ -73,8 +73,8 @@ const BurgerConstructor: React.FC = () => {
   }, [burgerConstructorIngredients]);
 
   return (
-    <section className={styles.constructor}>
-      <ul className={styles.mainList} ref={dropTarget} style={isOver ? { outlineStyle: 'solid' } : null}>
+    <section className={styles.burgerConstructor}>
+      <ul className={styles.mainList} ref={dropTarget} style={isOver ? { outlineStyle: 'solid' } : undefined}>
         {loadingOrder ? (
           <>
             <h2 style={{ textAlign: 'center' }}>Ваш заказ готовится, ожидайте...</h2>
@@ -102,7 +102,7 @@ const BurgerConstructor: React.FC = () => {
                 })}
                 <div>
                   {orderNumber && (
-                    <Modal onRemove={handleRemoveOrder} closeModalPath={'/'} onClose={handleRemoveOrder}>
+                    <Modal onRemove={handleRemoveOrder} closeModalPath={'/'}>
                       <OrderDetails />
                     </Modal>
                   )}

@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import { useAppSelector } from '../../types/hooks';
+import { IProtectedRouteAuthorizedComponent } from './protected-route-authorized.types';
 
-const ProtectedRouteAuthorized = ({ element }) => {
-  const accessToken = useSelector((store) => store.profile.accessToken);
+const ProtectedRouteAuthorized: React.FC<IProtectedRouteAuthorizedComponent> = ({ element }) => {
+  const accessToken = useAppSelector((store) => store.profile.accessToken);
   const navigate = useNavigate();
 
   const init = () => {

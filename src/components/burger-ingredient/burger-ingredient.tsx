@@ -2,13 +2,14 @@ import styles from './burger-ingredient.module.css';
 import { useDrag } from 'react-dnd';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { set } from '../../services/slices/ingredient-details';
 import { Link } from 'react-router-dom';
 import { INGREDIENT_TYPE } from '../../constants/constants';
+import { IBurgerIngredientComponent } from './burger-ingredient.types';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const BurgerIngredient = ({ ingredient }) => {
-  const dispatch = useDispatch();
+const BurgerIngredient: React.FC<IBurgerIngredientComponent> = ({ ingredient }) => {
+  const dispatch = useAppDispatch();
 
   const [{ isDragging }, dragRef] = useDrag({
     type: INGREDIENT_TYPE,
@@ -19,7 +20,7 @@ const BurgerIngredient = ({ ingredient }) => {
     }),
   });
 
-  const { bun, ingredients } = useSelector((store) => store.burgerConstructor);
+  const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
   const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
 
   const handleOpenIngredientDetails = () => {
@@ -42,7 +43,7 @@ const BurgerIngredient = ({ ingredient }) => {
   return (
     <li
       onClick={handleOpenIngredientDetails}
-      style={isDragging ? { backgroundColor: 'var(--colors-interface-accent)' } : null}
+      style={isDragging ? { backgroundColor: 'var(--colors-interface-accent)' } : undefined}
       ref={dragRef}
       className={styles.item}>
       <Link className={styles.link} to={`/ingredients/${ingredient._id}`}>

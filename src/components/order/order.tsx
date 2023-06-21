@@ -1,22 +1,23 @@
 import styles from './order.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import OrderIngredientsImageList from '../order-ingredients-image-list/order-ingredients-image-list';
 import { set } from '../../services/slices/order-information';
 import { countTotalPrice } from '../../utils/utils';
+import { IOrderComponent } from './order.types';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const Order = ({ order, path }) => {
+const Order: React.FC<IOrderComponent> = ({ order, path }) => {
   const { _id, name, createdAt, number, ingredients } = order;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const burgerIngredients = useSelector((store) => store.burgerIngredients.ingredients);
+  const burgerIngredients = useAppSelector((store) => store.burgerIngredients.ingredients);
 
   const totalPrice = useMemo(() => {
     return countTotalPrice(ingredients, burgerIngredients);
-  });
+  }, [ingredients, burgerIngredients]);
 
   const handleOpenOrderInformation = () => {
     dispatch(set(order));

@@ -2,10 +2,10 @@ import styles from './modal.module.css';
 import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { IModal } from './modal.types';
 
-const Modal = ({ children, closeModalPath, onRemove }) => {
+const Modal: React.FC<IModal> = ({ children, closeModalPath, onRemove }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,23 +18,23 @@ const Modal = ({ children, closeModalPath, onRemove }) => {
     navigate(closeModalPath);
   };
 
-  const keydownHandler = ({ key }) => {
-    if (key === 'Escape') {
+  const keydownHandler = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
       handleCloseModal();
     }
   };
 
-  return ReactDOM.createPortal(
-    <div className={styles.modals}>
-      <ModalOverlay onClose={handleCloseModal} />
-      <div className={styles.modal}>{children}</div>
-    </div>,
-    document.getElementById('react-modals')
-  );
-};
+  const portalElement: HTMLElement | null = document.getElementById('react-modals');
 
-Modal.propTypes = {
-  children: PropTypes.element,
+  if (portalElement) {
+    return ReactDOM.createPortal(
+      <div className={styles.modals}>
+        <ModalOverlay onClose={handleCloseModal} />
+        <div className={styles.modal}>{children}</div>
+      </div>,
+      portalElement
+    );
+  }
 };
 
 export default Modal;

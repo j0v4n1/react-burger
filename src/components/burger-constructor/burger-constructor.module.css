@@ -1,4 +1,4 @@
-.constructor {
+.burgerConstructor {
   margin-top: 44px;
   width: 100%;
   max-width: 600px;
@@ -19,7 +19,6 @@
 @media (min-height: 1770px) {
   .mainList {
     min-height: calc(100vh - (596px - 160px - 32px));
-
   }
 }
 
@@ -31,19 +30,19 @@
 }
 
 .list::-webkit-scrollbar {
-  background: #2F2F37;
+  background: #2f2f37;
   width: 8px;
   margin-bottom: 20px;
 }
 
 .list::-webkit-scrollbar-thumb {
-  background: #8585AD;
+  background: #8585ad;
 }
 
 .bottom {
   display: flex;
   align-items: center;
-  justify-content: flex-end
+  justify-content: flex-end;
 }
 
 .svgWrapper {

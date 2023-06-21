@@ -1,14 +1,14 @@
 import styles from './ingredient-details.module.css';
-import { useDispatch, useSelector } from 'react-redux';
 import { remove } from '../../services/slices/ingredient-details';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const IngredientDetails = () => {
-  const { image, name, proteins, calories, fat, carbohydrates } = useSelector(
+const IngredientDetails: React.FC = () => {
+  const { image, name, proteins, calories, fat, carbohydrates } = useAppSelector(
     (store) => store.ingredientDetails.currentIngredient
   );
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = () => {

@@ -1,6 +1,5 @@
 import styles from './feed.module.css';
 import Order from '../../components/order/order';
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { connectionClose, connectionStart } from '../../services/slices/websocketFeed';
 import Spinner from '../../components/spinner/spinner';
@@ -8,13 +7,14 @@ import { Route, Routes } from 'react-router-dom';
 import OrderInformation from '../order-information/order-information';
 import Modal from '../../components/modal/modal';
 import { remove } from '../../services/slices/order-information';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const Feed = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const { orders, total, totalToday } = useSelector((store) => store.websocketFeed.messages);
+  const { orders, total, totalToday } = useAppSelector((store) => store.websocketFeed.messages);
 
-  const { loading } = useSelector((store) => store.websocketFeed);
+  const { loading } = useAppSelector((store) => store.websocketFeed);
 
   const ordersList = orders
     ? orders.map((order) => {

@@ -1,27 +1,29 @@
 import styles from '../burger-constructor-ingredient/burger-constructor-ingredient.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch } from 'react-redux';
 import { reOrder, removeIngredient } from '../../services/slices/burger-constructor';
 import { useDrag, useDrop } from 'react-dnd';
 import { BURGER_CONSRTUCTOR_INGREDIENT_TYPE } from '../../constants/constants';
 import { useRef } from 'react';
+import { IBurgerConstructorComponent, DragItem } from './burger-constructor-ingredient.types';
+import { useAppDispatch } from '../../types/hooks';
+import type { Identifier } from 'dnd-core';
 
-const BurgerConstructorIngredient = ({ ingredient, index }) => {
-  const dispatch = useDispatch();
-  const ref = useRef(null);
+const BurgerConstructorIngredient: React.FC<IBurgerConstructorComponent> = ({ ingredient, index }) => {
+  const dispatch = useAppDispatch();
+  const ref = useRef<HTMLLIElement>(null);
 
   const handleRemoveIngredient = () => {
     dispatch(removeIngredient(ingredient.uniqueId));
   };
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<DragItem, void, { handlerId: Identifier | null }>({
     accept: BURGER_CONSRTUCTOR_INGREDIENT_TYPE,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
       };
     },
-    hover(item, monitor) {
+    hover(item: DragItem, monitor) {
       if (!ref.current) {
         return;
       }
@@ -33,12 +35,14 @@ const BurgerConstructorIngredient = ({ ingredient, index }) => {
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return;
-      }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return;
+      if (clientOffset) {
+        const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return;
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return;
+        }
       }
       dispatch(
         reOrder({

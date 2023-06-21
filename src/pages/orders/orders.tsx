@@ -8,12 +8,13 @@ import { Route, Routes } from 'react-router-dom';
 import OrderInformation from '../order-information/order-information';
 import Modal from '../../components/modal/modal';
 import { remove } from '../../services/slices/order-information';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const Orders = () => {
-  const dispatch = useDispatch();
-  const accessToken = useSelector((store) => store.profile.accessToken);
-  const { orders } = useSelector((store) => store.websocketHistoryOrders.messages);
-  const { loading } = useSelector((store) => store.websocketHistoryOrders);
+  const dispatch = useAppDispatch();
+  const accessToken = useAppSelector((store) => store.profile.accessToken);
+  const { orders } = useAppSelector((store) => store.websocketHistoryOrders.messages);
+  const { loading } = useAppSelector((store) => store.websocketHistoryOrders);
 
   const handleCloseOrderInformation = () => {
     dispatch(remove());

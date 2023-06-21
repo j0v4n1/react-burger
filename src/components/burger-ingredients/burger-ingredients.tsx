@@ -1,12 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
+import { useAppSelector } from '../../types/hooks';
+import { IIngredient } from '../burger-ingredient/burger-ingredient.types';
 
-const BurgerIngredients = () => {
-  const ingredients = useSelector((store) => store.burgerIngredients.ingredients);
-  const scrollRef = useRef(null);
+const BurgerIngredients: React.FC = () => {
+  const ingredients = useAppSelector((store) => store.burgerIngredients.ingredients);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState('bun');
 
   useEffect(() => {
@@ -22,28 +23,30 @@ const BurgerIngredients = () => {
   }, []);
 
   const scrollHandler = () => {
-    if (scrollRef.current.scrollTop < 294) {
-      setCurrent('bun');
-    } else if (scrollRef.current.scrollTop < 876) {
-      setCurrent('sauce');
-    } else {
-      setCurrent('main');
+    if (scrollRef.current) {
+      if (scrollRef.current.scrollTop < 294) {
+        setCurrent('bun');
+      } else if (scrollRef.current.scrollTop < 876) {
+        setCurrent('sauce');
+      } else {
+        setCurrent('main');
+      }
     }
   };
 
-  const buns = ingredients.map((ingredient) => {
+  const buns = ingredients.map((ingredient: IIngredient) => {
     if (ingredient.type === 'bun') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
   });
 
-  const sauces = ingredients.map((ingredient) => {
+  const sauces = ingredients.map((ingredient: IIngredient) => {
     if (ingredient.type === 'sauce') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
   });
 
-  const cutlets = ingredients.map((ingredient) => {
+  const cutlets = ingredients.map((ingredient: IIngredient) => {
     if (ingredient.type === 'main') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }

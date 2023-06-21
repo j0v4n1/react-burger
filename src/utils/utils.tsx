@@ -1,19 +1,8 @@
-import PropTypes from 'prop-types';
 import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from '../services/slices/profile/profile';
-const ingredientsPropTypes = {
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  proteins: PropTypes.number.isRequired,
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  _id: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  __v: PropTypes.number.isRequired,
-};
+import { IIngredient } from '../components/burger-ingredient/burger-ingredient.types';
+import { TAuthData } from '../types';
 
-export const setAuthData = (dispatch, refreshToken, accessToken, name, email) => {
+export const setAuthData: TAuthData = (dispatch, refreshToken, accessToken, name, email) => {
   localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
   dispatch(setAccessToken(accessToken));
   dispatch(setProfileName(name));
@@ -21,7 +10,7 @@ export const setAuthData = (dispatch, refreshToken, accessToken, name, email) =>
   dispatch(setIsLoggedIn(true));
 };
 
-export const filterIngredients = (ingredients, burgerIngredients) => {
+export const filterIngredients = (ingredients: string[], burgerIngredients: IIngredient[]) => {
   return ingredients
     .map((id) => {
       return burgerIngredients.filter(({ _id }) => {
@@ -34,7 +23,7 @@ export const filterIngredients = (ingredients, burgerIngredients) => {
     });
 };
 
-export const countTotalPrice = (ingredients, burgerIngredients) => {
+export const countTotalPrice = (ingredients: string[], burgerIngredients: IIngredient[]): number => {
   return ingredients
     .map((id) => {
       return burgerIngredients.filter(({ _id }) => {
@@ -46,5 +35,3 @@ export const countTotalPrice = (ingredients, burgerIngredients) => {
       return previousValue + currentValue.price;
     }, 0);
 };
-
-export default ingredientsPropTypes;

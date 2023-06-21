@@ -1,12 +1,12 @@
 import styles from './order-details.module.css';
 import done from '../../images/done.png';
-import { useDispatch, useSelector } from 'react-redux';
 import { remove } from '../../services/slices/order-details';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const OrderDetails = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const orderNumber = useSelector((store) => store.orderDetails.orderNumber);
+  const orderNumber = useAppSelector((store) => store.orderDetails.orderNumber);
 
   const handleRemoveOrder = () => {
     dispatch(remove());
@@ -19,9 +19,9 @@ const OrderDetails = () => {
         <h3 className="mt-30 text text_type_digits-large">{orderNumber}</h3>
         <p className="text text_type_main-medium mt-8">идентификатор заказа</p>
         <img className="mt-15 mb-15" src={done} alt="Готово" />
-        <p className="text text_type_main-default">Ваш заказ начали готовить</p>
+        <p className="text text_type_main-default">Ваш заказ готов</p>
         <p className="text text_type_main-default mt-2 mb-30 text_color_inactive">
-          Дождитесь готовности на орбитальной станции
+          Можете получить его на орбитальной станции
         </p>
       </div>
     </>
