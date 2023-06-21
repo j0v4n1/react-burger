@@ -34,15 +34,6 @@ export interface IIngredientsData {
   data: IIngredient[];
 }
 
-export interface IWebsocketFeedState {
-  loading: boolean;
-  websocketState: string;
-  connectionStarted: boolean;
-  wsConnected: boolean;
-  messages: [];
-  error: undefined;
-}
-
 export type TAuthData = (
   dispatch: AppDispatch,
   refreshToken: string,
@@ -50,3 +41,21 @@ export type TAuthData = (
   name: string,
   email: string
 ) => void;
+
+export interface IOrder {
+  ingredients: string[];
+  _id: string;
+  status: string;
+  number: number;
+  createAt: string;
+  updateAt: string;
+}
+
+export interface IWebsocketFeedState {
+  loading: boolean;
+  websocketState: string;
+  connectionStarted: boolean;
+  wsConnected: boolean;
+  messages: IOrder[];
+  error: string | undefined;
+}

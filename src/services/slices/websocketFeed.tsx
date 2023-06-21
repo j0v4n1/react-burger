@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { IOrder, IWebsocketFeedState } from '../../types';
 
-const initialState = {
+const initialState: IWebsocketFeedState = {
   loading: true,
   websocketState: 'closed',
   connectionStarted: false,
@@ -16,15 +17,15 @@ const websocketFeed = createSlice({
     connectionStart: (state) => {
       state.connectionStarted = true;
     },
-    connectionSuccess: (state, action) => {
+    connectionSuccess: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.wsConnected = true;
       state.websocketState = action.payload;
     },
-    getMessages: (state, action) => {
+    getMessages: (state, action: PayloadAction<IOrder[]>) => {
       state.messages = action.payload;
     },
-    connectionError: (state, action) => {
+    connectionError: (state, action: PayloadAction<string>) => {
       state.loading = false;
       state.error = action.payload;
     },
