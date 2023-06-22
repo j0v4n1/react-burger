@@ -1,3 +1,3 @@
-export interface IModalOverlay {
+export type ModalOverlayComponent = {
   onClose: () => void;
-}
+};

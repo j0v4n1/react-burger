@@ -9,7 +9,7 @@ import Modal from '../../components/modal/modal';
 import { remove } from '../../services/slices/order-information/order-information';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const Feed: React.FC = () => {
+const Feed = () => {
   const dispatch = useAppDispatch();
 
   const { orders, total, totalToday } = useAppSelector((store) => store.websocketFeed.messages);
@@ -22,7 +22,7 @@ const Feed: React.FC = () => {
       })
     : null;
 
-  const checkOrderStatus = (status: string, className: string) => {
+  const checkOrderStatus = (status: 'done' | 'pending', className: string) => {
     return orders
       ? orders.map((order, index) => {
           return order.status === status && index <= 9 ? (

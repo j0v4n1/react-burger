@@ -1,8 +1,8 @@
-import { IOrder } from '../../../types';
+import { Order } from '../../../types';
 
 export type Messages = {
   readonly success: boolean;
-  readonly orders: IOrder[];
+  readonly orders: Order[];
   readonly total: number;
   readonly totalToday: number;
 };

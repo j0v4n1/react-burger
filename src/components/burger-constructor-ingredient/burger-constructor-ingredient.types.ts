@@ -1,12 +1,12 @@
-import { IBurgerConstructorIngredient } from '../burger-constructor/burger-constructor.types';
+import { ConstructorIngredient } from '../burger-constructor/burger-constructor.types';
 
-export interface IBurgerConstructorComponent {
-  ingredient: IBurgerConstructorIngredient;
+export type BurgerConstructorComponent = {
+  ingredient: ConstructorIngredient;
   index: number;
-}
+};
 
-export interface DragItem {
+export type DragItem = {
   index: number;
   id: string;
   type: string;
-}
+};

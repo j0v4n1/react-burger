@@ -3,15 +3,15 @@ import { useState } from 'react';
 import styles from './forgot-password.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { PATH_RESET_PASSWORD_PAGE, RESET_PASSWORD_URL } from '../../constants/constants';
+import { PATH_LOGIN_PAGE, PATH_RESET_PASSWORD_PAGE, RESET_PASSWORD_URL } from '../../constants';
 import {
   forgotPasswordFailed,
   forgotPasswordRequest,
   forgotPasswordSuccess,
-} from '../../services/slices/reset-password/reset-password';
+} from '../../services/slices/reset-password';
 import { useAppDispatch } from '../../types/hooks';
 
-const ForgotPassword: React.FC = () => {
+const ForgotPassword = () => {
   const [emailValue, setEmailValue] = useState<string>('');
 
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const ForgotPassword: React.FC = () => {
         Восстановить
       </Button>
       <p className="mt-20 mb-6">
-        Вспомнили пароль? <Link to={'/login'}>Войти</Link>
+        Вспомнили пароль? <Link to={PATH_LOGIN_PAGE}>Войти</Link>
       </p>
     </main>
   );

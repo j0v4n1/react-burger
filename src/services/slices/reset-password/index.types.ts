@@ -1,4 +1,4 @@
-export interface TResetPasswordState {
+export type ResetPasswordState = {
   readonly forgotPasswordRequest: boolean;
   readonly forgotPasswordSuccess: boolean;
   readonly forgotPasswordFailed: boolean;
@@ -6,4 +6,4 @@ export interface TResetPasswordState {
   readonly resetPasswordRequest: boolean;
   readonly resetPasswordSuccess: boolean;
   readonly resetPasswordFailed: boolean;
-}
+};

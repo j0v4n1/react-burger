@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IWebsocketHistoryState, IHistoryMessages } from './websocket-history-orders.types';
+import { WebsocketHistoryState, HistoryMessages } from './index.types';
 import { Token } from '../../../types';
 
-const initialState: IWebsocketHistoryState = {
+const initialState: WebsocketHistoryState = {
   loading: true,
   websocketState: 'closed',
   connectionStarted: false,
@@ -28,7 +28,7 @@ const websocketHistoryOrders = createSlice({
       state.wsConnected = true;
       state.websocketState = action.payload;
     },
-    getMessages: (state, action: PayloadAction<IHistoryMessages>) => {
+    getMessages: (state, action: PayloadAction<HistoryMessages>) => {
       state.messages = action.payload;
     },
     connectionError: (state, action: PayloadAction<string>) => {

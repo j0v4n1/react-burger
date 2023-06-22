@@ -3,10 +3,10 @@ import React, { useEffect } from 'react';
 import getUserData from '../../utils/getUserData';
 import updateToken from '../../utils/updateToken';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
-import { IProtectedRouteComponent } from './protected-route-element.types';
-import { PATH_LOGIN_PAGE } from '../../constants/constants';
+import { ProtectedRouteComponent } from './protected-route-element.types';
+import { PATH_LOGIN_PAGE } from '../../constants';
 
-const ProtectedRouteElement: React.FC<IProtectedRouteComponent> = ({ element }) => {
+const ProtectedRouteElement: React.FC<ProtectedRouteComponent> = ({ element }) => {
   const dispatch = useAppDispatch();
   const refreshToken = localStorage.getItem('refreshToken');
   const accessToken = useAppSelector((store) => store.profile.accessToken);

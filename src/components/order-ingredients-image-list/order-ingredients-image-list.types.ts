@@ -1,6 +1,4 @@
-import OrderIngredientsImageList from './order-ingredients-image-list';
-
-export interface IOrderIngredientsImageListComponent {
+export type OrderIngredientsImageListComponent = {
   order: {
     _id: string;
     name: string;
@@ -8,4 +6,4 @@ export interface IOrderIngredientsImageListComponent {
     number: number;
     ingredients: string[];
   };
-}
+};

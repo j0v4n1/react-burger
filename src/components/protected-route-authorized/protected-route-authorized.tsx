@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect } from 'react';
 import { useAppSelector } from '../../types/hooks';
-import { IProtectedRouteAuthorizedComponent } from './protected-route-authorized.types';
-import { PATH_CONSTRUCTOR_PAGE } from '../../constants/constants';
+import { ProtectedRouteAuthorizedComponent } from './protected-route-authorized.types';
+import { PATH_CONSTRUCTOR_PAGE } from '../../constants';
 
-const ProtectedRouteAuthorized: React.FC<IProtectedRouteAuthorizedComponent> = ({ element }) => {
+const ProtectedRouteAuthorized: React.FC<ProtectedRouteAuthorizedComponent> = ({ element }) => {
   const accessToken = useAppSelector((store) => store.profile.accessToken);
   const navigate = useNavigate();
 

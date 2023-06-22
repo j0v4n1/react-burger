@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IIngredientDetailsState } from '../../types';
-import { IIngredient } from '../../components/burger-ingredient/burger-ingredient.types';
+import { IngredientDetailsState } from './ingredient-details.types';
+import { Ingredient } from '../../../components/burger-ingredient/burger-ingredient.types';
 
-const initialState: IIngredientDetailsState = {
+const initialState: IngredientDetailsState = {
   currentIngredient: {
     _id: '',
     name: '',
@@ -24,7 +24,7 @@ const ingredientDetails = createSlice({
   name: 'ingredientDetails',
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<IIngredient>) => {
+    set: (state, action: PayloadAction<Ingredient>) => {
       state.currentIngredient = action.payload;
     },
     remove: (state) => {

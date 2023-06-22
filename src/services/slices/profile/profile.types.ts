@@ -1,6 +1,6 @@
 import { Token } from '../../../types';
 
-export interface ProfileState {
+export type ProfileState = {
   readonly profileInformationRequest: boolean;
   readonly profileInformationSuccess: boolean;
   readonly profileInformationFailed: boolean;
@@ -31,4 +31,4 @@ export interface ProfileState {
   readonly isLoggedIn: boolean;
 
   readonly accessToken: Token;
-}
+};

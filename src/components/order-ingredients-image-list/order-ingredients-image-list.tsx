@@ -2,9 +2,9 @@ import styles from './order-ingredients-image-list.module.css';
 import { filterIngredients } from '../../utils/utils';
 import { useAppSelector } from '../../types/hooks';
 import React from 'react';
-import { IOrderIngredientsImageListComponent } from './order-ingredients-image-list.types';
+import { OrderIngredientsImageListComponent } from './order-ingredients-image-list.types';
 
-const OrderIngredientsImageList: React.FC<IOrderIngredientsImageListComponent> = ({ order }) => {
+const OrderIngredientsImageList: React.FC<OrderIngredientsImageListComponent> = ({ order }) => {
   const burgerIngredients = useAppSelector((store) => store.burgerIngredients.ingredients);
   const { ingredients } = order;
 

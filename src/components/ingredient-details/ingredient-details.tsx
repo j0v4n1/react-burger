@@ -1,9 +1,10 @@
 import styles from './ingredient-details.module.css';
-import { remove } from '../../services/slices/ingredient-details';
+import { remove } from '../../services/slices/ingredient-details/ingredient-details';
 import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { PATH_CONSTRUCTOR_PAGE } from '../../constants';
 
-const IngredientDetails: React.FC = () => {
+const IngredientDetails = () => {
   const { image, name, proteins, calories, fat, carbohydrates } = useAppSelector(
     (store) => store.ingredientDetails.currentIngredient
   );
@@ -12,7 +13,7 @@ const IngredientDetails: React.FC = () => {
   const navigate = useNavigate();
 
   const handleCloseIngredientDetails = () => {
-    navigate('/');
+    navigate(PATH_CONSTRUCTOR_PAGE);
     dispatch(remove());
   };
 

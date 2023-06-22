@@ -1,8 +1,8 @@
 import { setAccessToken, setProfileName, setProfileEmail, setIsLoggedIn } from '../services/slices/profile/profile';
-import { IIngredient } from '../components/burger-ingredient/burger-ingredient.types';
-import { TAuthData } from '../types';
+import { Ingredient } from '../components/burger-ingredient/burger-ingredient.types';
+import { AuthData } from '../types';
 
-export const setAuthData: TAuthData = (dispatch, refreshToken, accessToken, name, email) => {
+export const setAuthData: AuthData = (dispatch, refreshToken, accessToken, name, email) => {
   localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
   dispatch(setAccessToken(accessToken));
   dispatch(setProfileName(name));
@@ -10,7 +10,7 @@ export const setAuthData: TAuthData = (dispatch, refreshToken, accessToken, name
   dispatch(setIsLoggedIn(true));
 };
 
-export const filterIngredients = (ingredients: string[], burgerIngredients: IIngredient[]) => {
+export const filterIngredients = (ingredients: string[], burgerIngredients: Ingredient[]) => {
   return ingredients
     .map((id) => {
       return burgerIngredients.filter(({ _id }) => {
@@ -23,7 +23,7 @@ export const filterIngredients = (ingredients: string[], burgerIngredients: IIng
     });
 };
 
-export const countTotalPrice = (ingredients: string[], burgerIngredients: IIngredient[]): number => {
+export const countTotalPrice = (ingredients: string[], burgerIngredients: Ingredient[]): number => {
   return ingredients
     .map((id) => {
       return burgerIngredients.filter(({ _id }) => {

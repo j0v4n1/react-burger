@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
 
-export interface IProtectedRouteAuthorizedComponent {
+export type ProtectedRouteAuthorizedComponent = {
   element: ReactNode;
-}
+};

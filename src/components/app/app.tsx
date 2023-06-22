@@ -2,12 +2,12 @@ import './app.css';
 import { Main, Page404, Profile, Login, Register, ResetPassword, ForgotPassword } from '../../pages';
 import AppHeader from '../app-header/app-header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import getUserInformation from '../../utils/getUserInformation';
 import ProtectedRouteElement from '../protected-route-element/protected-route-element';
 import ProtectedRouteAuthorized from '../protected-route-authorized/protected-route-authorized';
 import Feed from '../../pages/feed/feed';
-import { fetchIngredients } from '../../services/slices/burger-ingredients';
+import { fetchIngredients } from '../../services/slices/burger-ingredients/burger-ingredients';
 import Spinner from '../spinner/spinner';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 import { Token } from '../../types';
@@ -19,18 +19,24 @@ import {
   PATH_PROFILE_PAGE,
   PATH_REGISTER_PAGE,
   PATH_RESET_PASSWORD_PAGE,
-} from '../../constants/constants';
+} from '../../constants';
 
-const App: React.FC = () => {
+const App = () => {
   const dispatch = useAppDispatch();
   const accessToken: Token = useAppSelector((store) => store.profile.accessToken);
   const refreshToken: Token = localStorage.getItem('refreshToken');
 
   useEffect(() => {
-    if (refreshToken) {
-      const parsedRefreshToken = JSON.parse(refreshToken);
-      dispatch(fetchIngredients());
-      getUserInformation(dispatch, accessToken, parsedRefreshToken);
+    try {
+      if (refreshToken) {
+        const parsedRefreshToken: string = JSON.parse(refreshToken);
+        dispatch(fetchIngredients());
+        getUserInformation(dispatch, accessToken, parsedRefreshToken);
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
     }
     // eslint-disable-next-line
   }, []);

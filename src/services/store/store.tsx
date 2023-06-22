@@ -6,7 +6,7 @@ import {
   WS_FEED_ACTIONS,
   WS_HISTORY_ORDERS_LIST,
   WS_HISTORY_ORDERS_ACTIONS,
-} from '../../constants/constants';
+} from '../../constants';
 
 const store = configureStore({
   reducer: rootReducer,

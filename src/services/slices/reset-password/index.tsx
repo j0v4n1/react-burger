@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { TResetPasswordState } from './reset-password.types';
+import { ResetPasswordState } from './index.types';
 
-const initialState: TResetPasswordState = {
+const initialState: ResetPasswordState = {
   forgotPasswordRequest: false,
   forgotPasswordSuccess: false,
   forgotPasswordFailed: false,

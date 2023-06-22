@@ -1,4 +1,4 @@
-export interface IIngredient {
+export type Ingredient = {
   _id: string;
   name: string;
   type: string;
@@ -11,9 +11,9 @@ export interface IIngredient {
   image_mobile: string;
   image_large: string;
   __v: number;
-}
+};
 
-export interface IBurgerIngredientComponent {
-  ingredient: IIngredient;
+export type BurgerIngredientComponent = {
+  ingredient: Ingredient;
   className?: string;
-}
+};

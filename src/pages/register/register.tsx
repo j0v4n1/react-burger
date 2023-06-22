@@ -3,7 +3,7 @@ import { useState } from 'react';
 import styles from './register.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { PATH_PROFILE_PAGE, REGISTRATION_URL } from '../../constants/constants';
+import { PATH_PROFILE_PAGE, REGISTRATION_URL } from '../../constants';
 import { setAuthData } from '../../utils/utils';
 import { registerFailed, registerRequest, registerSuccess } from '../../services/slices/profile/profile';
 import { useAppDispatch } from '../../types/hooks';

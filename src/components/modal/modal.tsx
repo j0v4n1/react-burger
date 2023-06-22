@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom';
 import { useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useNavigate } from 'react-router-dom';
-import { IModal } from './modal.types';
+import { ModalComponent } from './modal.types';
 
-const Modal: React.FC<IModal> = ({ children, closeModalPath, onRemove }) => {
+const Modal: React.FC<ModalComponent> = ({ children, closeModalPath, onRemove }) => {
   const navigate = useNavigate();
 
   useEffect(() => {

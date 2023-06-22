@@ -6,26 +6,27 @@ import React, { useMemo, useState } from 'react';
 import { DropTargetMonitor, useDrop } from 'react-dnd';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructorIngredient from '../burger-constructor-ingredient/burger-constructor-ingredient';
-import { set, remove } from '../../services/slices/order-details';
-import { removeAllIngredients, setIngredient } from '../../services/slices/burger-constructor';
+import { set, remove } from '../../services/slices/order-details/order-details';
+import { removeAllIngredients, setIngredient } from '../../services/slices/burger-constructor/burger-constructor';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../spinner/spinner';
-import { INGREDIENT_TYPE } from '../../constants/constants';
+import { INGREDIENT_TYPE, PATH_LOGIN_PAGE } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
-import { IBurgerConstructorIngredient } from './burger-constructor.types';
+import { ConstructorIngredient, OrderData } from './burger-constructor.types';
 
-const BurgerConstructor: React.FC = () => {
-  const [loadingOrder, setLoadingOrder] = useState<boolean>(false);
+const BurgerConstructor = () => {
+  const [loadingOrder, setLoadingOrder] = useState(false);
   const dispatch = useAppDispatch();
   const { ingredients, bun } = useAppSelector((store) => store.burgerConstructor);
   const accessToken = useAppSelector((store) => store.profile.accessToken);
   const isLoggedIn = useAppSelector((store) => store.profile.isLoggedIn);
   const orderNumber = useAppSelector((store) => store.orderDetails.orderNumber);
+
   const handleRemoveOrder = () => {
     dispatch(remove());
   };
 
-  const dropHandler = (ingredient: IBurgerConstructorIngredient) => {
+  const dropHandler = (ingredient: ConstructorIngredient) => {
     dispatch(setIngredient(ingredient));
   };
 
@@ -34,7 +35,7 @@ const BurgerConstructor: React.FC = () => {
     collect: (monitor: DropTargetMonitor) => ({
       isOver: monitor.isOver(),
     }),
-    drop: (item: { ingredient: IBurgerConstructorIngredient }) => {
+    drop: (item: { ingredient: ConstructorIngredient }) => {
       dropHandler(item.ingredient);
     },
   });
@@ -46,10 +47,10 @@ const BurgerConstructor: React.FC = () => {
     if (isLoggedIn && bun) {
       const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id];
       getOrderNumber(ingredientsAndBunsIdsList, accessToken)
-        .then((orderData) => {
-          dispatch(set(orderData.order.number));
+        .then((data: OrderData) => {
+          dispatch(set(data.order.number));
         })
-        .catch((error) => {
+        .catch((error: string) => {
           console.error(error);
         })
         .finally(() => {
@@ -57,13 +58,12 @@ const BurgerConstructor: React.FC = () => {
           setLoadingOrder(false);
         });
     } else {
-      navigate('/login');
+      navigate(PATH_LOGIN_PAGE);
     }
   };
 
   const totalPrice = useMemo(() => {
     const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
-
     return burgerConstructorIngredients.reduce((sum, item) => {
       if (item && item.price) {
         return sum + item.price;

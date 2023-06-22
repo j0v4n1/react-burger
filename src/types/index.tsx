@@ -1,40 +1,8 @@
-import { IIngredient } from '../components/burger-ingredient/burger-ingredient.types';
-import { IBurgerConstructorIngredient } from '../components/burger-constructor/burger-constructor.types';
 import { AppDispatch } from '../services/store/store';
-
+import { Ingredient } from '../components/burger-ingredient/burger-ingredient.types';
 export type Token = string | null;
-export interface IOrderNumberState {
-  orderNumber: number | null;
-}
 
-export type TBurgerConstructorState = {
-  bun: null | IIngredient;
-  ingredients: IBurgerConstructorIngredient[];
-};
-
-export interface IDragAndHoverIndex {
-  dragIndex: number;
-  hoverIndex: number;
-}
-
-export interface IIngredientDetailsState {
-  currentIngredient: IIngredient;
-  showModal: boolean;
-}
-
-export interface IBurgerIngredientsState {
-  loading: boolean;
-  ingredientsRequest: boolean;
-  ingredientsFailed: boolean;
-  ingredients: IIngredient[];
-}
-
-export interface IIngredientsData {
-  success: boolean;
-  data: IIngredient[];
-}
-
-export type TAuthData = (
+export type AuthData = (
   dispatch: AppDispatch,
   refreshToken: string,
   accessToken: string,
@@ -42,12 +10,16 @@ export type TAuthData = (
   email: string
 ) => void;
 
-export interface IOrder {
+export type Order = {
   _id: string;
   ingredients: string[];
-  status: string;
+  status: 'done' | 'pending' | null;
   name: string;
   createdAt: string;
   updatedAt: string;
   number: number;
-}
+};
+export type IngredientsData = {
+  success: boolean;
+  data: Ingredient[];
+};

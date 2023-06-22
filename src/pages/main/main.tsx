@@ -5,9 +5,9 @@ import BurgerIngredients from '../../components/burger-ingredients/burger-ingred
 import { Route, Routes } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { remove } from '../../services/slices/ingredient-details';
+import { remove } from '../../services/slices/ingredient-details/ingredient-details';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
-import { PATH_CONSTRUCTOR_PAGE, PATH_INGREDIENTS_ID } from '../../constants/constants';
+import { PATH_CONSTRUCTOR_PAGE, PATH_INGREDIENTS_ID } from '../../constants';
 
 const Main = () => {
   const dispatch = useAppDispatch();

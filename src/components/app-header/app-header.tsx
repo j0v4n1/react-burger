@@ -2,10 +2,10 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 import styles from './app-header.module.css';
 import { NavLink } from 'react-router-dom';
 import { useAppSelector } from '../../types/hooks';
-import { RootState } from '../../services/store/store';
+import { PATH_CONSTRUCTOR_PAGE, PATH_FEED, PATH_LOGIN_PAGE, PATH_PROFILE_PAGE } from '../../constants';
 
 const AppHeader = () => {
-  const isLoggedIn: boolean = useAppSelector((store: RootState) => store.profile.isLoggedIn);
+  const isLoggedIn = useAppSelector((store) => store.profile.isLoggedIn);
 
   return (
     <header className={styles.header}>
@@ -15,7 +15,7 @@ const AppHeader = () => {
             <li className={styles.item}>
               <BurgerIcon type="primary" />
               <NavLink
-                to={'/'}
+                to={PATH_CONSTRUCTOR_PAGE}
                 className={styles.link}
                 style={({ isActive }) => ({
                   color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
@@ -26,7 +26,7 @@ const AppHeader = () => {
             <li className={styles.item}>
               <ListIcon type="secondary" />
               <NavLink
-                to={'/feed'}
+                to={PATH_FEED}
                 style={({ isActive }) => ({
                   color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
                 })}
@@ -40,7 +40,7 @@ const AppHeader = () => {
         <div className={styles.account}>
           <ProfileIcon type="secondary" />
           <NavLink
-            to={isLoggedIn ? '/profile' : '/login'}
+            to={isLoggedIn ? PATH_PROFILE_PAGE : PATH_LOGIN_PAGE}
             className={styles.link}
             style={({ isActive }) => ({
               color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',

@@ -1,3 +1,3 @@
-export interface SpinnerComponent {
+export type SpinnerComponent = {
   height: string;
-}
+};

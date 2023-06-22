@@ -2,7 +2,7 @@ import styles from './profile.module.css';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import classNames from 'classnames';
 import authentication from '../../utils/authentication-api';
-import { LOGOUT_URL, PATH_PROFILE_PAGE } from '../../constants/constants';
+import { LOGOUT_URL, PATH_PROFILE_PAGE } from '../../constants';
 import {
   setIsLoggedIn,
   setAccessToken,
@@ -14,27 +14,38 @@ import ProfileForm from '../profile-form/profile-form';
 import Orders from '../orders/orders';
 import ProtectedRouteElement from '../../components/protected-route-element/protected-route-element';
 import { useAppDispatch } from '../../types/hooks';
+import { Token } from '../../types';
 
 const Profile = () => {
   const dispatch = useAppDispatch();
+  const refreshToken: Token = localStorage.getItem('refreshToken');
 
   const handleLogOut = () => {
-    dispatch(logOutRequest());
-    authentication(LOGOUT_URL, {
-      body: {
-        token: localStorage.getItem('refreshToken'),
-      },
-    })
-      .then(() => {
-        dispatch(logOutSuccess());
-        localStorage.removeItem('refreshToken');
-        dispatch(setAccessToken(null));
-        dispatch(setIsLoggedIn(false));
-      })
-      .catch((error: string) => {
-        dispatch(logOutFailed());
-        console.log(error);
-      });
+    try {
+      if (refreshToken) {
+        const parsedRefreshToken = JSON.parse(refreshToken);
+        dispatch(logOutRequest());
+        authentication(LOGOUT_URL, {
+          body: {
+            token: parsedRefreshToken,
+          },
+        })
+          .then(() => {
+            dispatch(logOutSuccess());
+            localStorage.removeItem('refreshToken');
+            dispatch(setAccessToken(null));
+            dispatch(setIsLoggedIn(false));
+          })
+          .catch((error: string) => {
+            dispatch(logOutFailed());
+            console.log(error);
+          });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

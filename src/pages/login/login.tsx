@@ -3,14 +3,19 @@ import { useState } from 'react';
 import styles from './login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { AUTHORIZATION_URL, PATH_CONSTRUCTOR_PAGE } from '../../constants/constants';
+import {
+  AUTHORIZATION_URL,
+  PATH_CONSTRUCTOR_PAGE,
+  PATH_FORGOT_PASSWORD_PAGE,
+  PATH_REGISTER_PAGE,
+} from '../../constants';
 import { setAuthData } from '../../utils/utils';
 import { logInFailed, logInRequest, logInSuccess } from '../../services/slices/profile/profile';
 import { useAppDispatch } from '../../types/hooks';
 
-const Login: React.FC = () => {
-  const [passwordValue, setPasswordValue] = useState<string>('');
-  const [emailValue, setEmailValue] = useState<string>('');
+const Login = () => {
+  const [passwordValue, setPasswordValue] = useState('');
+  const [emailValue, setEmailValue] = useState('');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -59,10 +64,10 @@ const Login: React.FC = () => {
         Войти
       </Button>
       <p className="mt-20 mb-6">
-        Вы — новый пользователь? <Link to={'/register'}>Зарегистрироваться</Link>
+        Вы — новый пользователь? <Link to={PATH_REGISTER_PAGE}>Зарегистрироваться</Link>
       </p>
       <p style={{ margin: 0 }}>
-        Забыли пароль? <Link to={'/forgot-password'}>Восстановить пароль</Link>
+        Забыли пароль? <Link to={PATH_FORGOT_PASSWORD_PAGE}>Восстановить пароль</Link>
       </p>
     </section>
   );

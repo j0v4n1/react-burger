@@ -1,17 +1,17 @@
-import { IOrder } from '../../../types';
+import { Order } from '../../../types';
 
-export interface IHistoryMessages {
+export type HistoryMessages = {
   readonly success: boolean;
-  readonly orders: IOrder[];
+  readonly orders: Order[];
   readonly total: number;
   readonly totalToday: number;
-}
+};
 
-export interface IWebsocketHistoryState {
+export type WebsocketHistoryState = {
   readonly loading: boolean;
   readonly websocketState: 'closed' | 'open';
   readonly connectionStarted: boolean;
   readonly wsConnected: boolean;
-  readonly messages: IHistoryMessages;
+  readonly messages: HistoryMessages;
   readonly error: string | undefined;
-}
+};

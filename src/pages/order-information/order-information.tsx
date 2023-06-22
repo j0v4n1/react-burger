@@ -19,7 +19,7 @@ const OrderInformation: React.FC<IOrderInformationComponent> = ({ closeModalPath
 
   const flattedIngredients = filterIngredients(ingredients, burgerIngredients);
 
-  const countById = ingredients.reduce((count: { [key: string]: number }, item) => {
+  const countById = ingredients.reduce((count: { [key: string]: number }, item: string) => {
     count[item] = (count[item] || 0) + 1;
     return count;
   }, {});

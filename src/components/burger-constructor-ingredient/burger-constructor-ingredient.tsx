@@ -1,14 +1,14 @@
 import styles from '../burger-constructor-ingredient/burger-constructor-ingredient.module.css';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { reOrder, removeIngredient } from '../../services/slices/burger-constructor';
+import { reOrder, removeIngredient } from '../../services/slices/burger-constructor/burger-constructor';
 import { useDrag, useDrop } from 'react-dnd';
-import { BURGER_CONSRTUCTOR_INGREDIENT_TYPE } from '../../constants/constants';
+import { BURGER_CONSRTUCTOR_INGREDIENT_TYPE } from '../../constants';
 import { useRef } from 'react';
-import { IBurgerConstructorComponent, DragItem } from './burger-constructor-ingredient.types';
+import { BurgerConstructorComponent, DragItem } from './burger-constructor-ingredient.types';
 import { useAppDispatch } from '../../types/hooks';
 import type { Identifier } from 'dnd-core';
 
-const BurgerConstructorIngredient: React.FC<IBurgerConstructorComponent> = ({ ingredient, index }) => {
+const BurgerConstructorIngredient: React.FC<BurgerConstructorComponent> = ({ ingredient, index }) => {
   const dispatch = useAppDispatch();
   const ref = useRef<HTMLLIElement>(null);
 

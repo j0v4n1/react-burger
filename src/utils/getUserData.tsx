@@ -1,5 +1,5 @@
 import authentication from './authentication-api';
-import { PROFILE_URL } from '../constants/constants';
+import { PROFILE_URL } from '../constants';
 import {
   getProfileInformationFailed,
   getProfileInformationSuccess,

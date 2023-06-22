@@ -3,9 +3,9 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-ingredients.module.css';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { useAppSelector } from '../../types/hooks';
-import { IIngredient } from '../burger-ingredient/burger-ingredient.types';
+import { Ingredient } from '../burger-ingredient/burger-ingredient.types';
 
-const BurgerIngredients: React.FC = () => {
+const BurgerIngredients = () => {
   const ingredients = useAppSelector((store) => store.burgerIngredients.ingredients);
   const scrollRef = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState('bun');
@@ -34,25 +34,28 @@ const BurgerIngredients: React.FC = () => {
     }
   };
 
-  const buns = ingredients.map((ingredient: IIngredient) => {
+  const buns = ingredients.map((ingredient: Ingredient) => {
     if (ingredient.type === 'bun') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
+    } else {
+      return null;
     }
-    return [];
   });
 
-  const sauces = ingredients.map((ingredient: IIngredient) => {
+  const sauces = ingredients.map((ingredient: Ingredient) => {
     if (ingredient.type === 'sauce') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
+    } else {
+      return null;
     }
-    return [];
   });
 
-  const cutlets = ingredients.map((ingredient: IIngredient) => {
+  const cutlets = ingredients.map((ingredient: Ingredient) => {
     if (ingredient.type === 'main') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
+    } else {
+      return null;
     }
-    return [];
   });
 
   return (

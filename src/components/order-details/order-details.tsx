@@ -1,6 +1,6 @@
 import styles from './order-details.module.css';
 import done from '../../images/done.png';
-import { remove } from '../../services/slices/order-details';
+import { remove } from '../../services/slices/order-details/order-details';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const OrderDetails = () => {

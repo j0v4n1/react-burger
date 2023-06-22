@@ -3,12 +3,8 @@ import { useState } from 'react';
 import styles from './reset-password.module.css';
 import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { PATH_FORGOT_PASSWORD_PAGE, PATH_LOGIN_PAGE, SET_NEW_PASSWORD_URL } from '../../constants/constants';
-import {
-  resetPasswordFailed,
-  resetPasswordRequest,
-  resetPasswordSuccess,
-} from '../../services/slices/reset-password/reset-password';
+import { PATH_FORGOT_PASSWORD_PAGE, PATH_LOGIN_PAGE, SET_NEW_PASSWORD_URL } from '../../constants';
+import { resetPasswordFailed, resetPasswordRequest, resetPasswordSuccess } from '../../services/slices/reset-password';
 import { useAppDispatch } from '../../types/hooks';
 
 const ResetPassword = () => {

@@ -1,6 +1,6 @@
-import { IOrder } from '../../types';
+import { Order } from '../../types';
 
-export interface IOrderComponent {
-  order: IOrder;
+export type OrderComponent = {
+  order: Order;
   path: string;
-}
+};

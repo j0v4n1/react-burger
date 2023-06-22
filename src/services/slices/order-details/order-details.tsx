@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IOrderNumberState } from '../../types';
+import { OrderNumberState } from './order-details.types';
 
-const initialState: IOrderNumberState = {
+const initialState: OrderNumberState = {
   orderNumber: null,
 };
 

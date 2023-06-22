@@ -7,7 +7,7 @@ import {
   connectionSuccess as connectionSuccessHistoryOrder,
   connectionError as connectionErrorHistoryOrder,
   getMessages as getMessagesHistoryOrder,
-} from '../services/slices/websocket-history-orders/websocket-history-orders';
+} from '../services/slices/websocket-history-orders';
 
 export const GET_INGREDIENTS_URL = 'https://norma.nomoreparties.space/api/ingredients';
 export const GET_ORDER_NUMBER_URL = 'https://norma.nomoreparties.space/api/orders';

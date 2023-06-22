@@ -1,10 +1,7 @@
 import Order from '../../components/order/order';
 import styles from './orders.module.css';
 import { useEffect } from 'react';
-import {
-  connectionClose,
-  connectionStart,
-} from '../../services/slices/websocket-history-orders/websocket-history-orders';
+import { connectionClose, connectionStart } from '../../services/slices/websocket-history-orders';
 import Spinner from '../../components/spinner/spinner';
 import { Route, Routes } from 'react-router-dom';
 import OrderInformation from '../order-information/order-information';

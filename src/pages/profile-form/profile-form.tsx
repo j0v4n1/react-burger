@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import authentication from '../../utils/authentication-api';
-import { PROFILE_URL } from '../../constants/constants';
+import { PROFILE_URL } from '../../constants';
 import {
   setProfileEmail,
   setProfileName,

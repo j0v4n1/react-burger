@@ -5,10 +5,10 @@ import React, { useMemo } from 'react';
 import OrderIngredientsImageList from '../order-ingredients-image-list/order-ingredients-image-list';
 import { set } from '../../services/slices/order-information/order-information';
 import { countTotalPrice } from '../../utils/utils';
-import { IOrderComponent } from './order.types';
+import { OrderComponent } from './order.types';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const Order: React.FC<IOrderComponent> = ({ order, path }) => {
+const Order: React.FC<OrderComponent> = ({ order, path }) => {
   const { _id, name, createdAt, number, ingredients } = order;
 
   const dispatch = useAppDispatch();

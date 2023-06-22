@@ -1,5 +1,5 @@
-import { IOrder } from '../../../types';
+import { Order } from '../../../types';
 
-export interface IOrderInformationState {
-  readonly currentOrder: IOrder;
-}
+export type IOrderInformationState = {
+  readonly currentOrder: Order;
+};

@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { AppDispatch } from '../store/store';
-import { TBurgerConstructorState, IDragAndHoverIndex } from '../../types';
-import { IBurgerConstructorIngredient } from '../../components/burger-constructor/burger-constructor.types';
+import { AppDispatch } from '../../store/store';
+import { BurgerConstructorState, DragAndHoverIndex } from './burger-constructor.types';
+import { ConstructorIngredient } from '../../../components/burger-constructor/burger-constructor.types';
 
-export const setIngredient = (ingredient: IBurgerConstructorIngredient) => {
+export const setIngredient = (ingredient: ConstructorIngredient) => {
   return function (dispatch: AppDispatch) {
     const uniqueId = uuidv4();
 
@@ -16,7 +16,7 @@ export const setIngredient = (ingredient: IBurgerConstructorIngredient) => {
   };
 };
 
-const initialState: TBurgerConstructorState = {
+const initialState: BurgerConstructorState = {
   bun: null,
   ingredients: [],
 };
@@ -25,10 +25,10 @@ const burgerConstructor = createSlice({
   name: 'burgerConstructor',
   initialState,
   reducers: {
-    addBun: (state, action: PayloadAction<IBurgerConstructorIngredient>) => {
+    addBun: (state, action: PayloadAction<ConstructorIngredient>) => {
       state.bun = action.payload;
     },
-    addIngredient: (state, action: PayloadAction<IBurgerConstructorIngredient>) => {
+    addIngredient: (state, action: PayloadAction<ConstructorIngredient>) => {
       state.ingredients.push(action.payload);
     },
     removeIngredient: (state, action: PayloadAction<string>) => {
@@ -40,7 +40,7 @@ const burgerConstructor = createSlice({
       state.bun = null;
       state.ingredients = [];
     },
-    reOrder: (state, action: PayloadAction<IDragAndHoverIndex>) => {
+    reOrder: (state, action: PayloadAction<DragAndHoverIndex>) => {
       const { dragIndex, hoverIndex } = action.payload;
       const dragIngredient = state.ingredients[dragIndex];
       state.ingredients[dragIndex] = state.ingredients[hoverIndex];
