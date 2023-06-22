@@ -2,15 +2,16 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
-import { useDispatch, useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Modal from '../../components/modal/modal';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
 import { remove } from '../../services/slices/ingredient-details';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
+import { PATH_CONSTRUCTOR_PAGE, PATH_INGREDIENTS_ID } from '../../constants/constants';
 
 const Main = () => {
-  const dispatch = useDispatch();
-  const ingredientsFailed = useSelector((state) => state.burgerIngredients.ingredientsFailed);
+  const dispatch = useAppDispatch();
+  const ingredientsFailed = useAppSelector((state) => state.burgerIngredients.ingredientsFailed);
 
   const handleCloseIngredientDetails = () => {
     dispatch(remove());
@@ -26,9 +27,9 @@ const Main = () => {
       </DndProvider>
       <Routes>
         <Route
-          path="/ingredients/:id"
+          path={PATH_INGREDIENTS_ID}
           element={
-            <Modal onRemove={handleCloseIngredientDetails} closeModalPath={'/'}>
+            <Modal onRemove={handleCloseIngredientDetails} closeModalPath={PATH_CONSTRUCTOR_PAGE}>
               <IngredientDetails />
             </Modal>
           }

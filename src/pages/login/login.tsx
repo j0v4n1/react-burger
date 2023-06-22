@@ -3,16 +3,16 @@ import { useState } from 'react';
 import styles from './login.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { AUTHORIZATION_URL } from '../../constants/constants';
-import { useDispatch } from 'react-redux';
+import { AUTHORIZATION_URL, PATH_CONSTRUCTOR_PAGE } from '../../constants/constants';
 import { setAuthData } from '../../utils/utils';
 import { logInFailed, logInRequest, logInSuccess } from '../../services/slices/profile/profile';
+import { useAppDispatch } from '../../types/hooks';
 
-const Login = () => {
-  const [passwordValue, setPasswordValue] = useState('');
-  const [emailValue, setEmailValue] = useState('');
+const Login: React.FC = () => {
+  const [passwordValue, setPasswordValue] = useState<string>('');
+  const [emailValue, setEmailValue] = useState<string>('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleLogIn = () => {
@@ -23,12 +23,16 @@ const Login = () => {
         password: passwordValue,
       },
     })
-      .then((data) => {
-        dispatch(logInSuccess());
-        setAuthData(dispatch, data.refreshToken, data.accessToken, data.user.name, data.user.email);
-        navigate('/');
+      .then(({ refreshToken, accessToken, user }) => {
+        if (refreshToken && accessToken && user) {
+          dispatch(logInSuccess());
+          setAuthData(dispatch, refreshToken, accessToken, user.name, user.email);
+          navigate(PATH_CONSTRUCTOR_PAGE);
+        } else {
+          throw new Error();
+        }
       })
-      .catch((error) => {
+      .catch((error: string) => {
         console.log(error);
         dispatch(logInFailed());
       });

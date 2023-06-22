@@ -25,8 +25,6 @@ const BurgerConstructor: React.FC = () => {
     dispatch(remove());
   };
 
-  const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
-
   const dropHandler = (ingredient: IBurgerConstructorIngredient) => {
     dispatch(setIngredient(ingredient));
   };
@@ -45,8 +43,8 @@ const BurgerConstructor: React.FC = () => {
 
   const fetchOrderNumber = () => {
     setLoadingOrder(true);
-    if (isLoggedIn) {
-      const ingredientsAndBunsIdsList = bun ? [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id] : null;
+    if (isLoggedIn && bun) {
+      const ingredientsAndBunsIdsList = [bun._id, ...ingredients.flatMap(({ _id }) => _id), bun._id];
       getOrderNumber(ingredientsAndBunsIdsList, accessToken)
         .then((orderData) => {
           dispatch(set(orderData.order.number));
@@ -64,13 +62,15 @@ const BurgerConstructor: React.FC = () => {
   };
 
   const totalPrice = useMemo(() => {
+    const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
+
     return burgerConstructorIngredients.reduce((sum, item) => {
       if (item && item.price) {
         return sum + item.price;
       }
       return sum;
     }, 0);
-  }, [burgerConstructorIngredients]);
+  }, [bun, ingredients]);
 
   return (
     <section className={styles.burgerConstructor}>

@@ -24,7 +24,7 @@ const Modal: React.FC<IModal> = ({ children, closeModalPath, onRemove }) => {
     }
   };
 
-  const portalElement: HTMLElement | null = document.getElementById('react-modals');
+  const portalElement = document.getElementById('react-modals');
 
   if (portalElement) {
     return ReactDOM.createPortal(
@@ -34,6 +34,8 @@ const Modal: React.FC<IModal> = ({ children, closeModalPath, onRemove }) => {
       </div>,
       portalElement
     );
+  } else {
+    return null;
   }
 };
 

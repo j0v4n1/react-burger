@@ -1,15 +1,15 @@
 import styles from './feed.module.css';
 import Order from '../../components/order/order';
 import { useEffect } from 'react';
-import { connectionClose, connectionStart } from '../../services/slices/websocketFeed';
+import { connectionClose, connectionStart } from '../../services/slices/websocket-feed/websocket-feed';
 import Spinner from '../../components/spinner/spinner';
 import { Route, Routes } from 'react-router-dom';
 import OrderInformation from '../order-information/order-information';
 import Modal from '../../components/modal/modal';
-import { remove } from '../../services/slices/order-information';
+import { remove } from '../../services/slices/order-information/order-information';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const Feed = () => {
+const Feed: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { orders, total, totalToday } = useAppSelector((store) => store.websocketFeed.messages);
@@ -22,7 +22,7 @@ const Feed = () => {
       })
     : null;
 
-  const checkOrderStatus = (status, className) => {
+  const checkOrderStatus = (status: string, className: string) => {
     return orders
       ? orders.map((order, index) => {
           return order.status === status && index <= 9 ? (
@@ -46,6 +46,7 @@ const Feed = () => {
     return () => {
       dispatch(connectionClose());
     };
+    // eslint-disable-next-line
   }, []);
 
   const handleCloseOrderInformation = () => {

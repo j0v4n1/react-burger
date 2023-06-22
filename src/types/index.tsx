@@ -2,7 +2,7 @@ import { IIngredient } from '../components/burger-ingredient/burger-ingredient.t
 import { IBurgerConstructorIngredient } from '../components/burger-constructor/burger-constructor.types';
 import { AppDispatch } from '../services/store/store';
 
-export type TToken = string | null;
+export type Token = string | null;
 export interface IOrderNumberState {
   orderNumber: number | null;
 }
@@ -43,19 +43,11 @@ export type TAuthData = (
 ) => void;
 
 export interface IOrder {
-  ingredients: string[];
   _id: string;
+  ingredients: string[];
   status: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
   number: number;
-  createAt: string;
-  updateAt: string;
-}
-
-export interface IWebsocketFeedState {
-  loading: boolean;
-  websocketState: string;
-  connectionStarted: boolean;
-  wsConnected: boolean;
-  messages: IOrder[];
-  error: string | undefined;
 }

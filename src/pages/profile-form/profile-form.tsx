@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import authentication from '../../utils/authentication-api';
 import { PROFILE_URL } from '../../constants/constants';
@@ -11,9 +10,10 @@ import {
 } from '../../services/slices/profile/profile';
 import styles from './profile-form.module.css';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const ProfileForm = () => {
-  const { profileName, profileEmail, accessToken } = useSelector((store) => store.profile);
+  const { profileName, profileEmail, accessToken } = useAppSelector((store) => store.profile);
 
   const [nameValue, setNameValue] = useState(profileName);
   const [emailValue, setEmailValue] = useState(profileEmail);
@@ -26,7 +26,7 @@ const ProfileForm = () => {
     }
   }, [profileEmail, profileName]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const isFormChanged = () => {
     return !(profileName === nameValue && profileEmail === emailValue);
@@ -50,12 +50,16 @@ const ProfileForm = () => {
         password: passwordValue,
       },
     })
-      .then((data) => {
-        dispatch(updateProfileInformationSuccess());
-        dispatch(setProfileName(data.user.name));
-        dispatch(setProfileEmail(data.user.email));
+      .then(({ user }) => {
+        if (user) {
+          dispatch(updateProfileInformationSuccess());
+          dispatch(setProfileName(user.name));
+          dispatch(setProfileEmail(user.email));
+        } else {
+          throw new Error();
+        }
       })
-      .catch((error) => {
+      .catch((error: string) => {
         dispatch(updateProfileInformationFailed());
         console.log(error);
       });
@@ -67,14 +71,14 @@ const ProfileForm = () => {
         type={'text'}
         placeholder={'Имя'}
         onChange={(e) => setNameValue(e.target.value)}
-        value={nameValue}
+        value={nameValue ? nameValue : 'Ошибка имени'}
         name={'name'}
         size={'default'}
         extraClass="mb-6"
       />
       <EmailInput
         onChange={(e) => setEmailValue(e.target.value)}
-        value={emailValue}
+        value={emailValue ? emailValue : 'Ошибка email'}
         name={'email'}
         placeholder={'Логин'}
       />

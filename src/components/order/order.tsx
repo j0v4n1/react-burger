@@ -3,7 +3,7 @@ import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burge
 import { Link } from 'react-router-dom';
 import React, { useMemo } from 'react';
 import OrderIngredientsImageList from '../order-ingredients-image-list/order-ingredients-image-list';
-import { set } from '../../services/slices/order-information';
+import { set } from '../../services/slices/order-information/order-information';
 import { countTotalPrice } from '../../utils/utils';
 import { IOrderComponent } from './order.types';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';

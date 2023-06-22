@@ -1,30 +1,32 @@
 import styles from './order-information.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
 import { countTotalPrice, filterIngredients } from '../../utils/utils';
 import { useMemo } from 'react';
-import { remove } from '../../services/slices/order-information';
+import { remove } from '../../services/slices/order-information/order-information';
 import { useNavigate } from 'react-router-dom';
+import { IOrderInformationComponent } from './order-information.types';
+import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
-const OrderInformation = ({ closeModalPath }) => {
-  const dispatch = useDispatch();
+const OrderInformation: React.FC<IOrderInformationComponent> = ({ closeModalPath }) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const order = useSelector((store) => store.orderInformation.currentOrder);
-  const { createdAt, name, number, ingredients, status } = order;
+  const order = useAppSelector((store) => store.orderInformation.currentOrder);
 
-  const burgerIngredients = useSelector((store) => store.burgerIngredients.ingredients);
+  const { name, createdAt, number, ingredients, status } = order;
+
+  const burgerIngredients = useAppSelector((store) => store.burgerIngredients.ingredients);
 
   const flattedIngredients = filterIngredients(ingredients, burgerIngredients);
 
-  const countById = ingredients.reduce((count, item) => {
+  const countById = ingredients.reduce((count: { [key: string]: number }, item) => {
     count[item] = (count[item] || 0) + 1;
     return count;
   }, {});
 
   const totalPrice = useMemo(() => {
     return countTotalPrice(ingredients, burgerIngredients);
-  });
+  }, [ingredients, burgerIngredients]);
 
   const handleCloseOrderInformation = () => {
     dispatch(remove());

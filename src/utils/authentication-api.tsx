@@ -1,15 +1,27 @@
 import { DEFAULT_HEADERS } from '../constants/constants';
 import checkResponse from './check-response';
 
-const authentication = (url, options = {}) => {
+interface ServerResponse {
+  success: boolean;
+  user?: {
+    email: string;
+    name: string;
+  };
+  accessToken?: string;
+  refreshToken?: string;
+  message?: string;
+}
+
+type TAuthentication = (url: string, options: { method?: string; headers?: {}; body?: {} }) => Promise<ServerResponse>;
+
+const authentication: TAuthentication = async (url, options = {}) => {
   const { method = 'POST', headers = {}, body } = options;
 
-  return fetch(url, {
+  const res = await fetch(url, {
     method,
     headers: { ...DEFAULT_HEADERS, ...headers },
     body: body && JSON.stringify(body),
-  }).then((res) => {
-    return checkResponse(res);
   });
+  return await checkResponse(res);
 };
 export default authentication;

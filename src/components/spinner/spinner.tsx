@@ -1,6 +1,6 @@
-import { Spinner } from './spinner.types';
+import { SpinnerComponent } from './spinner.types';
 
-const Spinner: React.FC<Spinner> = ({ height }) => {
+const Spinner: React.FC<SpinnerComponent> = ({ height }) => {
   return (
     <div
       style={{

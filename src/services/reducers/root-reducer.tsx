@@ -4,10 +4,10 @@ import burgerIngredients from '../slices/burger-ingredients';
 import orderDetails from '../slices/order-details';
 import ingredientDetails from '../slices/ingredient-details';
 import profile from '../slices/profile/profile';
-import websocketFeed from '../slices/websocketFeed';
-import websocketHistoryOrders from '../slices/websocket-history-orders';
-import orderInformation from '../slices/order-information';
-import resetPassword from '../slices/reset-password';
+import websocketFeed from '../slices/websocket-feed/websocket-feed';
+import websocketHistoryOrders from '../slices/websocket-history-orders/websocket-history-orders';
+import orderInformation from '../slices/order-information/order-information';
+import resetPassword from '../slices/reset-password/reset-password';
 
 const rootReducer = combineReducers({
   burgerIngredients,

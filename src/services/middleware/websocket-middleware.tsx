@@ -1,6 +1,10 @@
-const websocketMiddleware = (wsUrl, wsActions) => {
+import { WsActions } from './websocket-middleware.types';
+import { Middleware } from 'redux';
+import { RootState } from '../store/store';
+
+const websocketMiddleware = (wsUrl: string, wsActions: WsActions): Middleware<{}, RootState> => {
   return (store) => {
-    let socket = null;
+    let socket: WebSocket | null = null;
 
     return (next) => (action) => {
       const { dispatch } = store;
@@ -20,11 +24,11 @@ const websocketMiddleware = (wsUrl, wsActions) => {
 
       if (socket) {
         socket.onopen = (event) => {
-          dispatch(connectionSuccess(event.type));
+          dispatch(connectionSuccess(event.type as 'closed' | 'open'));
         };
 
         socket.onerror = (event) => {
-          dispatch(connectionError(event));
+          dispatch(connectionError(event.type));
         };
 
         socket.onmessage = (event) => {

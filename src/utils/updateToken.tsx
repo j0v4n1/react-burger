@@ -11,39 +11,52 @@ import {
   updateTokenSuccess,
   updateTokenFailed,
 } from '../services/slices/profile/profile';
+import { AppDispatch } from '../services/store/store';
 
-const updateToken = (dispatch) => {
-  authentication(REFRESH_TOKEN_URL, {
-    body: {
-      token: JSON.parse(localStorage.getItem('refreshToken')),
-    },
-  })
-    .then((data) => {
-      dispatch(updateTokenSuccess());
-      localStorage.setItem('refreshToken', JSON.stringify(data.refreshToken));
-      dispatch(setAccessToken(data.accessToken));
-      dispatch(getProfileInformationRequest());
-      authentication(PROFILE_URL, {
-        method: 'GET',
-        headers: {
-          authorization: data.accessToken,
-        },
-      })
-        .then((data) => {
-          dispatch(getProfileInformationSuccess());
-          dispatch(setProfileName(data.user.name));
-          dispatch(setProfileEmail(data.user.email));
-          dispatch(setIsLoggedIn(true));
-        })
-        .catch((error) => {
-          dispatch(getProfileInformationFailed());
-          console.log(error);
-        });
+const refreshTokenFromStorage = localStorage.getItem('refreshToken');
+
+const updateToken = (dispatch: AppDispatch) => {
+  if (refreshTokenFromStorage) {
+    authentication(REFRESH_TOKEN_URL, {
+      body: {
+        token: JSON.parse(refreshTokenFromStorage),
+      },
     })
-    .catch((error) => {
-      dispatch(updateTokenFailed());
-      console.log(error);
-    });
+      .then(({ accessToken, refreshToken }) => {
+        if (accessToken) {
+          dispatch(updateTokenSuccess());
+          localStorage.setItem('refreshToken', JSON.stringify(refreshToken));
+          dispatch(setAccessToken(accessToken));
+          dispatch(getProfileInformationRequest());
+          authentication(PROFILE_URL, {
+            method: 'GET',
+            headers: {
+              authorization: accessToken,
+            },
+          })
+            .then(({ user }) => {
+              if (user) {
+                dispatch(getProfileInformationSuccess());
+                dispatch(setProfileName(user.name));
+                dispatch(setProfileEmail(user.email));
+                dispatch(setIsLoggedIn(true));
+              } else {
+                throw new Error();
+              }
+            })
+            .catch((error: string) => {
+              dispatch(getProfileInformationFailed());
+              console.log(error);
+            });
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((error: string) => {
+        dispatch(updateTokenFailed());
+        console.log(error);
+      });
+  }
 };
 
 export default updateToken;

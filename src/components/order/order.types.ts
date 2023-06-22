@@ -1,10 +1,6 @@
+import { IOrder } from '../../types';
+
 export interface IOrderComponent {
-  order: {
-    _id: string;
-    name: string;
-    createdAt: string;
-    number: number;
-    ingredients: string[];
-  };
+  order: IOrder;
   path: string;
 }

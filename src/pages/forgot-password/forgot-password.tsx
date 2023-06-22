@@ -3,20 +3,20 @@ import { useState } from 'react';
 import styles from './forgot-password.module.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { RESET_PASSWORD_URL } from '../../constants/constants';
-import { useDispatch } from 'react-redux';
+import { PATH_RESET_PASSWORD_PAGE, RESET_PASSWORD_URL } from '../../constants/constants';
 import {
   forgotPasswordFailed,
   forgotPasswordRequest,
   forgotPasswordSuccess,
-} from '../../services/slices/reset-password';
+} from '../../services/slices/reset-password/reset-password';
+import { useAppDispatch } from '../../types/hooks';
 
-const ForgotPassword = () => {
-  const [emailValue, setEmailValue] = useState('');
+const ForgotPassword: React.FC = () => {
+  const [emailValue, setEmailValue] = useState<string>('');
 
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleResetPassword = () => {
     dispatch(forgotPasswordRequest());
@@ -27,9 +27,9 @@ const ForgotPassword = () => {
     })
       .then(() => {
         dispatch(forgotPasswordSuccess());
-        navigate('/reset-password', { state: location.pathname });
+        navigate(PATH_RESET_PASSWORD_PAGE, { state: location.pathname });
       })
-      .catch((error) => {
+      .catch((error: string) => {
         dispatch(forgotPasswordFailed());
         console.log(error);
       });

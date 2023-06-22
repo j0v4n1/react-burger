@@ -3,9 +3,13 @@ import { useState } from 'react';
 import styles from './reset-password.module.css';
 import { Link, useLocation, useNavigate, Navigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { SET_NEW_PASSWORD_URL } from '../../constants/constants';
-import { useDispatch } from 'react-redux';
-import { resetPasswordFailed, resetPasswordRequest, resetPasswordSuccess } from '../../services/slices/reset-password';
+import { PATH_FORGOT_PASSWORD_PAGE, PATH_LOGIN_PAGE, SET_NEW_PASSWORD_URL } from '../../constants/constants';
+import {
+  resetPasswordFailed,
+  resetPasswordRequest,
+  resetPasswordSuccess,
+} from '../../services/slices/reset-password/reset-password';
+import { useAppDispatch } from '../../types/hooks';
 
 const ResetPassword = () => {
   const [newPasswordValue, setNewPasswordValue] = useState('');
@@ -13,9 +17,9 @@ const ResetPassword = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isRedirectFromForgotPasswordPage = location.state === '/forgot-password';
+  const isRedirectFromForgotPasswordPage = location.state === PATH_FORGOT_PASSWORD_PAGE;
 
   const handleResetPassword = () => {
     dispatch(resetPasswordRequest());
@@ -27,9 +31,9 @@ const ResetPassword = () => {
     })
       .then(() => {
         dispatch(resetPasswordSuccess());
-        navigate('/login');
+        navigate(PATH_LOGIN_PAGE);
       })
-      .catch((error) => {
+      .catch((error: string) => {
         dispatch(resetPasswordFailed());
         console.log(error);
       });

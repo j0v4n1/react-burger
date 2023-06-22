@@ -3,17 +3,17 @@ import { useState } from 'react';
 import styles from './register.module.css';
 import { Link, useNavigate } from 'react-router-dom';
 import authentication from '../../utils/authentication-api';
-import { useDispatch } from 'react-redux';
-import { REGISTRATION_URL } from '../../constants/constants';
+import { PATH_PROFILE_PAGE, REGISTRATION_URL } from '../../constants/constants';
 import { setAuthData } from '../../utils/utils';
 import { registerFailed, registerRequest, registerSuccess } from '../../services/slices/profile/profile';
+import { useAppDispatch } from '../../types/hooks';
 
 const Register = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleRegister = () => {
@@ -25,12 +25,16 @@ const Register = () => {
         name,
       },
     })
-      .then((data) => {
-        dispatch(registerSuccess());
-        setAuthData(dispatch, data.refreshToken, data.accessToken, data.user.name, data.user.email);
-        navigate('/profile');
+      .then(({ refreshToken, accessToken, user }) => {
+        if (refreshToken && accessToken && user) {
+          dispatch(registerSuccess());
+          setAuthData(dispatch, refreshToken, accessToken, user.name, user.email);
+          navigate(PATH_PROFILE_PAGE);
+        } else {
+          throw new Error();
+        }
       })
-      .catch((error) => {
+      .catch((error: string) => {
         console.log(error);
         dispatch(registerFailed());
       });

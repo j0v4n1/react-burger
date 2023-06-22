@@ -21,13 +21,13 @@ const BurgerIngredient: React.FC<IBurgerIngredientComponent> = ({ ingredient }) 
   });
 
   const { bun, ingredients } = useAppSelector((store) => store.burgerConstructor);
-  const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
 
   const handleOpenIngredientDetails = () => {
     dispatch(set(ingredient));
   };
 
   const countIngredient = useMemo(() => {
+    const burgerConstructorIngredients = [bun, ...ingredients.flatMap((ingredient) => ingredient), bun];
     return burgerConstructorIngredients.reduce((sum, el) => {
       if (!el) {
         return sum;
@@ -38,7 +38,7 @@ const BurgerIngredient: React.FC<IBurgerIngredientComponent> = ({ ingredient }) 
         return sum;
       }
     }, 0);
-  }, [burgerConstructorIngredients, ingredient._id]);
+  }, [bun, ingredients, ingredient._id]);
 
   return (
     <li

@@ -1,13 +1,15 @@
 import Order from '../../components/order/order';
 import styles from './orders.module.css';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { connectionClose, connectionStart } from '../../services/slices/websocket-history-orders';
+import {
+  connectionClose,
+  connectionStart,
+} from '../../services/slices/websocket-history-orders/websocket-history-orders';
 import Spinner from '../../components/spinner/spinner';
 import { Route, Routes } from 'react-router-dom';
 import OrderInformation from '../order-information/order-information';
 import Modal from '../../components/modal/modal';
-import { remove } from '../../services/slices/order-information';
+import { remove } from '../../services/slices/order-information/order-information';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
 
 const Orders = () => {
@@ -26,6 +28,7 @@ const Orders = () => {
     return () => {
       dispatch(connectionClose());
     };
+    // eslint-disable-next-line
   }, [accessToken]);
 
   const ordersList = orders

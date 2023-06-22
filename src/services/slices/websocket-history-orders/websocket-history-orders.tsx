@@ -1,28 +1,34 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { IOrder, IWebsocketFeedState } from '../../types';
+import { IWebsocketHistoryState, IHistoryMessages } from './websocket-history-orders.types';
+import { Token } from '../../../types';
 
-const initialState: IWebsocketFeedState = {
+const initialState: IWebsocketHistoryState = {
   loading: true,
   websocketState: 'closed',
   connectionStarted: false,
   wsConnected: false,
-  messages: [],
+  messages: {
+    success: false,
+    orders: [],
+    total: 0,
+    totalToday: 0,
+  },
   error: undefined,
 };
 
-const websocketFeed = createSlice({
-  name: 'websocketFeed',
+const websocketHistoryOrders = createSlice({
+  name: 'websocketHistoryOrders',
   initialState,
   reducers: {
-    connectionStart: (state) => {
+    connectionStart: (state, action: PayloadAction<{ accessToken: Token }>) => {
       state.connectionStarted = true;
     },
-    connectionSuccess: (state, action: PayloadAction<string>) => {
+    connectionSuccess: (state, action: PayloadAction<'closed' | 'open'>) => {
       state.loading = false;
       state.wsConnected = true;
       state.websocketState = action.payload;
     },
-    getMessages: (state, action: PayloadAction<IOrder[]>) => {
+    getMessages: (state, action: PayloadAction<IHistoryMessages>) => {
       state.messages = action.payload;
     },
     connectionError: (state, action: PayloadAction<string>) => {
@@ -38,6 +44,6 @@ const websocketFeed = createSlice({
   },
 });
 
-const { actions, reducer } = websocketFeed;
+const { actions, reducer } = websocketHistoryOrders;
 export default reducer;
 export const { connectionStart, connectionSuccess, getMessages, connectionError, connectionClose } = actions;

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProfileState } from './types';
+import { ProfileState } from './profile.types';
+import { Token } from '../../../types';
 
 const initialState: ProfileState = {
   profileInformationRequest: false,
@@ -110,7 +111,7 @@ const profile = createSlice({
       state.updateProfileInformationFailed = true;
     },
 
-    setAccessToken: (state, action: PayloadAction<string>) => {
+    setAccessToken: (state, action: PayloadAction<Token>) => {
       state.accessToken = action.payload;
     },
     setProfileName: (state, action: PayloadAction<string>) => {

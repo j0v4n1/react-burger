@@ -1,7 +1,5 @@
-import { ReactNode } from 'react';
-
 export interface IModal {
-  children: ReactNode;
+  children: React.ReactNode;
   closeModalPath: string;
   onRemove: () => void;
 }

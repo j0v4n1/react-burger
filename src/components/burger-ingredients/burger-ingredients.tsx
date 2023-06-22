@@ -38,18 +38,21 @@ const BurgerIngredients: React.FC = () => {
     if (ingredient.type === 'bun') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
+    return [];
   });
 
   const sauces = ingredients.map((ingredient: IIngredient) => {
     if (ingredient.type === 'sauce') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
+    return [];
   });
 
   const cutlets = ingredients.map((ingredient: IIngredient) => {
     if (ingredient.type === 'main') {
       return <BurgerIngredient key={ingredient._id} ingredient={ingredient} className={styles.item} />;
     }
+    return [];
   });
 
   return (

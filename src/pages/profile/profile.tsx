@@ -2,7 +2,7 @@ import styles from './profile.module.css';
 import { NavLink, Route, Routes } from 'react-router-dom';
 import classNames from 'classnames';
 import authentication from '../../utils/authentication-api';
-import { LOGOUT_URL } from '../../constants/constants';
+import { LOGOUT_URL, PATH_PROFILE_PAGE } from '../../constants/constants';
 import {
   setIsLoggedIn,
   setAccessToken,
@@ -10,19 +10,19 @@ import {
   logOutSuccess,
   logOutFailed,
 } from '../../services/slices/profile/profile';
-import { useDispatch } from 'react-redux';
 import ProfileForm from '../profile-form/profile-form';
 import Orders from '../orders/orders';
 import ProtectedRouteElement from '../../components/protected-route-element/protected-route-element';
+import { useAppDispatch } from '../../types/hooks';
 
 const Profile = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleLogOut = () => {
     dispatch(logOutRequest());
     authentication(LOGOUT_URL, {
       body: {
-        token: JSON.parse(localStorage.getItem('refreshToken')),
+        token: localStorage.getItem('refreshToken'),
       },
     })
       .then(() => {
@@ -31,7 +31,7 @@ const Profile = () => {
         dispatch(setAccessToken(null));
         dispatch(setIsLoggedIn(false));
       })
-      .catch((error) => {
+      .catch((error: string) => {
         dispatch(logOutFailed());
         console.log(error);
       });
@@ -49,7 +49,7 @@ const Profile = () => {
                   color: isActive ? 'var(--text-primary-color)' : 'var(--text-inactive-color)',
                 })}
                 className={classNames(styles.link, 'text_type_main-medium')}
-                to={'/profile'}>
+                to={PATH_PROFILE_PAGE}>
                 Профиль
               </NavLink>
             </li>

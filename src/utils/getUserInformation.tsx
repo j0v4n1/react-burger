@@ -1,10 +1,10 @@
 import updateToken from './updateToken';
 import getUserData from './getUserData';
 import { getProfileInformationRequest, updateTokenRequest } from '../services/slices/profile/profile';
-import { TToken } from '../types';
+import { Token } from '../types';
 import { AppDispatch } from '../services/store/store';
 
-const getUserInformation = (dispatch: AppDispatch, accessToken: TToken, refreshToken: TToken): void => {
+const getUserInformation = (dispatch: AppDispatch, accessToken: Token, refreshToken: Token): void => {
   if (accessToken) {
     dispatch(getProfileInformationRequest());
     getUserData(accessToken, dispatch);

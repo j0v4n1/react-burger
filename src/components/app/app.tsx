@@ -10,7 +10,7 @@ import Feed from '../../pages/feed/feed';
 import { fetchIngredients } from '../../services/slices/burger-ingredients';
 import Spinner from '../spinner/spinner';
 import { useAppDispatch, useAppSelector } from '../../types/hooks';
-import { TToken } from '../../types';
+import { Token } from '../../types';
 import {
   PATH_CONSTRUCTOR_PAGE,
   PATH_FEED,
@@ -23,16 +23,20 @@ import {
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const accessToken: TToken = useAppSelector((store) => store.profile.accessToken);
-  const refreshToken: TToken = localStorage.getItem('refreshToken');
+  const accessToken: Token = useAppSelector((store) => store.profile.accessToken);
+  const refreshToken: Token = localStorage.getItem('refreshToken');
 
   useEffect(() => {
-    dispatch(fetchIngredients());
-    getUserInformation(dispatch, accessToken, refreshToken);
+    if (refreshToken) {
+      const parsedRefreshToken = JSON.parse(refreshToken);
+      dispatch(fetchIngredients());
+      getUserInformation(dispatch, accessToken, parsedRefreshToken);
+    }
+    // eslint-disable-next-line
   }, []);
 
-  const loading: boolean = useAppSelector((store) => store.burgerIngredients.loading);
-  const isLoggedIn: boolean = useAppSelector((store) => store.profile.isLoggedIn);
+  const loading = useAppSelector((store) => store.burgerIngredients.loading);
+  const isLoggedIn = useAppSelector((store) => store.profile.isLoggedIn);
 
   return loading && !isLoggedIn ? (
     <Spinner height={'calc(100vh - 128px)'} />
