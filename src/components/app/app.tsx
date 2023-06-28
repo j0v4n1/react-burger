@@ -27,17 +27,10 @@ const App = () => {
   const refreshToken: Token = localStorage.getItem('refreshToken');
 
   useEffect(() => {
-    try {
-      if (refreshToken) {
-        const parsedRefreshToken: string = JSON.parse(refreshToken);
-        dispatch(fetchIngredients());
-        getUserInformation(dispatch, accessToken, parsedRefreshToken);
-      } else {
-        throw new Error();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    const parsedRefreshToken: Token = refreshToken ? JSON.parse(refreshToken) : null;
+    dispatch(fetchIngredients());
+    getUserInformation(dispatch, accessToken, parsedRefreshToken);
+
     // eslint-disable-next-line
   }, []);
 

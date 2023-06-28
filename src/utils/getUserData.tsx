@@ -9,7 +9,7 @@ import {
 } from '../services/slices/profile/profile';
 import updateToken from './updateToken';
 import { Token } from '../types';
-import { AppDispatch } from '../services/store/store';
+import { AppDispatch } from '../services/store';
 
 const getUserData = (accessToken: Token, dispatch: AppDispatch) => {
   authentication(PROFILE_URL, {

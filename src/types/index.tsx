@@ -1,4 +1,4 @@
-import { AppDispatch } from '../services/store/store';
+import { AppDispatch } from '../services/store';
 import { Ingredient } from '../components/burger-ingredient/burger-ingredient.types';
 export type Token = string | null;
 

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch } from '../../store';
 import { BurgerConstructorState, DragAndHoverIndex } from './burger-constructor.types';
 import { ConstructorIngredient } from '../../../components/burger-constructor/burger-constructor.types';
 

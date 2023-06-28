@@ -1,6 +1,6 @@
 import { WsActions } from './websocket-middleware.types';
 import { Middleware } from 'redux';
-import { RootState } from '../store/store';
+import { RootState } from '../store';
 
 const websocketMiddleware = (wsUrl: string, wsActions: WsActions): Middleware<{}, RootState> => {
   return (store) => {
