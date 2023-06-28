@@ -30,8 +30,6 @@ const App = () => {
     const parsedRefreshToken: Token = refreshToken ? JSON.parse(refreshToken) : null;
     dispatch(fetchIngredients());
     getUserInformation(dispatch, accessToken, parsedRefreshToken);
-
-    // eslint-disable-next-line
   }, []);
 
   const loading = useAppSelector((store) => store.burgerIngredients.loading);
