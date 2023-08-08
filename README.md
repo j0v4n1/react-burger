@@ -5,3 +5,5 @@
 4. Module CSS
 
 Бибилиотека React DnD
+
+Ссылка на проект: https://ivanklimovskiy.github.io/react-burger/
