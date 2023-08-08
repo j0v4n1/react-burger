@@ -36,7 +36,11 @@ const BurgerConstructor = () => {
       isOver: monitor.isOver(),
     }),
     drop: (item: { ingredient: ConstructorIngredient }) => {
-      dropHandler(item.ingredient);
+      if (bun || item.ingredient.type === 'bun') {
+        dropHandler(item.ingredient);
+      } else {
+        alert('Сначала добавьте булку');
+      }
     },
   });
 
