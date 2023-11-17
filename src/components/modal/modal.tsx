@@ -1,6 +1,6 @@
 import styles from './modal.module.css';
 import ReactDOM from 'react-dom';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import { useNavigate } from 'react-router-dom';
 import { ModalComponent } from './modal.types';
